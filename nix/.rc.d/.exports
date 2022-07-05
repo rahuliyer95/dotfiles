@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Make vim the default editor.
+export EDITOR="vim"
+# use neovim if available
+[ -n "$(command -v nvim)" ] && export EDITOR="nvim"
+
+export VISUAL="vim"
+[ -n "$(command -v nvim)" ] && export VISUAL="nvim"
+
+# Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
+export PYTHONIOENCODING="UTF-8"
+
+# gnupg tty
+export GPG_TTY=""
+GPG_TTY="$(tty)"
+
+# Increase Bash history size. Allow 32³ entries; the default is 500.
+export HISTSIZE="32768"
+export SAVEHIST="${HISTSIZE}"
+export HISTFILESIZE="${HISTSIZE}"
+# Omit duplicates and commands that begin with a space from history.
+export HISTCONTROL="ignoreboth"
+export HISTFILE="$HOME/.history"
+
+# Prefer US English and use UTF-8.
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+# Don’t clear the screen after quitting a manual page.
+export MANPAGER="less -X"
+
+# Java
+[ -d "/Library/Java/Home" ] && export JAVA_HOME="/Library/Java/Home"
+
+# Android
+[ -d "$HOME/workspace/android" ] \
+    && export ANDROID_SDK="$HOME/workspace/android"
+
+# YarnJS
+export YARN_GLOBAL_PATH="$HOME/.config/yarn/global/node_modules/.bin"
+
+# vi-mode timeout
+# https://dougblack.io/words/zsh-vi-mode.html
+export KEYTIMEOUT=1
+
+# ripgrep
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
+# fzf
+export FZF_DEFAULT_OPTS="--ansi --multi --reverse --delimiter ':' --bind 'ctrl-e:execute(vim \"+call cursor(\"{2}\", \"{3}\")\" {1} < /dev/tty)+accept'"
+

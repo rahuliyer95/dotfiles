@@ -1,0 +1,125 @@
+set autoread
+let mapleader = ","
+let g:mapleader = ","
+" Fast saving
+nmap <leader>w :w!<cr>
+nmap <leader>q :q!<cr>
+
+" Idea actions
+nmap <leader>f :action ReformatCode<cr>
+nmap <leader>o :action OptimizeImports<cr>
+
+" commentary.vim plugin
+set commentary
+
+" vim-surround plugin
+set surround
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases
+set smartcase
+
+" Highlight search results
+set nohlsearch
+
+" Makes search act like search in modern browsers
+set incsearch
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch
+
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+" No annoying sound on errors
+set novisualbell
+set noerrorbells
+set vb t_vb=
+set tm=500
+
+set splitright
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf-8
+set fileencoding=utf-8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+set number
+
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+set nobackup
+set noswapfile
+
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=2
+set tabstop=2
+
+" Linebreak on 500 characters
+set lbr
+set tw=110
+
+set ai " Auto indent
+set si " Smart indent
+set wrap " Wrap lines
+
+" Use system clipboard
+set clipboard+=unnamed
+" idea clipboard
+set clipboard+=ideaput
+
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <c-space> ?
+
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+" Specify the behavior when switching between buffers
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
+" Remember info about open buffers on close
+set viminfo^=%
+
+" Remap VIM 0 to first non-blank character
+map 0 ^
+
+" Move a line of text using CTRL+[jk] on mac
+nmap <C-j> mz:m+<cr>`z
+nmap <C-k> mz:m-2<cr>`z
+vmap <C-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <C-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Tab & Shift+Tab in visual mode
+vmap <Tab> >gv
+vmap <S-Tab> <gv
+
+if filereadable($HOME . "/.vimrc.local")
+  source $HOME/.vimrc.local
+endif
+

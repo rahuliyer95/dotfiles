@@ -1,0 +1,62 @@
+#!/usr/bin/env zsh
+
+for option in appendhistory autocd autopushd incappendhistory interactivecomments sharehistory vi; do
+  set -o "$option" 2> /dev/null
+done
+
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+
+# Load path
+for file in "$HOME/.rc.d/."{exports,path}; do
+  [ -f "$file" ] && . "$file" 2> /dev/null
+done
+# Load the common shell dotfiles
+for file in "$HOME/.rc.d/."{aliases,extras,functions}; do
+  [ -f "$file" ] && . "$file" 2> /dev/null
+done
+for file in "$HOME/.zshrc.d/."{plugins.bundle,local.pre,zsh_prompt}; do
+  [ -f "$file" ] && . "$file" 2> /dev/null
+done
+
+if [ -n "$(command -v brew 2> /dev/null)" ]; then
+  PREFIX="$(brew --prefix bash-completion 2> /dev/null)"
+  export BASH_COMPLETION_COMPAT_DIR="$PREFIX/etc/bash_completion.d"
+  [ -d "$PREFIX" ] && . "$PREFIX/etc/profile.d/bash_completion.sh" 2> /dev/null
+fi
+
+# Custom completions
+[ -d "$HOME/.zsh.d" ] \
+  && fpath=("$HOME/.zsh.d" $fpath)
+
+# zsh-completions
+autoload -Uz +X compinit
+compinit -uC
+
+# Load bash-completions
+autoload -Uz +X bashcompinit
+bashcompinit
+
+# zsh-autosuggestions
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
+export ZSH_AUTOSUGGEST_STRATEGY=(history match_prev_cmd completion)
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60"
+export ZSH_HIGHLIGHT_STYLES[comment]="fg=245"
+bindkey "TAB" autosuggest-fetch
+bindkey "^@" autosuggest-accept
+
+autoload edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
+# fzf widgets
+[ -f "~/.fzf.zsh" ] && . "~/.fzf.zsh"
+bindkey -a "/" fzf-insert-history
+bindkey -a "?" fzf-insert-history
+bindkey "^\\" fzf-change-recent-directory
+bindkey "^r" fzf-insert-history
+bindkey "^xf" fzf-insert-files
+bindkey "^xd" fzf-insert-directory
+bindkey "^xn" fzf-insert-named-directory
+
+[ -f "$HOME/.zshrc.d/.local.post" ] && . "$HOME/.zshrc.d/.local.post"

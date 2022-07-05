@@ -1,0 +1,15 @@
+$7z = "C:\\Program Files\\7-Zip"
+$Android = "D:\android"
+$Chocolatey = "C:\\ProgramData\\chocolatey\\bin"
+$Git = "C:\\Program Files\\Git\\bin"
+$GNUCoreUtils = "$env:PROGRAMFILES\\Git\\usr\\bin"
+$GoBin = "$env:USERPROFILE\\go\\bin"
+$OpenSSL = "C:\\Program Files\\OpenSSL"
+$Python = "$env:USERPROFILE\\AppData\\Roaming\\Python\\Python36\\Scripts"
+$Npm = "$env:AppData\\npm"
+$Yarn = "$env:USERPROFILE\\AppData\\Local\\Yarn\\bin"
+
+$env:Path = "$Yarn;$env:Path"
+$env:Path += ";$OpenSSL;$OpenSSL\\bin;$7z;$Npm;$Git;$Chocolatey"
+$env:Path += ";$Python;$GNUCoreUtils;$GoBin;$Android"
+

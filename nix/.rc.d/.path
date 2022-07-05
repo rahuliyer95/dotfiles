@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# base path
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/Library/TeX/texbin:/opt/X11/bin:/bin:/sbin"
+
+if command -v brew >/dev/null; then
+  for prefix in coreutils moreutils binutils;
+  do
+    PREFIX="$(brew --prefix $prefix 2>/dev/null)"
+    [ -n "$PREFIX" ] && export PATH="$PREFIX/bin:$PATH"
+  done
+fi
+
+# java
+[ -n "$JAVA_HOME" ] && export PATH="$PATH:$JAVA_HOME/bin"
+
+[ -n "$ANT_ROOT" ] && export PATH="$PATH:$ANT_ROOT"
+
+# android
+[ -n "$ANDROID_SDK" ] && \
+  export PATH="$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools"
+
+# yarn
+[ -n "$YARN_GLOBAL_PATH" ] && export PATH="$PATH:$YARN_GLOBAL_PATH"
+
+# local bin
+[ -d "$HOME/.local/bin" ] && export PATH="$PATH:$HOME/.local/bin"
+
+# home bin
+[ -d "$HOME/.bin" ] && export PATH="$PATH:$HOME/.bin"
+
+# fzf
+[ -d "$HOME/.fzf/bin" ] && export PATH="$PATH:$HOME/.fzf/bin"
+
+# node@10
+[ -d "/usr/local/opt/node@10" ] && export PATH="$PATH:/usr/local/opt/node@10/bin"
+
+# pyenv
+if command -v pyenv >/dev/null; then
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+fi
+
+# rbenv
+if command -v rbenv >/dev/null; then
+  eval "$(rbenv init -)"
+fi
+
+if command -v nodenv >/dev/null; then
+  eval "$(nodenv init -)"
+fi

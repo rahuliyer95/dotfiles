@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Cleanup .DS_Store
+function ds_store-cleanup() {
+  local dir="${1:-.}"
+  find "${dir}" -name ".DS_Store" -print -delete
+}
+
+function update_hosts() {
+  local os
+  http --print=b GET "https://github.com/StevenBlack/hosts/raw/master/hosts" --download --output /tmp/hosts
+  if [ -f "$HOME/.hosts" ]; then
+    grep -v "^!" "$HOME/.hosts" >> "/tmp/hosts"
+    grep "^!" "$HOME/.hosts" | cut -c 2- | while read -r host; do
+      sed -i -e '/^'"$host"'$/d' "/tmp/hosts"
+    done
+  fi
+  sudo mv "/etc/hosts" "/etc/hosts.bak"
+  sudo cp "/tmp/hosts" "/etc/hosts"
+  rm "/tmp/hosts"
+  os="$(uname -s)"
+  if [[ $os == "Darwin" ]]; then
+    sudo dscacheutil -flushcache
+    sudo killall -HUP mDNSResponder
+  fi
+}
+
+function countdown() {
+  date1=$(($(date +%s) + $1))
+  while [ "$date1" -ge "$(date +%s)" ]; do
+    echo -ne "$(date -u -r $(("$date1" - "$(date +%s)")) +%H:%M:%S)\r"
+    sleep 0.1
+  done
+}
+
+function stopwatch() {
+  date1="$(date +%s)"
+  while true; do
+    echo -ne "$(date -u -r $(("$(date +%s)" - "$date1")) +%H:%M:%S)\r"
+    sleep 0.1
+  done
+}
+
+function pathmunge() {
+  if ! echo "$PATH" | grep -Eq "(^|:)$1($|:)"; then
+    if [ "$2" = "after" ]; then
+      export PATH="$PATH:$1"
+    else
+      export PATH="$1:$PATH"
+    fi
+  fi
+}
+
+function pip-upgrade() {
+  if command -v pip3 > /dev/null; then
+    pip3 install --upgrade pip || sudo pip3 install --upgrade pip
+    if command -v pip-autoremove > /dev/null; then
+      while read -r package; do
+        pip3 install --upgrade "$package"
+      done < <(pip-autoremove -L | awk '{ print $1 }')
+    fi
+  fi
+}

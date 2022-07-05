@@ -1,0 +1,106 @@
+{
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.enableHighlightLineNumber": true,
+  "diagnostic.enableSign": true,
+  "diagnostic.errorSign": "", // 0xf467 nerd-font
+  "diagnostic.virtualText": false,
+  "diagnostic.warningSign": "", // 0xf071 nerd-font
+  "diagnostic-languageserver.filetypes": {
+    "markdown": [
+      "proselint"
+    ],
+    "rst": [
+      "proselint"
+    ],
+    "sh": "shellcheck",
+    "text": [
+      "proselint"
+    ]
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+    "sh": "shfmt",
+    "zsh": "shfmt"
+  },
+  "diagnostic-languageserver.formatters": {
+    "shfmt": {
+      "command": "shfmt",
+      "args": [
+        "-i",
+        "2",
+        "-bn",
+        "-ci",
+        "-sr",
+        "-s"
+      ]
+    }
+  },
+  "diagnostic-languageserver.linters": {
+    "proselint": {
+      "command": "proselint",
+      "isStdout": true,
+      "isStderr": false,
+      "debounce": 100,
+      "args": [
+        "-"
+      ],
+      "offsetLine": 0,
+      "offsetColumn": 0,
+      "sourceName": "proselint",
+      "formatLines": 1,
+      "formatPattern": [
+        "^[^:]+:(\\d+):(\\d+):(\\s)(.*)$",
+        {
+          "line": 1,
+          "column": 2,
+          "security": 3,
+          "message": 4
+        }
+      ],
+      "securities": {
+        " ": "info"
+      }
+    }
+  },
+  "git.addGBlameToVirtualText": true,
+  "git.showCommitInFloating": true,
+  "languageserver": {
+    "sourcery": {
+      "command": "~/.pyenv/shims/sourcery",
+      "args": [
+        "lsp"
+      ],
+      "filetypes": [
+        "python"
+      ],
+      "initializationOptions": {
+        "token": "$TOKEN",
+        "extension_version": "coc.vim",
+        "editor_version": "vim"
+      },
+      "settings": {
+        "sourcery": {
+          "metricsEnabled": false
+        }
+      }
+    },
+    "terraform": {
+      "command": "terraform-ls",
+      "args": [
+        "serve"
+      ],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  },
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "~/.pyenv/shims/black",
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Path": "~/.pyenv/shims/flake8",
+  "python.linting.pydocstyleEnabled": true,
+  "python.linting.pydocstylePath": "~/.pyenv/shims/pydocstyle",
+  "yaml.format.enable": true
+}

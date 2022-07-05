@@ -1,0 +1,10 @@
+black
+flake8
+neovim
+pip-autoremove
+pipenv
+powerline-status
+ptpython
+pydocstyle
+rope
+yq

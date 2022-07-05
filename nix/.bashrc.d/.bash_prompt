@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+
+. "$HOME/.gitstatus/gitstatus.plugin.sh"
+
+if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color > /dev/null 2>&1; then
+  export TERM='gnome-256color'
+elif infocmp xterm-256color > /dev/null 2>&1; then
+  export TERM='xterm-256color'
+fi
+
+BRANCH=''
+COG='⚙'
+
+ECHO="gecho"
+WC="gwc"
+
+color() {
+  case "$1" in
+    gray) "$ECHO" -ne '246' ;;
+    black) "$ECHO" -ne '235' ;;
+    red) "$ECHO" -ne '196' ;;
+    green) "$ECHO" -ne '40' ;;
+    yellow) "$ECHO" -ne '226' ;;
+    blue) "$ECHO" -ne '39' ;;
+    cyan) "$ECHO" -ne '45' ;;
+    violet) "$ECHO" -ne '93' ;;
+    white) "$ECHO" -ne '255' ;;
+    orange) "$ECHO" -ne '214' ;;
+    pink) "$ECHO" -ne '175' ;;
+    reset) "$ECHO" -ne '0' ;;
+  esac
+}
+
+fg_color() {
+  "$ECHO" -ne "\\033[38;5;$1m"
+}
+
+bg_color() {
+  "$ECHO" -ne "\\033[48;5;$1m"
+}
+
+__prompt_separator() {
+  "$ECHO" -ne " "
+}
+
+__prompt_pre() {
+  # __prompt_jobs
+  __prompt_venv
+}
+
+__prompt_user() {
+  local -a user host
+  user="$USER"
+  host="$(hostname -s)"
+  [ -z "$user" ] && user="$(whoami)"
+  "$ECHO" -ne "$(fg_color "$(color gray)")$user@$host"
+}
+
+__prompt_pwd() {
+  "$ECHO" -ne "$(fg_color "$(color blue)") $(dirs +0)"
+}
+
+__prompt_jobs() {
+  local n
+  n="$(jobs -l | $WC -l)"
+  if [ "$n" -gt 0 ]; then
+    [ "$n" -gt 1 ] && "$ECHO" -ne " $n "
+    "$ECHO" -ne "$COG "
+  fi
+}
+
+__prompt_venv() {
+  if [ -n "$VIRTUAL_ENV" ]; then
+    "$ECHO" -ne "$(fg_color "$(color green)")[$(basename "$VIRTUAL_ENV")]"
+    __prompt_separator
+  fi
+}
+
+__prompt_reset() {
+  "$ECHO" -e '\[\033[0m\]'
+}
+
+__prompt_git() {
+  if gitstatus_query && [[ $VCS_STATUS_RESULT == ok-sync ]]; then
+    "$ECHO" -ne " $(fg_color "$(color green)")$BRANCH"
+    if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
+      "$ECHO" -ne " ${VCS_STATUS_LOCAL_BRANCH//\\/\\\\} "
+    else
+      "$ECHO" -ne " @${VCS_STATUS_COMMIT//\\/\\\\} "
+    fi
+    [ "$VCS_STATUS_HAS_STAGED" = "1" ] && "$ECHO" -ne "$(fg_color "$(color blue)")+"
+    [ "$VCS_STATUS_HAS_UNSTAGED" = "1" ] && "$ECHO" -ne "$(fg_color "$(color blue)")!"
+    [ "$VCS_STATUS_HAS_UNTRACKED" = "1" ] && "$ECHO" -ne "$(fg_color "$(color blue)")?"
+  fi
+}
+
+__prompt_os() {
+  local -a os
+  os="$(uname)"
+  case "$os" in
+    *Darwin*)
+      "$ECHO" -ne "$(fg_color "$(color pink)")"
+      ;;
+    *Linux*)
+      "$ECHO" -ne "$(fg_color "$(color pink)")"
+      ;;
+  esac
+}
+
+prompt_command() {
+  # local -a EXIT_CODE=$?
+
+  "$ECHO" -e '\033[0m'
+  __prompt_pre
+  __prompt_os
+  __prompt_separator
+  __prompt_user
+  __prompt_separator
+  __prompt_pwd
+  __prompt_git
+  "$ECHO" -e '\033[0m'
+  PS1="$(__prompt_reset) "
+}
+
+gitstatus_stop && gitstatus_start
+
+PROMPT_COMMAND=prompt_command
