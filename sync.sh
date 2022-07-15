@@ -1,4 +1,4 @@
 #!/bin/bash
 for DIR in nix common; do
-  rsync -ahvu --exclude ".git" ./${DIR}/ ~
+  rsync -azvhrlP --exclude ".git" ./${DIR}/ ~
 done
