@@ -12,8 +12,7 @@
 		<string>-x16</string>
 		<string>-s16</string>
 		<string>-k1M</string>
+    <string>-l/tmp/aria2c.log</string>
 	</array>
-	<key>RunAtLoad</key>
-	<true/>
 </dict>
 </plist>
