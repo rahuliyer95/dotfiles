@@ -89,3 +89,7 @@ alias b64encode='python3 -m base64 -e'
 alias b64decode='python3 -m base64 -d'
 
 alias keep='rlwrap keep'
+
+[ -f "/Applications/kitty.app/Contents/MacOS/kitty" ] && alias kitty="/Applications/kitty.app/Contents/MacOS/kitty"
+
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
