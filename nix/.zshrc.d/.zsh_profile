@@ -31,11 +31,19 @@ fi
 
 # zsh-completions
 autoload -Uz +X compinit
-compinit -uC
+if [ -f "$HOME/.zcompdump" ] && [ "$(date +"%j")" != "$(stat -f "%Sm" -t "%j" "$HOME/.zcompdump")" ]; then
+  compinit -d "$HOME/.zcompdump"
+else
+  compinit -C
+fi
 
 # Load bash-completions
 autoload -Uz +X bashcompinit
 bashcompinit
+
+# zstyle ":completion:*" accept-exact "*(N)"
+zstyle ":completion:*" use-cache on
+zstyle ":completion:*" cache-path ~/.zsh/cache
 
 # zsh-autosuggestions
 export ZSH_AUTOSUGGEST_USE_ASYNC=true

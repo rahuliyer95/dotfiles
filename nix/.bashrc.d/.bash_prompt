@@ -70,7 +70,7 @@ __prompt_jobs() {
 }
 
 __prompt_venv() {
-  if [ -n "$VIRTUAL_ENV" ]; then
+  if [ ! -z "$VIRTUAL_ENV" ]; then
     "$ECHO" -ne "$(fg_color "$(color green)")[$(basename "$VIRTUAL_ENV")]"
     __prompt_separator
   fi
@@ -88,9 +88,9 @@ __prompt_git() {
     else
       "$ECHO" -ne " @${VCS_STATUS_COMMIT//\\/\\\\} "
     fi
-    [ "$VCS_STATUS_HAS_STAGED" = "1" ] && "$ECHO" -ne "$(fg_color "$(color blue)")+"
-    [ "$VCS_STATUS_HAS_UNSTAGED" = "1" ] && "$ECHO" -ne "$(fg_color "$(color blue)")!"
-    [ "$VCS_STATUS_HAS_UNTRACKED" = "1" ] && "$ECHO" -ne "$(fg_color "$(color blue)")?"
+    [[ "$VCS_STATUS_HAS_STAGED" == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")+"
+    [[ "$VCS_STATUS_HAS_UNSTAGED" == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")!"
+    [[ "$VCS_STATUS_HAS_UNTRACKED" == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")?"
   fi
 }
 
@@ -108,7 +108,7 @@ __prompt_os() {
 }
 
 prompt_command() {
-  # local -a EXIT_CODE=$?
+  # local -a EXIT_CODE="$?"
 
   "$ECHO" -e '\033[0m'
   __prompt_pre
@@ -117,7 +117,7 @@ prompt_command() {
   __prompt_user
   __prompt_separator
   __prompt_pwd
-  __prompt_git
+  # __prompt_git
   "$ECHO" -e '\033[0m'
   PS1="$(__prompt_reset) "
 }

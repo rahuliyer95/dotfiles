@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 # Load profile
-for file in "$HOME/.rc.d/"{.aliases,.exports,.path,.functions}; do
+for file in "$HOME/.rc.d/"{.aliases,.exports,.path}; do
   [ -f "$file" ] && . "$file"
 done
+[ -f "$HOME/.zshrc.d/.local.post" ] && . "$HOME/.zshrc.d/.local.post"
 
 # Ask sudo and keep-alive
 sudo -v
@@ -33,18 +34,25 @@ command -v gem > /dev/null \
   && gem update
 
 # pip3
-pip-upgrade
-
-# neovim
-command -v nvim > /dev/null \
-  && nvim +PlugUpgrade +PlugUpdate +qall \
-  && nvim +CocUpdate +qall
+if command -v pip3 > /dev/null; then
+  pip3 install --upgrade pip || sudo pip3 install --upgrade pip
+  if command -v pip-autoremove > /dev/null; then
+    while read -r package; do
+      pip3 install --upgrade "$package"
+    done < <(pip-autoremove -L | awk '{ print $1 }')
+  fi
+fi
 
 # antibody
 command -v antibody > /dev/null \
   && [ -f "$HOME/.zshrc.d/.plugins" ] \
   && antibody bundle < "$HOME/.zshrc.d/.plugins" > "$HOME/.zshrc.d/.plugins.bundle" \
   && antibody update
+
+# neovim
+command -v nvim > /dev/null \
+  && nvim +PlugUpgrade +PlugUpdate +qall \
+  && nvim +CocUpdate +qall
 
 # cleanup
 [ -x "$HOME/.rc.d/.cleanup.sh" ] \

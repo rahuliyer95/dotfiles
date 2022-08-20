@@ -77,7 +77,7 @@ if command -v yarnpkg &> /dev/null; then
   yarnpkg cache clean --force
 fi
 
-declare -A CACHE_ALLOW_LIST=([antibody]=1)
+declare -A CACHE_ALLOW_LIST=([antibody]=1 [com.spotify.client]=1)
 for dir in "$HOME/Library/Caches" "/Library/Caches"; do
   echo "Cleanup files from $dir"
   if cd "$dir"; then
