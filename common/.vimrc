@@ -27,7 +27,7 @@ Plug 'FooSoft/vim-argwrap'
 Plug 'heavenshell/vim-pydocstring'
 
 " Utilities
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 Plug 'kana/vim-repeat'
 Plug 'anyakichi/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -193,32 +193,45 @@ set foldlevel=99
 
 " coc.nvim {{{
 
-" Highlight the symbol and its references when holding the cursor.
-" WARN: Sometimes causes 100% CPU usage
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Insert <tab> when previous text is space, refresh completion if not.
+" inoremap <silent><expr> <TAB>
+"   \ coc#pum#visible() ? coc#pum#next(1):
+"   \ <SID>check_back_space() ? "\<Tab>" :
+"   \ coc#refresh()
+
+" Map <tab> for trigger completion, completion confirm, snippet expand and jump like VSCode:
+inoremap <silent><expr> <TAB>
+  \ coc#pum#visible() ? coc#_select_confirm() :
+  \ coc#expandableOrJumpable() ?
+  \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
+
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Use <c-space> to trigger completion: >
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" To make <CR> to confirm selection of selected complete item or notify coc.nvim to format on enter
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 let g:coc_snippet_next = '<tab>'
 
 " Key maps
-inoremap <silent> <c-space> <ESC>:call CocAction("showSignatureHelp")<CR>a
-inoremap <silent> <c-q> <ESC>:call CocAction("doHover")<CR>a
-inoremap <silent> <c-p> <ESC>:CocAction<CR>
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
-nnoremap <silent> <c-q> :call CocAction("doHover")<CR>
-nnoremap <silent> <c-p> :CocAction<CR>
+inoremap <silent> <c-space><expr> CocAction("showSignatureHelp")
+inoremap <silent> <c-q><expr> CocAction("doHover")
+inoremap <silent> <c-p><expr> CocCommand
+nnoremap <silent> <c-q><expr> CocAction("doHover")
+nnoremap <silent> <c-p><expor> CocCommand
 nmap <F2> <Plug>(coc-rename)
 nmap <silent> <F12> <Plug>(coc-definition)
 nmap <silent> <leader><F12> <Plug>(coc-references)
@@ -240,9 +253,9 @@ let g:coc_global_extensions = [
       \ 'coc-gocode',
       \ 'coc-html',
       \ 'coc-json',
-      \ 'coc-neosnippet',
       \ 'coc-pyright',
       \ 'coc-sh',
+      \ 'coc-snippets',
       \ 'coc-sql',
       \ 'coc-tsserver',
       \ 'coc-yaml',
@@ -269,8 +282,8 @@ let g:vim_markdown_conceal = 0
 
 " SuperTAB {{{
 
-let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
+" let g:SuperTabDefaultCompletionType = "<c-n>"
+" let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " }}}
 
@@ -330,14 +343,6 @@ let g:strip_whitespace_on_save=1
 
 " }}}
 
-" neosnippet {{{
-
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
-
-" }}}
-
 " vim-anzu (search progress) {{{
 
 nmap n <Plug>(anzu-n-with-echo)
@@ -371,21 +376,24 @@ require("nvim-tree").setup {
   filters             = {
     dotfiles = true,
   },
+  git                 = {
+    enable = false,
+  },
   renderer            = {
-    highlight_git = false,
     highlight_opened_files = 'icon',
     icons = {
       show = {
         file = true,
         folder = true,
         folder_arrow = true,
-        git = false,
       },
     },
     indent_markers = {
       enable = true,
     },
   },
+  respect_buf_cwd     = true,
+  sync_root_with_cwd  = true,
   update_cwd          = true,
   update_focused_file = {
     enable      = true,

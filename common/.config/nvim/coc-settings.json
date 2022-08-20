@@ -6,22 +6,34 @@
   "diagnostic.virtualText": false,
   "diagnostic.warningSign": "", // 0xf071 nerd-font
   "diagnostic-languageserver.filetypes": {
+    "bzl": [
+      "buildifier"
+    ],
     "markdown": [
-      "proselint"
+      "vale-md"
     ],
     "rst": [
-      "proselint"
+      "vale-rst"
     ],
     "sh": "shellcheck",
     "text": [
-      "proselint"
+      "vale"
     ]
   },
   "diagnostic-languageserver.formatFiletypes": {
+    "bzl": "buildifier",
     "sh": "shfmt",
     "zsh": "shfmt"
   },
   "diagnostic-languageserver.formatters": {
+    "buildifier": {
+      "command": "buildifier",
+      "args": [
+        "-mode",
+        "print_if_changed",
+        "%file"
+      ]
+    },
     "shfmt": {
       "command": "shfmt",
       "args": [
@@ -35,34 +47,117 @@
     }
   },
   "diagnostic-languageserver.linters": {
-    "proselint": {
-      "command": "proselint",
+    "buildifier": {
+      "command": "buildifier",
+      "debounce": 100,
+      "isStdout": false,
+      "isStderr": true,
+      "args": [
+        "-lint",
+        "warn",
+        "-mode",
+        "check",
+        "%file"
+      ],
+      "offsetLine": 0,
+      "offsetColumn": 0,
+      "sourceName": "buildifier",
+      "formatLines": 1,
+      "formatPattern": [
+        "^([^#])* \\# (.*)$",
+        {
+          "sourceName": 1,
+          "message": 2
+        }
+      ],
+      "securities": {
+        "warning": "warning",
+        "error": "error"
+      }
+    },
+    "vale-md": {
+      "command": "vale",
       "isStdout": true,
       "isStderr": false,
       "debounce": 100,
       "args": [
-        "-"
+        "--ext=.md",
+        "--output=JSON"
       ],
       "offsetLine": 0,
       "offsetColumn": 0,
-      "sourceName": "proselint",
-      "formatLines": 1,
-      "formatPattern": [
-        "^[^:]+:(\\d+):(\\d+):(\\s)(.*)$",
-        {
-          "line": 1,
-          "column": 2,
-          "security": 3,
-          "message": 4
-        }
-      ],
+      "sourceName": "vale",
+      "parseJson": {
+        "errorsRoot": "stdin.md",
+        "line": "Line",
+        "column": "Span[0]",
+        "endColumn": "Span[1]",
+        "security": "Severity",
+        "message": "[${Check}] ${Message}\n${Link}"
+      },
       "securities": {
-        " ": "info"
+        "error": "error",
+        "warning": "warning",
+        "suggestion": "info"
+      }
+    },
+    "vale-rst": {
+      "command": "vale",
+      "isStdout": true,
+      "isStderr": false,
+      "debounce": 100,
+      "args": [
+        "--ext=.rst",
+        "--output=JSON"
+      ],
+      "offsetLine": 0,
+      "offsetColumn": 0,
+      "sourceName": "vale",
+      "parseJson": {
+        "errorsRoot": "stdin.rst",
+        "line": "Line",
+        "column": "Span[0]",
+        "endColumn": "Span[1]",
+        "security": "Severity",
+        "message": "[${Check}] ${Message}\n${Link}"
+      },
+      "securities": {
+        "error": "error",
+        "warning": "warning",
+        "suggestion": "info"
+      }
+    },
+    "vale": {
+      "command": "vale",
+      "isStdout": true,
+      "isStderr": false,
+      "debounce": 100,
+      "args": [
+        "--output=JSON"
+      ],
+      "offsetLine": 0,
+      "offsetColumn": 0,
+      "sourceName": "vale",
+      "parseJson": {
+        "errorsRoot": "stdin.txt",
+        "line": "Line",
+        "column": "Span[0]",
+        "endColumn": "Span[1]",
+        "security": "Severity",
+        "message": "[${Check}] ${Message}\n${Link}"
+      },
+      "securities": {
+        "error": "error",
+        "warning": "warning",
+        "suggestion": "info"
       }
     }
   },
-  "git.addGBlameToVirtualText": true,
-  "git.showCommitInFloating": true,
+  "git.addGBlameToVirtualText": false,
+  "git.enableGlobalStatus": false,
+  "git.enableGutters": false,
+  "git.realtimeGutters": false,
+  "git.showCommitInFloating": false,
   "languageserver": {
     "sourcery": {
       "command": "~/.pyenv/shims/sourcery",
@@ -96,11 +191,18 @@
       "settings": {}
     }
   },
+  "pyright.organizeimports.provider": "isort",
+  "python.analysis.diagnosticMode": "openFilesOnly",
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "~/.pyenv/shims/black",
+  "python.formatting.blackArgs": [
+    "--line-length",
+    "100"
+  ],
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Path": "~/.pyenv/shims/flake8",
   "python.linting.pydocstyleEnabled": true,
   "python.linting.pydocstylePath": "~/.pyenv/shims/pydocstyle",
+  "python.sortImports.path": "~/.pyenv/shims/isort",
   "yaml.format.enable": true
 }
