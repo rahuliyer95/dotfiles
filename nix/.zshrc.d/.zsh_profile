@@ -1,12 +1,5 @@
 #!/usr/bin/env zsh
 
-for option in appendhistory autocd autopushd incappendhistory interactivecomments sharehistory vi; do
-  set -o "$option" 2> /dev/null
-done
-
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
-
 # Load path
 for file in "$HOME/.rc.d/."{exports,path}; do
   [ -f "$file" ] && . "$file" 2> /dev/null
@@ -29,8 +22,14 @@ fi
 [ -d "$HOME/.zsh.d" ] \
   && fpath=("$HOME/.zsh.d" $fpath)
 
+
+for option in appendhistory autocd autopushd incappendhistory histignorealldups histignorespace interactivecomments noextendedhistory sharehistory vi; do
+  set -o "$option" 2> /dev/null
+done
+
+autoload -Uz +X add-zsh-hook cdr chpwd_recent_dirs compinit zmv
+add-zsh-hook chpwd chpwd_recent_dirs
 # zsh-completions
-autoload -Uz +X compinit
 if [ -f "$HOME/.zcompdump" ] && [ "$(date +"%j")" != "$(stat -f "%Sm" -t "%j" "$HOME/.zcompdump")" ]; then
   compinit -d "$HOME/.zcompdump"
 else
