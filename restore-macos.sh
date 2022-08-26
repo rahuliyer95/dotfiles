@@ -11,7 +11,6 @@ while true; do
 done 2> /dev/null &
 
 # Homebrew
-chmod +x brew.sh
 ./brew.sh
 
 # tpm
@@ -26,7 +25,6 @@ curl -sSLo "/usr/local/bin/cht.sh" "https://cht.sh/:cht.sh"
 chmod +x "/usr/local/bin/cht.sh"
 
 # sync dotfiles
-chmod +x sync.sh
 ./sync.sh
 
 # antibody
@@ -34,5 +32,4 @@ curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
 /usr/local/bin/antibody bundle < "$HOME/.zshrc.d/.plugins" > "$HOME/.zshrc.d/.plugins.bundle"
 
 # macOS settings
-chmod +x ./packages/.macos
-./packages/.macos
+./packages/setup-macos.sh
