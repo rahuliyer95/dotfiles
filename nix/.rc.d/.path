@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # base path
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin"
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin"
 
 if command -v brew >/dev/null; then
   for prefix in coreutils moreutils binutils;
@@ -11,8 +11,8 @@ if command -v brew >/dev/null; then
   done
 fi
 
-# java
-# [ -n "$JAVA_HOME" ] && export PATH="$PATH:$JAVA_HOME/bin"
+# Java
+[ -n "$JAVA_HOME" ] && export PATH="$PATH:$JAVA_HOME/bin"
 
 [ -n "$ANT_ROOT" ] && export PATH="$PATH:$ANT_ROOT"
 
