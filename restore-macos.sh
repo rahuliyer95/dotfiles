@@ -20,16 +20,11 @@ git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm"
 # vim-anywhere
 curl -fsSL "https://raw.github.com/cknadler/vim-anywhere/master/install" | bash
 
-# cht.sh
-curl -sSLo "/usr/local/bin/cht.sh" "https://cht.sh/:cht.sh"
-chmod +x "/usr/local/bin/cht.sh"
-
 # sync dotfiles
 ./sync.sh
 
 # antibody
-curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
-/usr/local/bin/antibody bundle < "$HOME/.zshrc.d/.plugins" > "$HOME/.zshrc.d/.plugins.bundle"
+antibody bundle < "$HOME/.zshrc.d/.plugins" > "$HOME/.zshrc.d/.plugins.bundle"
 
 # macOS settings
 ./packages/setup-macos.sh
