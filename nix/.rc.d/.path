@@ -58,3 +58,12 @@ fi
 if command -v goenv >/dev/null; then
   eval "$(goenv init -)"
 fi
+
+# direnv
+if command -v direnv >/dev/null && [ -n "$PS1" ]; then
+  eval "$(direnv hook $SHELL)"
+fi
+
+# cargo
+[ -d "$HOME/.cargo/bin" ] && export PATH="$HOME/.cargo/bin:$PATH"
+
