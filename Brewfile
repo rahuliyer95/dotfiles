@@ -57,6 +57,7 @@ brew "rbenv"
 brew "rlwrap"
 brew "shellcheck"
 brew "tmux"
+brew "watch"
 brew "wget"
 brew "zsh"
 
