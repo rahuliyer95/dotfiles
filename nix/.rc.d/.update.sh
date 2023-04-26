@@ -2,9 +2,9 @@
 
 # Load profile
 for file in "$HOME/.rc.d/"{.aliases,.exports,.path}; do
-  [ -f "$file" ] && . "$file"
+  # shellcheck  source=/dev/null
+  [ -f "$file" ] && source "$file"
 done
-[ -f "$HOME/.zshrc.d/.local.post" ] && . "$HOME/.zshrc.d/.local.post"
 
 # Ask sudo and keep-alive
 sudo -v

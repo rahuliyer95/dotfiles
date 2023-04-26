@@ -66,4 +66,14 @@ bindkey "^xf" fzf-insert-files
 bindkey "^xd" fzf-insert-directory
 bindkey "^xn" fzf-insert-named-directory
 
+# zsh-vi-mode
+export ZVM_INSERT_MODE_CURSOR="$ZVM_CURSOR_BLINKING_BEAM"
+export ZVM_VISUAL_MODE_CURSOR="$ZVM_CURSOR_BLINKING_BLOCK"
+
+# https://github.com/jeffreytse/zsh-vi-mode/pull/188#issuecomment-1453640946
+function zvm_after_init() {
+  autoload add-zle-hook-widget
+  add-zle-hook-widget zle-line-pre-redraw zvm_zle-line-pre-redraw
+}
+
 [ -f "$HOME/.zshrc.d/.local.post" ] && . "$HOME/.zshrc.d/.local.post"
