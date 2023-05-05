@@ -201,8 +201,7 @@
   ],
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Path": "~/.pyenv/shims/flake8",
-  "python.linting.pydocstyleEnabled": true,
-  "python.linting.pydocstylePath": "~/.pyenv/shims/pydocstyle",
+  "python.linting.pydocstyleEnabled": false,
   "python.sortImports.path": "~/.pyenv/shims/isort",
   "yaml.format.enable": true
 }
