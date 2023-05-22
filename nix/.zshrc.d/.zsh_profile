@@ -12,16 +12,17 @@ for file in "$HOME/.zshrc.d/."{plugins.bundle,local.pre,zsh_prompt}; do
   [ -f "$file" ] && . "$file" 2> /dev/null
 done
 
-if [ -n "$(command -v brew 2> /dev/null)" ]; then
+if command -v brew 2> /dev/null; then
   PREFIX="$(brew --prefix bash-completion 2> /dev/null)"
-  export BASH_COMPLETION_COMPAT_DIR="$PREFIX/etc/bash_completion.d"
-  [ -d "$PREFIX" ] && . "$PREFIX/etc/profile.d/bash_completion.sh" 2> /dev/null
+  if [ -d "$PREFIX" ]; then
+    . "$PREFIX/etc/profile.d/bash_completion.sh" 2> /dev/null
+    export BASH_COMPLETION_COMPAT_DIR="$PREFIX/etc/bash_completion.d"
+  fi
+  [ -d "$(brew --prefix)/share/zsh/site-functions" ] && fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
 fi
 
 # Custom completions
 [ -d "$HOME/.zsh.d" ] && fpath=("$HOME/.zsh.d" $fpath)
-
-[ -d "$(brew --prefix)/share/zsh/site-functions" ] && fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
 
 for option in appendhistory autocd autopushd incappendhistory histignorealldups histignorespace interactivecomments noextendedhistory sharehistory vi; do
   set -o "$option" 2> /dev/null
