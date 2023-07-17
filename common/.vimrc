@@ -299,16 +299,6 @@ require("nvim-tree").setup {
     update_cwd  = true,
     ignore_list = {},
   },
-  view                = {
-    mappings    = {
-      list = {
-        {
-          key = {"<2-RightMouse>", "C"},
-          action = "cd"
-        },
-      },
-    },
-  },
 }
 EOF
 " }}}

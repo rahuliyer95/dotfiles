@@ -1,6 +1,7 @@
 set autoread
 let mapleader = ","
 let g:mapleader = ","
+
 " Fast saving
 nmap <leader>w :w!<cr>
 nmap <leader>q :q!<cr>
@@ -123,3 +124,4 @@ if filereadable($HOME . "/.vimrc.local")
   source $HOME/.vimrc.local
 endif
 
+set ideajoin
