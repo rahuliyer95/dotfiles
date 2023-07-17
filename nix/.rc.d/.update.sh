@@ -22,7 +22,6 @@ command -v brew > /dev/null \
 
 # NPM
 command -v npm > /dev/null \
-  && npm i -g --force npm \
   && npm up -g
 
 # YarnPkg
@@ -39,7 +38,7 @@ if command -v pip3 > /dev/null; then
   if command -v pip-autoremove > /dev/null; then
     while read -r package; do
       pip3 install --upgrade "$package"
-    done < <(pip-autoremove -L | awk '{ print $1 }')
+    done < <(pip-autoremove -L | awk '{ print $1 }' | sort)
   fi
 fi
 
@@ -53,6 +52,10 @@ command -v antibody > /dev/null \
 command -v nvim > /dev/null \
   && nvim +PlugUpgrade +PlugUpdate +qall \
   && nvim +CocUpdate +qall
+
+# rustup
+command -v rustup > /dev/null \
+  && rustup update
 
 # cleanup
 [ -x "$HOME/.rc.d/.cleanup.sh" ] \

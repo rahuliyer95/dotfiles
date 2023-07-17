@@ -8,21 +8,20 @@ done
 for file in "$HOME/.rc.d/."{aliases,extras,functions}; do
   [ -f "$file" ] && . "$file" 2> /dev/null
 done
-for file in "$HOME/.zshrc.d/."{plugins.bundle,local.pre,zsh_prompt}; do
+for file in "$HOME/.zshrc.d/."{plugins.bundle,local.pre.sh,zsh_prompt}; do
   [ -f "$file" ] && . "$file" 2> /dev/null
 done
 
-if command -v brew 2> /dev/null; then
+if command -v brew > /dev/null 2>&1; then
   PREFIX="$(brew --prefix bash-completion 2> /dev/null)"
-  if [ -d "$PREFIX" ]; then
-    . "$PREFIX/etc/profile.d/bash_completion.sh" 2> /dev/null
-    export BASH_COMPLETION_COMPAT_DIR="$PREFIX/etc/bash_completion.d"
-  fi
-  [ -d "$(brew --prefix)/share/zsh/site-functions" ] && fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
+  export BASH_COMPLETION_COMPAT_DIR="$PREFIX/etc/bash_completion.d"
+  [ -d "$PREFIX" ] && . "$PREFIX/etc/profile.d/bash_completion.sh" 2> /dev/null
 fi
 
 # Custom completions
 [ -d "$HOME/.zsh.d" ] && fpath=("$HOME/.zsh.d" $fpath)
+
+[ -d "$(brew --prefix)/share/zsh/site-functions" ] && fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
 
 for option in appendhistory autocd autopushd incappendhistory histignorealldups histignorespace interactivecomments noextendedhistory sharehistory vi; do
   set -o "$option" 2> /dev/null
@@ -45,7 +44,7 @@ autoload -Uz +X add-zsh-hook cdr chpwd_recent_dirs compinit zmv
 add-zsh-hook chpwd chpwd_recent_dirs
 # zsh-completions
 if [ -f "$HOME/.zcompdump" ] && [ "$(date +"%j")" != "$(stat -f "%Sm" -t "%j" "$HOME/.zcompdump")" ]; then
-  compinit -d "$HOME/.zcompdump"
+  compinit -D
 else
   compinit -C
 fi
@@ -80,4 +79,4 @@ bindkey "^xf" fzf-insert-files
 bindkey "^xd" fzf-insert-directory
 bindkey "^xn" fzf-insert-named-directory
 
-[ -f "$HOME/.zshrc.d/.local.post" ] && . "$HOME/.zshrc.d/.local.post"
+[ -f "$HOME/.zshrc.d/.local.post.sh" ] && . "$HOME/.zshrc.d/.local.post.sh"

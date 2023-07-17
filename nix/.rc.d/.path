@@ -65,5 +65,4 @@ if command -v direnv >/dev/null && [ -n "$PS1" ]; then
 fi
 
 # cargo
-[ -d "$HOME/.cargo/bin" ] && export PATH="$HOME/.cargo/bin:$PATH"
-
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
