@@ -15,45 +15,90 @@ while true; do
 done > /dev/null 2>&1 &
 
 # Homebrew
+echo "############"
+echo "Homebrew"
+echo "############"
+echo ""
 command -v brew > /dev/null \
   && brew update \
   && brew upgrade \
   && brew upgrade --cask
 
-# NPM
+# npm
+echo ""
+echo "############"
+echo "npm"
+echo "############"
+echo ""
 command -v npm > /dev/null \
   && npm up -g
 
 # YarnPkg
+echo ""
+echo "############"
+echo "YarnPkg"
+echo "############"
+echo ""
 command -v yarnpkg > /dev/null \
   && yarnpkg global upgrade
 
 # ruby
+echo ""
+echo "############"
+echo "Ruby Gems"
+echo "############"
+echo ""
 command -v gem > /dev/null \
   && gem update
 
 # pip3
 if command -v pip3 > /dev/null; then
+  echo ""
+  echo "############"
+  echo "pip3"
+  echo "############"
+  echo ""
   pip3 install --upgrade pip || sudo pip3 install --upgrade pip
   if command -v pip-autoremove > /dev/null; then
-    while read -r package; do
-      pip3 install --upgrade "$package"
-    done < <(pip-autoremove -L | awk '{ print $1 }' | sort)
+    echo ""
+    echo "############"
+    echo "pip packages"
+    echo "############"
+    echo ""
+    pip-autoremove -L \
+      | awk '{ printf "%s ", $1 }' \
+      | sort \
+      | xargs pip3 install --upgrade
   fi
 fi
 
 # antibody
+echo ""
+echo "############"
+echo "Antibody"
+echo "############"
+echo ""
 command -v antibody > /dev/null \
   && [ -f "$HOME/.zshrc.d/.plugins" ] \
   && antibody bundle < "$HOME/.zshrc.d/.plugins" > "$HOME/.zshrc.d/.plugins.bundle" \
   && antibody update
 
 # neovim
+echo ""
+echo "############"
+echo "Neovim"
+echo "############"
+echo ""
 command -v nvim > /dev/null \
   && nvim +PlugUpgrade +PlugUpdate +qall \
   && nvim +CocUpdate +qall
 
 # rustup
+echo ""
+echo "############"
+echo "Rustup"
+echo "############"
+echo ""
 command -v rustup > /dev/null \
   && rustup update
 

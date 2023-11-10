@@ -1,7 +1,7 @@
 [user]
   email      = rahuliyer573@gmail.com
   name       = Rahul Iyer
-  signingKey = 56971551D5259BE8AAA640D1A10520F464A108AE
+  signingKey = 9BC18269D3C5E1560ADF6F77267B8AAE5144461E
 
 [alias]
   # View abbreviated SHA, description, and history graph of the latest 20 commits
@@ -94,6 +94,12 @@
   syntax-theme = OneDark
   features     = side-by-side line-numbers decorations
 
+[filter "lfs"]
+  required = true
+  clean    = git-lfs clean -- %f
+  smudge   = git-lfs smudge -- %f
+  process  = git-lfs filter-process
+
 [init]
   defaultBranch = main
 
@@ -112,3 +118,4 @@
 
 [url "git@github.com:"]
   insteadOf = https://github.com/
+
