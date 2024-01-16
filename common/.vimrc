@@ -20,6 +20,7 @@ Plug 'antoinemadec/coc-fzf'
 Plug 'joom/vim-commentary'
 Plug 'tmhedberg/SimpylFold'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i'  }
+Plug 'darfink/vim-plist'
 " Documentation
 Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'PeterRincker/vim-argumentative'
@@ -52,6 +53,7 @@ Plug 'nvim-telescope/telescope.nvim'
 
 " Look & Feel
 Plug 'rafi/awesome-vim-colorschemes'
+Plug 'lunacookies/vim-colors-xcode'
 Plug 'ryanoasis/vim-devicons'
 Plug 'itchyny/lightline.vim'
 Plug 'liuchengxu/vista.vim'
@@ -205,7 +207,7 @@ map <Tab> :bn<cr>
 map <S-Tab> :bp<cr>
 
 lua << EOF
-require("bufferline").setup {
+require('bufferline').setup {
   options = {
     mode        = "buffers",
     numbers     = "buffer_id",
@@ -266,7 +268,7 @@ xmap ga <Plug>(EasyAlign)
 nnoremap <leader>n :NvimTreeToggle<CR>
 
 lua << EOF
-require("nvim-tree").setup {
+require('nvim-tree').setup {
   actions             = {
     open_file = {
       resize_window = true,
@@ -307,7 +309,8 @@ EOF
 
 set background=dark
 let g:onedark_terminal_italics=1
-colorscheme onedark
+" colorscheme onedark
+colorscheme xcodedark
 
 " }}}
 

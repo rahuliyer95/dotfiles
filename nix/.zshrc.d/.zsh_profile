@@ -60,10 +60,12 @@ zstyle ":completion:*" cache-path ~/.zsh/cache
 # zsh-autosuggestions
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
 export ZSH_AUTOSUGGEST_STRATEGY=(history match_prev_cmd completion)
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60"
-export ZSH_HIGHLIGHT_STYLES[comment]="fg=245"
+# export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60"
 bindkey "TAB" autosuggest-fetch
 bindkey "^@" autosuggest-accept
+# zsh-syntax-highlighting
+export ZSH_HIGHLIGHT_STYLES[comment]="fg=245"
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern regexp cursor root line)
 
 autoload edit-command-line
 zle -N edit-command-line
