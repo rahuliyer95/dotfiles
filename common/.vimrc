@@ -308,9 +308,28 @@ EOF
 " Colors and Fonts {{{
 
 set background=dark
-let g:onedark_terminal_italics=1
+
+" OneDark {{{
+" let g:onedark_terminal_italics=1
 " colorscheme onedark
+" }}}
+
+" XCode {{{
+
+" Italic Comments
+
+augroup vim-colors-xcode
+  autocmd!
+augroup END
+autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
+autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
+
+let g:xcodedark_green_comments = 1
+let g:xcodedark_dim_punctuation = 0
+
 colorscheme xcodedark
+
+" }}}
 
 " }}}
 
