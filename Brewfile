@@ -57,6 +57,7 @@ brew "shellcheck"
 brew "tmux"
 brew "watch"
 brew "wget"
+brew "yq"
 brew "zsh"
 
 # cask
