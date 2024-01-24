@@ -11,11 +11,13 @@ done
 for file in "$HOME/.zshrc.d/."{plugins.bundle,local.pre.sh,zsh_prompt}; do
   [ -f "$file" ] && . "$file" 2> /dev/null
 done
+unset file
 
 if command -v brew > /dev/null 2>&1; then
   PREFIX="$(brew --prefix bash-completion 2> /dev/null)"
   export BASH_COMPLETION_COMPAT_DIR="$PREFIX/etc/bash_completion.d"
   [ -d "$PREFIX" ] && . "$PREFIX/etc/profile.d/bash_completion.sh" 2> /dev/null
+  unset PREFIX
 fi
 
 # Custom completions
@@ -23,9 +25,32 @@ fi
 
 [ -d "$(brew --prefix)/share/zsh/site-functions" ] && fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
 
-for option in appendhistory autocd autopushd incappendhistory histignorealldups histignorespace interactivecomments noextendedhistory sharehistory vi; do
+for option in appendhistory autocd autopushd interactivecomments vi; do
   set -o "$option" 2> /dev/null
 done
+unset option
+
+# History
+# Immediately append to history file:
+setopt INC_APPEND_HISTORY
+# Record timestamp in history:
+setopt EXTENDED_HISTORY
+# Expire duplicate entries first when trimming history:
+setopt HIST_EXPIRE_DUPS_FIRST
+# Dont record an entry that was just recorded again:
+setopt HIST_IGNORE_DUPS
+# Delete old recorded entry if new entry is a duplicate:
+setopt HIST_IGNORE_ALL_DUPS
+# Do not display a line previously found:
+setopt HIST_FIND_NO_DUPS
+# Dont record an entry starting with a space:
+setopt HIST_IGNORE_SPACE
+# Dont write duplicate entries in the history file:
+setopt HIST_SAVE_NO_DUPS
+# Share history between all sessions:
+setopt SHARE_HISTORY
+# Execute commands using history (e.g.: using !$) immediately:
+unsetopt HIST_VERIFY
 
 # vim-surround
 # https://github.com/zsh-users/zsh/blob/master/Functions/Zle/surround
@@ -80,5 +105,10 @@ bindkey "^r" fzf-insert-history
 bindkey "^xf" fzf-insert-files
 bindkey "^xd" fzf-insert-directory
 bindkey "^xn" fzf-insert-named-directory
+
+# aws auto-complete
+_aws_completer_bin="$(command -v aws_completer 2> /dev/null)"
+[ -x "${_aws_completer_bin}" ] && complete -C "${_aws_completer_bin}" aws
+unset _aws_completer_bin
 
 [ -f "$HOME/.zshrc.d/.local.post.sh" ] && . "$HOME/.zshrc.d/.local.post.sh"
