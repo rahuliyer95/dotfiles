@@ -1,5 +1,5 @@
 " Plug {{{
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 
 " Core
 Plug 'sheerun/vim-polyglot'
@@ -12,7 +12,8 @@ Plug 'raimondi/delimitmate'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-eunuch'
-Plug 'nvim-treesitter/nvim-treesitter'
+" Please ensure to do `:TSInstall! vim` and `:TSInstall! lua` after installation
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
 " Code
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -21,6 +22,8 @@ Plug 'joom/vim-commentary'
 Plug 'tmhedberg/SimpylFold'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i'  }
 Plug 'darfink/vim-plist'
+Plug 'https://github.com/apple/pkl-neovim.git'
+
 " Documentation
 Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'PeterRincker/vim-argumentative'
@@ -164,6 +167,25 @@ let g:coc_global_extensions = [
 
 set sessionoptions+=globals
 command! -range FormatShellCmd <line1>!~/.rc.d/format_shell_cmd.py
+" }}}
+
+" pcl/pkl {{{
+
+lua << EOF
+local hasConfigs, configs = pcall(require, "nvim-treesitter.configs")
+if hasConfigs then
+  configs.setup {
+    ensure_installed = { "pcl", "pkl" },
+    highlight = {
+      enable = true,              -- false will disable the whole extension
+    },
+    indent = {
+      enable = true,
+    },
+  }
+end
+EOF
+
 " }}}
 
 " vim-pydocstring {{{

@@ -13,6 +13,9 @@ for file in "$HOME/.zshrc.d/."{plugins.bundle,local.pre.sh,zsh_prompt}; do
 done
 unset file
 
+# Kitty 0.24+
+typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION=true
+
 if command -v brew > /dev/null 2>&1; then
   PREFIX="$(brew --prefix bash-completion 2> /dev/null)"
   export BASH_COMPLETION_COMPAT_DIR="$PREFIX/etc/bash_completion.d"
