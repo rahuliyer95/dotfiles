@@ -63,14 +63,6 @@
   local   = yellow
   remote  = green
 
-[color "diff"]
-  meta       = 11
-  frag       = magenta bold
-  old        = red bold
-  new        = green bold
-  commit     = yellow bold
-  whitespace = red reverse
-
 [color "status"]
   added     = yellow
   changed   = green
@@ -83,8 +75,7 @@
 [diff]
   # Detect copies as well as renames
   renames = true
-  tool    = kitty
-  guitool = kitty.gui
+  tool    = delta
 
 [diff "bin"]
   # Use `hexdump` to diff binary files

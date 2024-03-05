@@ -66,3 +66,7 @@ fi
 
 # cargo
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# bun.sh
+[ -d "$BUN_INSTALL" ] && export PATH="$BUN_INSTALL/bin:$PATH"
+

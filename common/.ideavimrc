@@ -7,14 +7,16 @@ nmap <leader>w :w!<cr>
 nmap <leader>q :q!<cr>
 
 " Idea actions
-nmap <leader>f :action ReformatCode<cr>
-nmap <leader>o :action OptimizeImports<cr>
+nmap <leader>f :action ReformatCode<cr>:action OptimizeImports<cr>
 
 " commentary.vim plugin
 set commentary
 
 " vim-surround plugin
 set surround
+
+" IdeaVim-EasyMotion (https://plugins.jetbrains.com/plugin/13360-ideavim-easymotion/)
+set easymotion
 
 " Ignore case when searching
 set ignorecase
@@ -66,7 +68,7 @@ set expandtab
 " Be smart when using tabs ;)
 set smarttab
 
-" 1 tab == 4 spaces
+" 1 tab == 2 spaces
 set shiftwidth=2
 set tabstop=2
 
@@ -125,3 +127,7 @@ if filereadable($HOME . "/.vimrc.local")
 endif
 
 set ideajoin
+
+" Continuous Shift
+xnoremap < <gv
+xnoremap > >gv

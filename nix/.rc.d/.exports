@@ -61,4 +61,8 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 
 export DOCKER_BUILD_KIT=1
 
+# bun.sh
+export BUN_INSTALL="$HOME/.bun"
+
 export DIRENV_LOG_FORMAT=
+
