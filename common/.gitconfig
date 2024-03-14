@@ -73,17 +73,21 @@
   gpgsign = true
 
 [diff]
+  colorMoved = default
   # Detect copies as well as renames
-  renames = true
-  tool    = delta
+  renames    = true
 
 [diff "bin"]
   # Use `hexdump` to diff binary files
   textconv = hexdump -v -C
 
 [delta]
+  decorations  = true
+  hyperlinks   = true
+  line-numbers = true
+  navigate     = true
+  side-by-side = true
   syntax-theme = OneDark
-  features     = side-by-side line-numbers decorations
 
 [filter "lfs"]
   required = true
@@ -100,6 +104,9 @@
 
 [http]
   postBuffer = 524288000
+
+[merge]
+  conflictstyle = diff3
 
 [pull]
   rebase = true

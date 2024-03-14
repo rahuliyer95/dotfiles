@@ -175,7 +175,7 @@ lua << EOF
 local hasConfigs, configs = pcall(require, "nvim-treesitter.configs")
 if hasConfigs then
   configs.setup {
-    ensure_installed = { "pcl", "pkl" },
+    ensure_installed = { "pkl" },
     highlight = {
       enable = true,              -- false will disable the whole extension
     },
