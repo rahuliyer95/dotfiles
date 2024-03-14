@@ -15,9 +15,9 @@ while true; do
 done > /dev/null 2>&1 &
 
 # Homebrew
-echo "############"
-echo "Homebrew"
-echo "############"
+echo "╭──────────────╮"
+echo "│ 🍺 Homebrew  │"
+echo "╰──────────────╯"
 echo ""
 command -v brew > /dev/null \
   && brew update \
@@ -26,27 +26,33 @@ command -v brew > /dev/null \
 
 # npm
 echo ""
-echo "############"
-echo "npm"
-echo "############"
+echo -ne "\e[32m"
+echo -e "╭─────────╮"
+echo -e "│   npm  │" # \uE71E
+echo -e "╰─────────╯"
+echo -ne "\e[0m"
 echo ""
 command -v npm > /dev/null \
   && npm up -g
 
 # YarnPkg
 echo ""
-echo "############"
-echo "YarnPkg"
-echo "############"
+echo -ne "\e[34m"
+echo -e "╭─────────────╮"
+echo -e "│   YarnPkg  │" # \uE6A7
+echo -e "╰─────────────╯"
+echo -ne "\e[0m"
 echo ""
 command -v yarnpkg > /dev/null \
   && yarnpkg global upgrade
 
 # ruby
 echo ""
-echo "############"
-echo "Ruby Gems"
-echo "############"
+echo -ne "\e[31m"
+echo -e "╭───────────────╮"
+echo -e "│   Ruby Gems  │" # \uE21E
+echo -e "╰───────────────╯"
+echo -ne "\e[0m"
 echo ""
 command -v gem > /dev/null \
   && gem update
@@ -54,16 +60,20 @@ command -v gem > /dev/null \
 # pip3
 if command -v pip3 > /dev/null; then
   echo ""
-  echo "############"
-  echo "pip3"
-  echo "############"
+  echo -ne "\e[33m"
+  echo -e "╭─────────╮"
+  echo -e "│   pip  │" # \uE73C
+  echo -e "╰─────────╯"
+  echo -ne "\e[0m"
   echo ""
   pip3 install --upgrade pip || sudo pip3 install --upgrade pip
   if command -v pip-autoremove > /dev/null; then
     echo ""
-    echo "############"
-    echo "pip packages"
-    echo "############"
+    echo -ne "\e[33m"
+    echo -e "╭──────────────────╮"
+    echo -e "│   pip packages  │" # \uE73C
+    echo -e "╰──────────────────╯"
+    echo -ne "\e[0m"
     echo ""
     pip-autoremove -L \
       | awk '{ printf "%s ", $1 }' \
@@ -74,9 +84,9 @@ fi
 
 # antibody
 echo ""
-echo "############"
-echo "Antibody"
-echo "############"
+echo "╭────────────╮"
+echo "│  Antibody  │"
+echo "╰────────────╯"
 echo ""
 command -v antibody > /dev/null \
   && [ -f "$HOME/.zshrc.d/.plugins" ] \
@@ -85,9 +95,11 @@ command -v antibody > /dev/null \
 
 # neovim
 echo ""
-echo "############"
-echo "Neovim"
-echo "############"
+echo -ne "\e[32m"
+echo -e "╭────────────╮"
+echo -e "│   Neovim  │" # \uF36F
+echo -e "╰────────────╯"
+echo -ne "\e[0m"
 echo ""
 command -v nvim > /dev/null \
   && nvim +PlugUpgrade +PlugUpdate +qall \
@@ -95,9 +107,11 @@ command -v nvim > /dev/null \
 
 # rustup
 echo ""
-echo "############"
-echo "Rustup"
-echo "############"
+echo -ne "\e[31m"
+echo -e "╭────────────╮"
+echo -e "│   Rustup  │" # \uE7A8
+echo -e "╰────────────╯"
+echo -ne "\e[0m"
 echo ""
 command -v rustup > /dev/null \
   && rustup update
