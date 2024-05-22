@@ -22,7 +22,7 @@ Plug 'joom/vim-commentary'
 Plug 'tmhedberg/SimpylFold'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i'  }
 Plug 'darfink/vim-plist'
-Plug 'https://github.com/apple/pkl-neovim.git'
+Plug 'apple/pkl-neovim'
 
 " Documentation
 Plug 'vim-scripts/DoxygenToolkit.vim'
@@ -53,6 +53,7 @@ Plug 'osyo-manga/vim-anzu'
 Plug 'tpope/vim-abolish'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'lewis6991/gitsigns.nvim'
 
 " Look & Feel
 Plug 'rafi/awesome-vim-colorschemes'
@@ -62,7 +63,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'liuchengxu/vista.vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
-Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v4.*' }
+
+" Local
+if filereadable($HOME . "/.vimrc.plug")
+  source $HOME/.vimrc.plug
+endif
 
 call plug#end()
 " }}}
@@ -162,6 +168,7 @@ let g:coc_global_extensions = [
       \ 'coc-snippets',
       \ 'coc-sql',
       \ 'coc-tsserver',
+      \ 'coc-xml',
       \ 'coc-yaml',
       \ ]
 
@@ -169,7 +176,7 @@ set sessionoptions+=globals
 command! -range FormatShellCmd <line1>!~/.rc.d/format_shell_cmd.py
 " }}}
 
-" pcl/pkl {{{
+" pkl {{{
 
 lua << EOF
 local hasConfigs, configs = pcall(require, "nvim-treesitter.configs")
@@ -327,29 +334,40 @@ require('nvim-tree').setup {
 EOF
 " }}}
 
+" gitsigns {{{
+
+lua << EOF
+
+require('gitsigns').setup {
+}
+
+EOF
+
+" }}}
+
 " Colors and Fonts {{{
 
 set background=dark
 
 " OneDark {{{
-" let g:onedark_terminal_italics=1
-" colorscheme onedark
+let g:onedark_terminal_italics=1
+colorscheme onedark
 " }}}
 
 " XCode {{{
 
 " Italic Comments
 
-augroup vim-colors-xcode
-  autocmd!
-augroup END
-autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
-autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
+" augroup vim-colors-xcode
+"   autocmd!
+" augroup END
+" autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
+" autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
 
-let g:xcodedark_green_comments = 1
-let g:xcodedark_dim_punctuation = 0
+" let g:xcodedark_green_comments = 1
+" let g:xcodedark_dim_punctuation = 0
 
-colorscheme xcodedark
+" colorscheme xcodedark
 
 " }}}
 
@@ -358,10 +376,10 @@ colorscheme xcodedark
 " Moving around, tabs, windows and buffers {{{
 
 " Return to last edit position when opening files (You want this!)
-autocmd BufReadPost *
-      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
-      \ endif
+" autocmd BufReadPost *
+"       \ if line("'\"") > 0 && line("'\"") <= line("$") |
+"       \   exe "normal! g`\"" |
+"       \ endif
 " Remember info about open buffers on close
 set viminfo^=%
 

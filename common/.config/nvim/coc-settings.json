@@ -172,15 +172,12 @@
   },
   "pyright.organizeimports.provider": "isort",
   "python.analysis.diagnosticMode": "openFilesOnly",
-  "python.formatting.provider": "black",
-  "python.formatting.blackPath": "~/.pyenv/shims/black",
-  "python.formatting.blackArgs": [
-    "--line-length",
-    "100"
-  ],
+  "python.formatting.provider": "ruff",
+  "python.formatting.ruffPath": "~/.pyenv/shims/ruff",
+  "python.linting.ruffEnabled": true,
+  "python.linting.ruffPath": "~/.pyenv/shims/ruff",
   "python.linting.flake8Enabled": false,
   "python.linting.pydocstyleEnabled": false,
-  "python.sortImports.path": "~/.pyenv/shims/isort",
   "yaml.format.enable": true,
   "snippets.ultisnips.pythonPrompt": false
 }

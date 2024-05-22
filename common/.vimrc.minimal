@@ -95,20 +95,23 @@ set vb t_vb=
 set tm=500
 
 set splitright
-set completeopt=menuone,noinsert,noselect,preview,longest
+if has('completeopt')
+  set completeopt=menuone,noinsert,noselect,preview,longest
+endif
 
 " Line numbers
 set relativenumber
 set number
 
 " Show TAB and newline characters
-set list
-set listchars=tab:▸\ ,eol:⏎
+" set list
+" set listchars=tab:▸\ ,eol:⏎
 
 " }}}
 
 " Colors and Fonts {{{
 
+set background=dark
 " Enable syntax highlighting
 syntax enable
 if !has('gui_running')
