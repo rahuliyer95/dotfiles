@@ -1,37 +1,50 @@
 " Plug {{{
 call plug#begin()
 
-" Core
+" Core {{{
+
 Plug 'sheerun/vim-polyglot'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'raimondi/delimitmate'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-eunuch'
-" Please ensure to do `:TSInstall! vim` and `:TSInstall! lua` after installation
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
-" Code
+function NvimTreeSitterPostInstall(info)
+  TSInstall! lua
+  TSInstall! vim
+  TSInstall! vimdoc
+  TSUpdate
+endfunction
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': function('NvimTreeSitterPostInstall') }
+
+" }}}
+
+" Code {{{
+
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'antoinemadec/coc-fzf'
+" Plug 'antoinemadec/coc-fzf'
 Plug 'joom/vim-commentary'
 Plug 'tmhedberg/SimpylFold'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i'  }
 Plug 'darfink/vim-plist'
 Plug 'apple/pkl-neovim'
 
-" Documentation
+" }}}
+
+" Documentation {{{
+
 Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'FooSoft/vim-argwrap'
 Plug 'heavenshell/vim-pydocstring'
 
-" Utilities
-" Plug 'ervandew/supertab'
+" }}}
+
+" Utilities {{{
+
 Plug 'kana/vim-repeat'
 Plug 'anyakichi/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -46,24 +59,28 @@ Plug 'luochen1990/rainbow'
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'mattn/emmet-vim'
 Plug 'gisphm/vim-gitignore'
 Plug 'dstein64/vim-startuptime'
 Plug 'osyo-manga/vim-anzu'
 Plug 'tpope/vim-abolish'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+" Required by telescope.nvim
+Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 
-" Look & Feel
-Plug 'rafi/awesome-vim-colorschemes'
+" }}}
+
+" Look & Feel {{{
+
+Plug 'olimorris/onedarkpro.nvim'
 Plug 'lunacookies/vim-colors-xcode'
-Plug 'ryanoasis/vim-devicons'
-Plug 'itchyny/lightline.vim'
-Plug 'liuchengxu/vista.vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
-Plug 'akinsho/bufferline.nvim', { 'tag': 'v4.*' }
+Plug 'RRethy/vim-illuminate'
+Plug 'romgrk/barbar.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+
+" }}}
 
 " Local
 if filereadable($HOME . "/.vimrc.plug")
@@ -84,13 +101,123 @@ autocmd! BufWritePost .vimrc source $MYVIMRC
 
 " }}}
 
-" Vista {{{
+" Colors and Fonts {{{
 
-function! NearestMethodOrFunction() abort
-  return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
+set background=dark
 
-map <C-t> :Vista coc<CR>
+" OneDark {{{
+
+lua << EOF
+
+require('onedarkpro').setup {
+  options = {
+    cursorline   = true,
+    transparency = true,
+  },
+  styles = {
+    types        = "NONE",
+    methods      = "NONE",
+    numbers      = "NONE",
+    strings      = "NONE",
+    comments     = "italic",
+    keywords     = "NONE",
+    constants    = "NONE",
+    functions    = "NONE",
+    operators    = "NONE",
+    variables    = "NONE",
+    parameters   = "italic",
+    conditionals = "italic",
+    virtual_text = "italic",
+  },
+}
+
+EOF
+
+colorscheme onedark
+
+" }}}
+
+" XCode {{{
+
+" Italic Comments
+
+" augroup vim-colors-xcode
+"   autocmd!
+" augroup END
+" autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
+" autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
+
+" let g:xcodedark_green_comments = 1
+" let g:xcodedark_dim_punctuation = 0
+
+" colorscheme xcodedark
+
+" }}}
+
+" }}}
+
+" Status line {{{
+
+" Always show the status line
+set laststatus=2
+set noshowmode
+
+" lualine.nvim {{{
+
+lua << EOF
+
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+}
+
+require('lualine').hide {
+  place = {'tabline'},
+  unhide = false,
+}
+
+EOF
+
+" }}}
+
+" }}}
+
+" barbar.nvim {{{
+
+map <Tab> :bn<cr>
+map <S-Tab> :bp<cr>
+
+lua << EOF
+
+require('barbar').setup {
+  icons = {
+    diagnostics = {
+      [vim.diagnostic.severity.ERROR] = {enabled = true},
+      [vim.diagnostic.severity.WARN] = {enabled = true},
+      [vim.diagnostic.severity.INFO] = {enabled = true},
+      [vim.diagnostic.severity.HINT] = {enabled = true},
+    },
+  }
+}
+
+EOF
 
 " }}}
 
@@ -107,12 +234,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" Insert <tab> when previous text is space, refresh completion if not.
-" inoremap <silent><expr> <TAB>
-"   \ coc#pum#visible() ? coc#pum#next(1):
-"   \ <SID>check_back_space() ? "\<Tab>" :
-"   \ coc#refresh()
 
 " Map <tab> for trigger completion, completion confirm, snippet expand and jump like VSCode:
 inoremap <silent><expr> <TAB>
@@ -145,7 +266,7 @@ nnoremap <silent> <c-p><expor> CocCommand
 nmap <F2> <Plug>(coc-rename)
 nmap <silent> <F12> <Plug>(coc-definition)
 nmap <silent> <leader><F12> <Plug>(coc-references)
-nmap <leader>f <Plug>(coc-format)
+nmap <silent> <leader>f <Plug>(coc-format) :call CocAction("organizeImport")<CR>
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 xmap <leader>f <Plug>(coc-format-selected)
@@ -210,13 +331,6 @@ let g:vim_markdown_conceal = 0
 
 " }}}
 
-" SuperTAB {{{
-
-" let g:SuperTabDefaultCompletionType = "<c-n>"
-" let g:SuperTabContextDefaultCompletionType = "<c-n>"
-
-" }}}
-
 " telescope.nvim {{{
 
 lua << EOF
@@ -227,30 +341,6 @@ nnoremap <C-f> <cmd>Telescope find_files<cr>
 nnoremap <C-g> <cmd>Telescope live_grep<cr>
 
 set rtp+=~/.fzf
-
-" }}}
-
-" bufferline.nvim {{{
-
-map <Tab> :bn<cr>
-map <S-Tab> :bp<cr>
-
-lua << EOF
-require('bufferline').setup {
-  options = {
-    mode        = "buffers",
-    numbers     = "buffer_id",
-    diagnostics = "coc",
-    offsets     = {
-      {
-          filetype   = "NvimTree",
-          text       = "File Explorer",
-          text_align = "center",
-      }
-    },
-  },
-}
-EOF
 
 " }}}
 
@@ -294,9 +384,11 @@ xmap ga <Plug>(EasyAlign)
 " }}}
 
 " {{{ nvim-tree
+
 nnoremap <leader>n :NvimTreeToggle<CR>
 
 lua << EOF
+
 require('nvim-tree').setup {
   actions             = {
     open_file = {
@@ -331,7 +423,9 @@ require('nvim-tree').setup {
     ignore_list = {},
   },
 }
+
 EOF
+
 " }}}
 
 " gitsigns {{{
@@ -345,31 +439,15 @@ EOF
 
 " }}}
 
-" Colors and Fonts {{{
+" vim-illuminate {{{
 
-set background=dark
+lua << EOF
 
-" OneDark {{{
-let g:onedark_terminal_italics=1
-colorscheme onedark
-" }}}
+require('illuminate').configure({
+  delay = 0,
+})
 
-" XCode {{{
-
-" Italic Comments
-
-" augroup vim-colors-xcode
-"   autocmd!
-" augroup END
-" autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
-" autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
-
-" let g:xcodedark_green_comments = 1
-" let g:xcodedark_dim_punctuation = 0
-
-" colorscheme xcodedark
-
-" }}}
+EOF
 
 " }}}
 
@@ -382,45 +460,6 @@ colorscheme onedark
 "       \ endif
 " Remember info about open buffers on close
 set viminfo^=%
-
-" }}}
-
-" Status line (lightline) {{{
-
-" Always show the status line
-set laststatus=2
-set noshowmode " lightline shows insert
-
-let g:lightline = {
-      \ 'active': {
-      \   'left': [
-      \     ['mode', 'paste'],
-      \     ['gitbranch', 'cocstatus', 'readonly', 'filename', 'modified'],
-      \     ['vista'],
-      \   ],
-      \   'right': [
-      \     ['lineinfo'],
-      \     ['percent'],
-      \     ['fileformat', 'fileencoding', 'filetype', 'anzustatus', 'scrollbar'],
-      \   ]
-      \ },
-      \ 'enable': {
-      \   'tabline': 0,
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'LightlineGit',
-      \   'cocstatus': 'coc#status',
-      \   'anzustatus': 'anzu#search_status',
-      \   'vista': 'NearestMethodOrFunction',
-      \ },
-      \ 'colorscheme': 'one',
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' },
-      \ }
-
-function LightlineGit() abort
-  return get(g:, 'coc_git_status', '')
-endfunction
 
 " }}}
 
