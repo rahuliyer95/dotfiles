@@ -39,10 +39,6 @@ export BAT_STYLE="full"
 # Java
 [ -d "/Library/Java/Home" ] && export JAVA_HOME="/Library/Java/Home"
 
-# Android
-[ -d "$HOME/workspace/android" ] \
-  && export ANDROID_SDK="$HOME/workspace/android"
-
 # YarnJS
 export YARN_GLOBAL_PATH="$HOME/.config/yarn/global/node_modules/.bin"
 
@@ -54,7 +50,7 @@ export KEYTIMEOUT=1
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 # fzf
-export FZF_DEFAULT_OPTS="--ansi --multi --reverse --delimiter ':' --bind 'ctrl-v:execute(/usr/local/bin/nvim {1} < /dev/tty)' --bind 'ctrl-e:execute(/usr/local/bin/nvim \"+call cursor({2}, {3})\" {1} < /dev/tty)+accept'"
+export FZF_DEFAULT_OPTS_FILE="$HOME/.fzfrc"
 
 # Homebrew disable auto-update
 export HOMEBREW_NO_AUTO_UPDATE=1
@@ -65,4 +61,3 @@ export DOCKER_BUILD_KIT=1
 export BUN_INSTALL="$HOME/.bun"
 
 export DIRENV_LOG_FORMAT=
-

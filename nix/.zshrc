@@ -9,5 +9,3 @@ if [[ $- == *i* ]]; then
   [ -f "$HOME/.zshrc.d/.zsh_profile" ] && . "$HOME/.zshrc.d/.zsh_profile"
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
