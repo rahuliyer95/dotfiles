@@ -171,9 +171,6 @@
     }
   },
   "pyright.organizeimports.provider": "ruff",
-  "pyright.inlayHints.functionReturnTypes": false,
-  "pyright.inlayHints.parameterTypes": false,
-  "pyright.inlayHints.variableTypes": false,
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.formatting.provider": "ruff",
   "python.formatting.ruffPath": "~/.pyenv/shims/ruff",
@@ -181,7 +178,6 @@
   "python.linting.ruffPath": "~/.pyenv/shims/ruff",
   "python.linting.flake8Enabled": false,
   "python.linting.pydocstyleEnabled": false,
-  "snippets.ultisnips.pythonPrompt": false,
-  "xml.format.enabled": true,
   "yaml.format.enable": true,
+  "snippets.ultisnips.pythonPrompt": false
 }
