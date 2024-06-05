@@ -29,11 +29,6 @@ fi
 # home bin
 [ -d "$HOME/.bin" ] && export PATH="$PATH:$HOME/.bin"
 
-# fzf
-if command -v fzf >/dev/null; then
-  source <(fzf --zsh)
-fi
-
 # node@10
 [ -d "/usr/local/opt/node@10" ] && export PATH="$PATH:/usr/local/opt/node@10/bin"
 

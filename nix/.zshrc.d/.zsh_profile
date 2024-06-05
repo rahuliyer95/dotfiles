@@ -99,8 +99,9 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
-if command -v brew > /dev/null && [ -f "$(brew --prefix fzf)/shell/completion.zsh" ]; then
-  . "$(brew --prefix fzf)/shell/completion.zsh"
+# fzf
+if command -v fzf >/dev/null; then
+  source <(fzf --zsh)
 fi
 # fzf widgets
 bindkey -a "/" fzf-insert-history
