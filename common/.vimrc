@@ -26,11 +26,11 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': function('NvimTreeSitterPostInst
 " Code {{{
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-" Plug 'antoinemadec/coc-fzf'
 Plug 'joom/vim-commentary'
 Plug 'tmhedberg/SimpylFold'
 Plug 'darfink/vim-plist'
 Plug 'apple/pkl-neovim'
+Plug 'honza/vim-snippets'
 
 " }}}
 
@@ -83,11 +83,13 @@ Plug 'nvim-lualine/lualine.nvim'
 " }}}
 
 " Local
+
 if filereadable($HOME . "/.vimrc.plug")
   source $HOME/.vimrc.plug
 endif
 
 call plug#end()
+
 " }}}
 
 " Basic Settings {{{
@@ -98,6 +100,15 @@ endif
 
 " Auto reload vimrc
 autocmd! BufWritePost .vimrc source $MYVIMRC
+
+" Disable optional `perl` provider
+let g:loaded_perl_provider = 0
+
+" Disable optional `ruby` provider
+let g:loaded_ruby_provider = 0
+
+" Python setup using `pyenv`
+let g:python3_host_prog = $PYENV_ROOT . "/versions/neovim/bin/python3"
 
 " }}}
 
@@ -181,7 +192,7 @@ require('lualine').setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
+    lualine_c = {'filename', 'HasPaste'},
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
     lualine_z = {'location'}
@@ -266,7 +277,7 @@ nnoremap <silent> <c-p><expor> CocCommand
 nmap <F2> <Plug>(coc-rename)
 nmap <silent> <F12> <Plug>(coc-definition)
 nmap <silent> <leader><F12> <Plug>(coc-references)
-nmap <silent> <leader>f <Plug>(coc-format) :call CocAction("organizeImport")<CR>
+nmap <silent> <leader>f <Plug>(coc-format)<ESC>:call CocAction("organizeImport")<CR>
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 xmap <leader>f <Plug>(coc-format-selected)
@@ -276,25 +287,22 @@ nmap ]c <Plug>(coc-git-nextconflict)
 
 " 'coc-highlight' => Add this to support highlight
 let g:coc_global_extensions = [
-      \ 'coc-css',
       \ 'coc-diagnostic',
       \ 'coc-docker',
       \ 'coc-emoji',
       \ 'coc-git',
       \ 'coc-gocode',
-      \ 'coc-html',
       \ 'coc-json',
       \ 'coc-pyright',
       \ 'coc-sh',
       \ 'coc-snippets',
       \ 'coc-sql',
-      \ 'coc-tsserver',
       \ 'coc-xml',
       \ 'coc-yaml',
       \ ]
 
 set sessionoptions+=globals
-command! -range FormatShellCmd <line1>!~/.rc.d/format_shell_cmd.py
+
 " }}}
 
 " pkl {{{
@@ -454,10 +462,10 @@ EOF
 " Moving around, tabs, windows and buffers {{{
 
 " Return to last edit position when opening files (You want this!)
-" autocmd BufReadPost *
-"       \ if line("'\"") > 0 && line("'\"") <= line("$") |
-"       \   exe "normal! g`\"" |
-"       \ endif
+autocmd BufReadPost *
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
 " Remember info about open buffers on close
 set viminfo^=%
 
@@ -504,33 +512,6 @@ vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 " Helper functions {{{
 
-function! CmdLine(str)
-  exe "menu Foo.Bar :" . a:str
-  emenu Foo.Bar
-  unmenu Foo
-endfunction
-
-function! VisualSelection(direction) range
-  let l:saved_reg = @"
-  execute "normal! vgvy"
-
-  let l:pattern = escape(@", '\\/.*$^~[]')
-  let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-  if a:direction == 'b'
-    execute "normal ?" . l:pattern . "^M"
-  elseif a:direction == 'gv'
-    call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
-  elseif a:direction == 'replace'
-    call CmdLine("%s" . '/'. l:pattern . '/')
-  elseif a:direction == 'f'
-    execute "normal /" . l:pattern . "^M"
-  endif
-
-  let @/ = l:pattern
-  let @" = l:saved_reg
-endfunction
-
 " Returns true if paste mode is enabled
 function! HasPaste()
   if &paste
@@ -541,6 +522,7 @@ endfunction
 
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
+
 function! <SID>BufcloseCloseIt()
   let l:currentBufNum = bufnr("%")
   let l:alternateBufNum = bufnr("#")
