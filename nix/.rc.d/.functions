@@ -1,28 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Cleanup .DS_Store
 ds_store-cleanup() {
   local dir="${1:-.}"
   find "${dir}" -name '.DS_Store' -print -delete
-}
-
-update_hosts() {
-  local os
-  curl -sSLC - 'https://github.com/StevenBlack/hosts/raw/master/hosts' > '/tmp/hosts'
-  if [ -f "$HOME/.hosts" ]; then
-    grep -v '^!' "$HOME/.hosts" >> '/tmp/hosts'
-    grep '^!' "$HOME/.hosts" | cut -c 2- | while read -r host; do
-      sed -i -e '/^'"$host"'$/d' '/tmp/hosts'
-    done
-  fi
-  sudo mv '/etc/hosts' '/etc/hosts.bak'
-  sudo cp '/tmp/hosts' '/etc/hosts'
-  rm '/tmp/hosts'
-  os="$(uname -s)"
-  if [[ $os == "Darwin" ]]; then
-    sudo dscacheutil -flushcache
-    sudo killall -HUP mDNSResponder
-  fi
 }
 
 countdown() {
@@ -41,12 +22,19 @@ stopwatch() {
   done
 }
 
-# generated with pip3 completion --bash
-# pip bash completion start
-_pip_completion() {
-  COMPREPLY=($(COMP_WORDS="${COMP_WORDS[*]}" \
-    COMP_CWORD=$COMP_CWORD \
-    PIP_AUTO_COMPLETE=1 $1 2> /dev/null))
+_fzf_complete_git() {
+    ARGS="$*"
+    local branches
+    branches=$(git branch -vv --all)
+    if [[ $ARGS == 'git co'* ]]; then
+        _fzf_complete --reverse --multi -- "$@" < <(
+            echo "$branches"
+        )
+    else
+        eval "zle ${fzf_default_completion:-expand-or-complete}"
+    fi
 }
-complete -o default -F _pip_completion pip3
-# pip bash completion end
+
+_fzf_complete_git_post() {
+    awk '{print $1}'
+}

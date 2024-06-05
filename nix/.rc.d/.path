@@ -31,7 +31,7 @@ fi
 
 # fzf
 if command -v fzf >/dev/null; then
-  eval "$(fzf zsh)"
+  source <(fzf --zsh)
 fi
 
 # node@10
@@ -44,6 +44,8 @@ fi
 if command -v pyenv >/dev/null; then
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+  export PYENV_ROOT="$(pyenv root)"
 fi
 
 # rbenv
