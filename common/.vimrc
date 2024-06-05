@@ -14,10 +14,10 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-eunuch'
 
 function NvimTreeSitterPostInstall(info)
+  TSUpdate
   TSInstall! lua
   TSInstall! vim
   TSInstall! vimdoc
-  TSUpdate
 endfunction
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': function('NvimTreeSitterPostInstall') }
 
