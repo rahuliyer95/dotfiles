@@ -11,6 +11,9 @@ export VISUAL="vim"
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING="UTF-8"
 
+# gpg pinentry
+PINENTRY_USER_DATA="$(command -v pinentry-mac)"
+export PINENTRY_USER_DATA
 # gnupg tty
 export GPG_TTY=""
 GPG_TTY="$(tty)"
