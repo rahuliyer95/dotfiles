@@ -110,6 +110,9 @@ let g:loaded_ruby_provider = 0
 " Python setup using `pyenv`
 let g:python3_host_prog = $PYENV_ROOT . "/versions/neovim/bin/python3"
 
+" Cursor blinking
+set guicursor=a:blinkwait200-blinkon250-blinkoff200,i:ver25-blinkwait200-blinkon200-blinkoff200
+
 " }}}
 
 " Colors and Fonts {{{
