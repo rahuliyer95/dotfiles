@@ -57,6 +57,13 @@ if command -v brew > /dev/null; then
   echo -en "\r✅ Cleanup Homebrew Cache\n"
 fi
 
+if command -v apt-get > /dev/null; then
+  echo -en "ℹ️ Cleanup apt Cache"
+  sudo apt-get autoclean -y &> /dev/null
+  sudo apt autoclean -y &> /dev/null
+  echo -en "\r✅ Cleanup apt Cache\n"
+fi
+
 if command -v docker > /dev/null; then
   echo -en "ℹ️ Cleanup Docker"
   docker container prune -f &> /dev/null

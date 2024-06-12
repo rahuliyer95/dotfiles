@@ -3,6 +3,12 @@
 # base path
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin"
 
+# Snap
+[ -d "/snap/bin" ] && export PATH="$PATH:/snap/bin"
+
+# Homebridge
+[ -d "/opt/homebridge/bin" ] && export PATH="$PATH:/opt/homebridge/bin"
+
 if command -v brew >/dev/null; then
   for prefix in coreutils moreutils binutils;
   do
@@ -15,10 +21,6 @@ fi
 [ -n "$JAVA_HOME" ] && export PATH="$PATH:$JAVA_HOME/bin"
 
 [ -n "$ANT_ROOT" ] && export PATH="$PATH:$ANT_ROOT"
-
-# android
-[ -n "$ANDROID_SDK" ] && \
-  export PATH="$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools"
 
 # yarn
 [ -n "$YARN_GLOBAL_PATH" ] && export PATH="$PATH:$YARN_GLOBAL_PATH"
@@ -36,11 +38,14 @@ fi
 [ -d "$HOME/go/bin" ] && export PATH="$PATH:$HOME/go/bin"
 
 # pyenv
+[ -d "$PYENV_ROOT" ] && export PATH="$PATH:$PYENV_ROOT/bin"
+
 if command -v pyenv >/dev/null; then
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
-  export PYENV_ROOT="$(pyenv root)"
+  PYENV_ROOT="$(pyenv root)"
+  export PYENV_ROOT
 fi
 
 # rbenv

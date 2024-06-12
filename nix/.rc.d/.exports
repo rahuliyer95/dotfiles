@@ -11,12 +11,17 @@ export VISUAL="vim"
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING="UTF-8"
 
-# gpg pinentry
-PINENTRY_USER_DATA="$(command -v pinentry-mac)"
-export PINENTRY_USER_DATA
+# gnupg pinentry
+if command -v pinentry-mac > /dev/null; then
+  PINENTRY_USER_DATA="$(command -v pinentry-mac)"
+  export PINENTRY_USER_DATA
+elif command -v pinentry > /dev/null; then
+  PINENTRY_USER_DATA="$(command -v pinentry)"
+  export PINENTRY_USER_DATA
+fi
 # gnupg tty
-export GPG_TTY=""
 GPG_TTY="$(tty)"
+export GPG_TTY
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE="32768"
@@ -41,6 +46,9 @@ export BAT_STYLE="full"
 
 # Java
 [ -d "/Library/Java/Home" ] && export JAVA_HOME="/Library/Java/Home"
+
+# pyenv
+[ -d "$HOME/.pyenv" ] && export PYENV_ROOT="$HOME/.pyenv"
 
 # YarnJS
 export YARN_GLOBAL_PATH="$HOME/.config/yarn/global/node_modules/.bin"

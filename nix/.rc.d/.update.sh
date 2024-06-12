@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Load profile
-for file in "$HOME/.rc.d/"{.aliases,.exports,.path}; do
-  # shellcheck  source=/dev/null
+for file in "$HOME/.rc.d/."{exports,path,aliases}; do
+  # shellcheck source=/dev/null
   [ -f "$file" ] && source "$file"
 done
 
@@ -15,6 +15,7 @@ while true; do
 done > /dev/null 2>&1 &
 
 # Homebrew
+echo ""
 echo "╭──────────────╮"
 echo "│ 🍺 Homebrew  │"
 echo "╰──────────────╯"
@@ -23,6 +24,27 @@ command -v brew > /dev/null \
   && brew update \
   && brew upgrade \
   && brew upgrade --cask
+
+# Aptitude
+echo ""
+echo -e "╭──────────────╮"
+echo -e "│   Aptitude  │"
+echo -e "╰──────────────╯"
+echo ""
+command -v apt-get > /dev/null \
+  && sudo apt-get update -y \
+  && sudo apt-get upgrade -y
+
+# pi-hole
+echo ""
+echo -ne "\e[31m"
+echo -e "╭────────────╮"
+echo -e "│   pihole  │"
+echo -e "╰────────────╯"
+echo -ne "\e[0m"
+echo ""
+command -v pihole > /dev/null \
+  && pihole -up
 
 # npm
 echo ""

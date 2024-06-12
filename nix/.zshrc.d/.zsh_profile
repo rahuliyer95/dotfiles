@@ -71,8 +71,23 @@ export KEYTIMEOUT=30
 autoload -Uz +X add-zsh-hook cdr chpwd_recent_dirs compinit zmv
 add-zsh-hook chpwd chpwd_recent_dirs
 # zsh-completions
-if [ -f "$HOME/.zcompdump" ] && [ "$(date +"%j")" != "$(stat -f "%Sm" -t "%j" "$HOME/.zcompdump")" ]; then
-  compinit -D
+if [ -f "$HOME/.zcompdump" ]; then
+  cur_week="$(date +"%j")"
+  last_modified_week=""
+  case "$OSTYPE" in
+    darwin*)
+      last_modified_week="$(stat -f "%Sm" -t "%j" "$HOME/.zcompdump")"
+      ;;
+    linux*)
+      last_modified_week="$(date -d @"$(stat -c "%Y" "$HOME/.zcompdump")" +"%j")"
+      ;;
+  esac
+  if [ "$cur_week" != "$last_modified_week" ]; then
+    compinit -D
+  else
+    compinit -C
+  fi
+  unset cur_week last_modified_week
 else
   compinit -C
 fi
@@ -100,8 +115,8 @@ zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
 # fzf
-if command -v fzf >/dev/null; then
-  source <(fzf --zsh)
+if command -v fzf > /dev/null; then
+  source <(fzf --zsh 2> /dev/null)
 fi
 # fzf widgets
 bindkey -a "/" fzf-insert-history
