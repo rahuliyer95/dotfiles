@@ -1,8 +1,6 @@
 {
-  "diagnostic.checkCurrentLine": true,
-  "diagnostic.enableSign": true,
-  // "diagnostic.errorSign": "", // 0xf467 nerd-font
-  "diagnostic.virtualText": false,
+  "basedpyright.analysis.typeCheckingMode": "off",
+  "basedpyright.disableOrganizeImports": true,
   // "diagnostic.warningSign": "", // 0xf071 nerd-font
   "diagnostic-languageserver.filetypes": {
     "bzl": [
@@ -26,15 +24,14 @@
   },
   "diagnostic-languageserver.formatters": {
     "buildifier": {
-      "command": "buildifier",
       "args": [
         "-mode",
         "print_if_changed",
         "%file"
-      ]
+      ],
+      "command": "buildifier"
     },
     "shfmt": {
-      "command": "shfmt",
       "args": [
         "-i",
         "2",
@@ -42,15 +39,12 @@
         "-ci",
         "-sr",
         "-s"
-      ]
+      ],
+      "command": "shfmt"
     }
   },
   "diagnostic-languageserver.linters": {
     "buildifier": {
-      "command": "buildifier",
-      "debounce": 100,
-      "isStdout": false,
-      "isStderr": true,
       "args": [
         "-lint",
         "warn",
@@ -58,110 +52,118 @@
         "check",
         "%file"
       ],
-      "offsetLine": 0,
-      "offsetColumn": 0,
-      "sourceName": "buildifier",
+      "command": "buildifier",
+      "debounce": 100,
       "formatLines": 1,
       "formatPattern": [
         "^([^#])* \\# (.*)$",
         {
-          "sourceName": 1,
-          "message": 2
+          "message": 2,
+          "sourceName": 1
         }
       ],
+      "isStderr": true,
+      "isStdout": false,
+      "offsetColumn": 0,
+      "offsetLine": 0,
       "securities": {
-        "warning": "warning",
-        "error": "error"
-      }
+        "error": "error",
+        "warning": "warning"
+      },
+      "sourceName": "buildifier"
+    },
+    "vale": {
+      "args": [
+        "--output=JSON"
+      ],
+      "command": "vale",
+      "debounce": 100,
+      "isStderr": false,
+      "isStdout": true,
+      "offsetColumn": 0,
+      "offsetLine": 0,
+      "parseJson": {
+        "column": "Span[0]",
+        "endColumn": "Span[1]",
+        "errorsRoot": "stdin.txt",
+        "line": "Line",
+        "message": "[${Check}] ${Message}\n${Link}",
+        "security": "Severity"
+      },
+      "securities": {
+        "error": "error",
+        "suggestion": "info",
+        "warning": "warning"
+      },
+      "sourceName": "vale"
     },
     "vale-md": {
-      "command": "vale",
-      "isStdout": true,
-      "isStderr": false,
-      "debounce": 100,
       "args": [
         "--ext=.md",
         "--output=JSON"
       ],
-      "offsetLine": 0,
+      "command": "vale",
+      "debounce": 100,
+      "isStderr": false,
+      "isStdout": true,
       "offsetColumn": 0,
-      "sourceName": "vale",
+      "offsetLine": 0,
       "parseJson": {
-        "errorsRoot": "stdin.md",
-        "line": "Line",
         "column": "Span[0]",
         "endColumn": "Span[1]",
-        "security": "Severity",
-        "message": "[${Check}] ${Message}\n${Link}"
+        "errorsRoot": "stdin.md",
+        "line": "Line",
+        "message": "[${Check}] ${Message}\n${Link}",
+        "security": "Severity"
       },
       "securities": {
         "error": "error",
-        "warning": "warning",
-        "suggestion": "info"
-      }
+        "suggestion": "info",
+        "warning": "warning"
+      },
+      "sourceName": "vale"
     },
     "vale-rst": {
-      "command": "vale",
-      "isStdout": true,
-      "isStderr": false,
-      "debounce": 100,
       "args": [
         "--ext=.rst",
         "--output=JSON"
       ],
-      "offsetLine": 0,
+      "command": "vale",
+      "debounce": 100,
+      "isStderr": false,
+      "isStdout": true,
       "offsetColumn": 0,
-      "sourceName": "vale",
+      "offsetLine": 0,
       "parseJson": {
+        "column": "Span[0]",
+        "endColumn": "Span[1]",
         "errorsRoot": "stdin.rst",
         "line": "Line",
-        "column": "Span[0]",
-        "endColumn": "Span[1]",
-        "security": "Severity",
-        "message": "[${Check}] ${Message}\n${Link}"
+        "message": "[${Check}] ${Message}\n${Link}",
+        "security": "Severity"
       },
       "securities": {
         "error": "error",
-        "warning": "warning",
-        "suggestion": "info"
-      }
-    },
-    "vale": {
-      "command": "vale",
-      "isStdout": true,
-      "isStderr": false,
-      "debounce": 100,
-      "args": [
-        "--output=JSON"
-      ],
-      "offsetLine": 0,
-      "offsetColumn": 0,
-      "sourceName": "vale",
-      "parseJson": {
-        "errorsRoot": "stdin.txt",
-        "line": "Line",
-        "column": "Span[0]",
-        "endColumn": "Span[1]",
-        "security": "Severity",
-        "message": "[${Check}] ${Message}\n${Link}"
+        "suggestion": "info",
+        "warning": "warning"
       },
-      "securities": {
-        "error": "error",
-        "warning": "warning",
-        "suggestion": "info"
-      }
+      "sourceName": "vale"
     }
   },
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.enableSign": true,
+  // "diagnostic.errorSign": "", // 0xf467 nerd-font
+  "diagnostic.virtualText": false,
   "git.addGBlameToVirtualText": false,
   "git.enableGlobalStatus": false,
   "git.enableGutters": false,
   "git.realtimeGutters": false,
   "languageserver": {
     "terraform": {
-      "command": "terraform-ls",
       "args": [
         "serve"
       ],
+      "command": "terraform-ls",
       "filetypes": [
         "terraform",
         "tf"
@@ -170,14 +172,7 @@
       "settings": {}
     }
   },
-  "pyright.organizeimports.provider": "ruff",
-  "python.analysis.diagnosticMode": "openFilesOnly",
-  "python.formatting.provider": "ruff",
-  "python.formatting.ruffPath": "~/.pyenv/shims/ruff",
-  "python.linting.ruffEnabled": true,
-  "python.linting.ruffPath": "~/.pyenv/shims/ruff",
-  "python.linting.flake8Enabled": false,
-  "python.linting.pydocstyleEnabled": false,
-  "yaml.format.enable": true,
-  "snippets.ultisnips.pythonPrompt": false
+  "mypy-type-checker.useDmypy": false,
+  "snippets.ultisnips.pythonPrompt": false,
+  "yaml.format.enable": true
 }

@@ -272,31 +272,34 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>
 let g:coc_snippet_next = '<tab>'
 
 " Key maps
-inoremap <silent> <c-space><expr> CocAction("showSignatureHelp")
-inoremap <silent> <c-q><expr> CocAction("doHover")
-inoremap <silent> <c-p><expr> CocCommand
-nnoremap <silent> <c-q><expr> CocAction("doHover")
-nnoremap <silent> <c-p><expor> CocCommand
-nmap <F2> <Plug>(coc-rename)
-nmap <silent> <F12> <Plug>(coc-definition)
-nmap <silent> <leader><F12> <Plug>(coc-references)
-nmap <silent> <leader>f <Plug>(coc-format)<ESC>:call CocAction("organizeImport")<CR>
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-xmap <leader>f <Plug>(coc-format-selected)
+inoremap <C-Space><expr> CocAction("showSignatureHelp")
+inoremap <C-q> <ESC>:call CocAction("doHover")<CR>
+inoremap <C-S-p> <ESC>:CocCommand<CR>
+nnoremap <C-q> :call CocAction("doHover")<CR>
+nnoremap <C-S-p> :CocCommand<CR>
+nnoremap <F2> <Plug>(coc-rename)
+nnoremap <silent> <F12> <Plug>(coc-definition)
+nnoremap <silent> <F8> :CocDiagnostics<CR>
+nnoremap <silent> <leader><F12> <Plug>(coc-references)
+nnoremap <silent> <leader>f <Plug>(coc-format)<ESC>:call CocAction("organizeImport")<CR>
+nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
+nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
+xnoremap <leader>f <Plug>(coc-format-selected)
 " navigate conflicts of current buffer
-nmap [c <Plug>(coc-git-prevconflict)
-nmap ]c <Plug>(coc-git-nextconflict)
+nnoremap [c <Plug>(coc-git-prevconflict)
+nnoremap ]c <Plug>(coc-git-nextconflict)
 
 " 'coc-highlight' => Add this to support highlight
 let g:coc_global_extensions = [
+      \ '@yaegassy/coc-ruff',
+      \ '@yaegassy/coc-mypy',
+      \ 'coc-basedpyright',
       \ 'coc-diagnostic',
       \ 'coc-docker',
       \ 'coc-emoji',
       \ 'coc-git',
       \ 'coc-gocode',
       \ 'coc-json',
-      \ 'coc-pyright',
       \ 'coc-sh',
       \ 'coc-snippets',
       \ 'coc-sql',
@@ -550,8 +553,8 @@ endfunction
 " Custom Maps {{{
 
 " Tab & Shift+Tab in visual mode
-vmap <Tab> >gv
-vmap <S-Tab> <gv
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 " }}}
 
