@@ -3,9 +3,11 @@ Configuration example for ``ptpython``.
 
 Copy this file to ~/.ptpython/config.py
 """
+
 from __future__ import unicode_literals
 
-# from prompt_toolkit.key_binding.input_processor import KeyPress
+from prompt_toolkit.application.current import get_app
+from prompt_toolkit.filters import Condition
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.styles.pygments import style_from_pygments_dict
 from ptpython.layout import CompletionVisualisation
@@ -28,7 +30,16 @@ from pygments.token import (
 __all__ = ("configure",)
 
 
-def configure(repl):
+@Condition
+def suggestion_available() -> bool:
+    app = get_app()
+    return (
+        app.current_buffer.suggestion is not None
+        and app.current_buffer.document.is_cursor_at_the_end
+    )
+
+
+def configure(repl) -> None:
     """REPL Configuration.
 
     This is called during the start-up of ptpython.
@@ -36,10 +47,10 @@ def configure(repl):
     :param repl: `PythonRepl` instance.
     """
     # Show function signature (bool).
-    repl.show_signature = True
+    repl.show_signature = False
 
     # Show docstring (bool).
-    repl.show_docstring = True
+    repl.show_docstring = False
 
     # Show the "[Meta+Enter] Execute" message when pressing [Enter] only
     # inserts a newline instead of executing the code.
@@ -83,8 +94,11 @@ def configure(repl):
     # Use the classic prompt. (Display '>>>' instead of 'In [1]'.)
     repl.prompt_style = "ipython"  # 'classic' or 'ipython'
 
-    # Don't insert a blank line after the output.
+    # Insert a blank line after the output.
     repl.insert_blank_line_after_output = True
+
+    # Insert a blank line after input
+    repl.insert_blank_line_after_input = True
 
     # History Search.
     # When True, going back in history will filter the history on the records
@@ -124,18 +138,23 @@ def configure(repl):
 
     # Add custom key binding for PDB.
     @repl.add_key_binding(Keys.ControlB)
-    def _(event):
+    def _pdb(event):
         """Pressing Control-B will insert 'pdb.set_trace()'."""
         event.cli.current_buffer.insert_text("\nimport pdb; pdb.set_trace()\n")
 
     # Typing ControlE twice should also execute the current command.
     # (Alternative for Meta-Enter.)
     @repl.add_key_binding(Keys.ControlE, Keys.ControlE)
-    def _(event):
+    def _execute_current_cmd(event):
         b = event.current_buffer
 
         if b.accept_action.is_returnable:
             b.accept_action.validate_and_handle(event.cli, b)
+
+    # Auto complete current command with Ctrl+Space
+    @repl.add_key_binding(Keys.ControlSpace, filter=suggestion_available)
+    def _accept_suggestion(event):
+        event.current_buffer.insert_text(event.current_buffer.suggestion.text)
 
 
 DRACULA_THEME = {

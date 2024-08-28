@@ -102,14 +102,17 @@ if command -v yarnpkg &> /dev/null; then
   echo -en "\r✅ Cleanup YarnPkg cache\n"
 fi
 
-declare -A CACHE_ALLOW_LIST=([antibody]=1 [com.spotify.client]=1)
+declare -A CACHE_ALLOW_LIST=([antibody]=1)
 for dir in "$HOME/Library/Caches" "/Library/Caches"; do
   if cd "$dir"; then
     while read -r file; do
       filename="$(basename "$file")"
-      fullpath="$(sudo realpath "$dir/$filename")"
+      fullpath="$(sudo realpath "$dir/$filename" 2>/dev/null)"
+      if [ -z "$fullpath" ]; then
+        continue
+      fi
       if [ "${CACHE_ALLOW_LIST[$filename]}0" != "0" ]; then
-        echo -en "\r❌ Deleting $fullpath\n"
+        echo -en "\r⏭️ Deleting $fullpath\n"
       else
         echo -en "ℹ️ $fullpath"
         if sudo rm -rf "$file" &>/dev/null; then
