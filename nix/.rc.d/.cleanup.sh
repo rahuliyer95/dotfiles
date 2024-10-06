@@ -90,6 +90,12 @@ if [ -n "$PYENV_VIRTUALENV_CACHE_PATH" ]; then
   rm -rfv "$PYENV_VIRTUALENV_CACHE_PATH" &> /dev/null
 fi
 
+if command -v uv > /dev/null; then
+  echo -en "ℹ️ Prune uv cache"
+  uv cache prune &> /dev/null
+  echo -en "\r✅ Prune uv cache\n"
+fi
+
 if command -v npm > /dev/null; then
   echo -en "ℹ️ Cleanup npm cache"
   npm cache clean --force &> /dev/null

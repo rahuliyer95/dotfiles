@@ -11,4 +11,8 @@ if [[ $- == *i* ]]; then
   [ -f "$HOME/.zshrc.d/.zsh_profile" ] && . "$HOME/.zshrc.d/.zsh_profile"
 fi
 
+# cargo
 [ -s "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && . "$HOME/.bun/_bun"

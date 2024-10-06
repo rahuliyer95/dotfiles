@@ -23,18 +23,26 @@ stopwatch() {
 }
 
 _fzf_complete_git() {
-    ARGS="$*"
-    local branches
-    branches=$(git branch -vv --all)
-    if [[ $ARGS == 'git co'* ]] || [[ $ARGS == 'git bd'* ]]; then
-        _fzf_complete --reverse --multi -- "$@" < <(
-            echo "$branches"
-        )
-    else
-        eval "zle ${fzf_default_completion:-expand-or-complete}"
-    fi
+  ARGS="$*"
+  local branches
+  branches=$(git branch -vv --all)
+  if [[ $ARGS == 'git co'* ]] || [[ $ARGS == 'git bd'* ]]; then
+    _fzf_complete --reverse --multi -- "$@" < <(
+      echo "$branches"
+    )
+  else
+    eval "zle ${fzf_default_completion:-expand-or-complete}"
+  fi
 }
 
 _fzf_complete_git_post() {
-    awk '{print $1}'
+  awk '{print $1}'
+}
+
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  [ -n "$pid" ] &&
+    echo "$pid" | xargs kill "-${1:-9}"
 }
