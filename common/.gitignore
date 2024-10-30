@@ -22,3 +22,5 @@ Thumbs.db
 
 # Force add this because all repos don't have this file
 .git-blame-ignore-revs
+
+.direnv
