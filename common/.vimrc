@@ -67,6 +67,7 @@ Plug 'nvim-telescope/telescope.nvim'
 " Required by telescope.nvim
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'christoomey/vim-sort-motion'
 
 " }}}
 
