@@ -5,6 +5,4 @@ romkatv/powerlevel10k
 ohmyzsh/ohmyzsh path:plugins/docker-compose type:fpath
 MichaelAquilina/zsh-you-should-use
 # mbenford/zsh-tmux-auto-title
-ytet5uy4/fzf-widgets
 hlissner/zsh-autopair
-pschmitt/emoji-fzf.zsh

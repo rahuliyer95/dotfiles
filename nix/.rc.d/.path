@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usrbin/env bash
+
+# vim:ft=bash
 
 # base path
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin"
@@ -59,9 +61,10 @@ if command -v nodenv >/dev/null; then
 fi
 
 # goenv
-if command -v goenv >/dev/null; then
-  eval "$(goenv init -)"
-fi
+# TODO: uncomment after https://github.com/go-nv/goenv/issues/396 is resolved
+# if command -v goenv > /dev/null; then
+#   eval "$(goenv init -)"
+# fi
 
 # direnv
 if command -v direnv >/dev/null && [ -n "$PS1" ]; then

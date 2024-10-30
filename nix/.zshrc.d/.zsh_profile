@@ -119,17 +119,12 @@ if command -v fzf > /dev/null; then
   source <(fzf --zsh 2> /dev/null)
 fi
 # fzf widgets
-bindkey -a "/" fzf-insert-history
-bindkey -a "?" fzf-insert-history
-bindkey '^\' fzf-change-recent-directory
-bindkey "^r" fzf-insert-history
-bindkey "^xf" fzf-insert-files
-bindkey "^xd" fzf-insert-directory
-bindkey "^xn" fzf-insert-named-directory
-
-# aws auto-complete
-_aws_completer_bin="$(command -v aws_completer 2> /dev/null)"
-[ -x "${_aws_completer_bin}" ] && complete -C "${_aws_completer_bin}" aws
-unset _aws_completer_bin
+bindkey -a "/" fzf-history-widget
+bindkey -a "?" fzf-history-widget
+# bindkey '^\' fzf-change-recent-directory
+# bindkey "^r" fzf-insert-history
+# bindkey "^xf" fzf-insert-files
+# bindkey "^xd" fzf-insert-directory
+# bindkey "^xn" fzf-insert-named-directory
 
 [ -f "$HOME/.zshrc.d/.local.post.sh" ] && . "$HOME/.zshrc.d/.local.post.sh"

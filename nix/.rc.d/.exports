@@ -12,10 +12,10 @@ export VISUAL="vim"
 export PYTHONIOENCODING="UTF-8"
 
 # gnupg pinentry
-if command -v pinentry-mac > /dev/null; then
+if command -v pinentry-mac >/dev/null; then
   PINENTRY_USER_DATA="$(command -v pinentry-mac)"
   export PINENTRY_USER_DATA
-elif command -v pinentry > /dev/null; then
+elif command -v pinentry >/dev/null; then
   PINENTRY_USER_DATA="$(command -v pinentry)"
   export PINENTRY_USER_DATA
 fi
@@ -72,3 +72,6 @@ export DOCKER_BUILD_KIT=1
 export BUN_INSTALL="$HOME/.bun"
 
 export DIRENV_LOG_FORMAT=
+
+# Disable downloading python using `uv`
+export UV_PYTHON_DOWNLOADS="never"
