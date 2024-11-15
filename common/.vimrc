@@ -74,6 +74,7 @@ Plug 'christoomey/vim-sort-motion'
 " Look & Feel {{{
 
 Plug 'olimorris/onedarkpro.nvim'
+Plug 'loctvl842/monokai-pro.nvim'
 Plug 'lunacookies/vim-colors-xcode'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
@@ -148,7 +149,23 @@ require('onedarkpro').setup {
 
 EOF
 
-colorscheme onedark
+" colorscheme onedarkpro
+
+" }}}
+
+" Monokai Pro {{{
+
+lua << EOF
+
+require("monokai-pro").setup {
+  terminal_colors = true,
+  devicons = true,
+  filter = "machine",
+}
+
+EOF
+
+colorscheme monokai-pro
 
 " }}}
 

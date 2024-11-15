@@ -1,29 +1,23 @@
-"""
-Configuration example for ``ptpython``.
-
-Copy this file to ~/.ptpython/config.py
-"""
-
 from __future__ import unicode_literals
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.filters import Condition
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.styles.pygments import style_from_pygments_dict
-from ptpython.layout import CompletionVisualisation
-from pygments.token import (
-    Keyword,
-    Name,
+from prompt_toolkit.application.current import get_app  # type: ignore
+from prompt_toolkit.filters import Condition  # type: ignore
+from prompt_toolkit.keys import Keys  # type: ignore
+from prompt_toolkit.styles.pygments import style_from_pygments_dict  # type: ignore
+from ptpython.layout import CompletionVisualisation  # type: ignore
+from pygments.token import (  # type: ignore
     Comment,
-    String,
     Error,
+    Generic,
+    Keyword,
     Literal,
+    Name,
     Number,
     Operator,
     Other,
     Punctuation,
+    String,
     Text,
-    Generic,
     Whitespace,
 )
 
@@ -134,6 +128,7 @@ def configure(repl) -> None:
     # Use this colorscheme for the code.
     repl.install_code_colorscheme("dracula", style_from_pygments_dict(DRACULA_THEME))
     repl.install_code_colorscheme("one-dark", style_from_pygments_dict(ONE_DARK_THEME))
+    repl.install_code_colorscheme("monokai-pro", style_from_pygments_dict(MONOKAI_PRO))
     repl.use_code_colorscheme("one-dark")
 
     # Add custom key binding for PDB.
@@ -229,8 +224,79 @@ DRACULA_THEME = {
     Text: "#f8f8f2",
     Whitespace: "#f8f8f2",
 }
+"""Dracula Theme
 
-# Refered from https://github.com/mgyongyosi/OneDarkJekyll/blob/master/syntax.less
+See: https://github.com/dracula/pygments/blob/9cf371f24908e2b138cfcf0a87d0d654b4befd8f/dracula.py#L22
+"""
+
+
+MONOKAI_PRO = {
+    Generic.Emph: "italic",
+    Generic.Strong: "bold",
+    Generic.Inserted: "#bad761",
+    Generic.Deleted: "#ff657a",
+    Error: "#ff657a",
+    Name.Class: "#bad761",
+    Name.Function: "#bad761",
+    Literal.Date: "#bad761",
+    Literal.String.Regex: "#bad761",
+    Keyword.Type: "#ffd76d",
+    Name.Namespace: "#ffd76d",
+    Name.Entity: "#ffd76d",
+    Literal.String: "#ffd76d",
+    Literal.String.Backtick: "#ffd76d",
+    Literal.String.Double: "#ffd76d",
+    Literal.String.Other: "#ffd76d",
+    Literal.String.Single: "#ffd76d",
+    Literal.String.Symbol: "#ffd76d",
+    Literal.String.Char: "#ffd76d",
+    Literal: "#ff9b5e",
+    Name.Variable: "#ff9b5e",
+    Keyword: "#ff657a",
+    Operator: "#ff657a",
+    Operator.Word: "#ff657a",
+    Name.Constant: "#ff657a",
+    Name.Exception: "#ff657a",
+    Name.Tag: "#ff657a",
+    Name.Variable.Class: "#ff657a",
+    Name.Variable.Global: "#ff657a",
+    Name.Variable.Instance: "#ff657a",
+    Keyword.Constant: "#c39ac9",
+    Keyword.Pseudo: "#c39ac9",
+    Keyword.Reserved: "#c39ac9",
+    Literal.Number: "#c39ac9",
+    Literal.Number.Float: "#c39ac9",
+    Literal.Number.Integer: "#c39ac9",
+    Literal.Number.Oct: "#c39ac9",
+    Literal.Number.Integer.Long: "#c39ac9",
+    Literal.String.Escape: "#c39ac9",
+    Keyword.Declaration: "#9cd1bb",
+    Keyword.Namespace: "#9cd1bb",
+    Name.Attribute: "#9cd1bb",
+    Name.Decorator: "#9cd1bb",
+    Name: "#eaf2f1",
+    Name.Label: "#eaf2f1",
+    Name.Other: "#eaf2f1",
+    Name.Property: "#eaf2f1",
+    Name.Builtin: "#eaf2f1",
+    Name.Builtin.Pseudo: "#eaf2f1",
+    Literal.Number.Hex: "#eaf2f1",
+    Punctuation: "#b2b9bd",
+    Text.Whitespace: "#b2b9bd",
+    Literal.String.Doc: "#888d94",
+    Literal.String.Heredoc: "#888d94",
+    Literal.String.Interpol: "#888d94",
+    Comment: "#888d94",
+    Comment.Multiline: "#888d94",
+    Comment.Preproc: "#888d94",
+    Comment.Single: "#888d94",
+    Comment.Special: "#888d94",
+}
+"""Monokai Pro Theme
+
+See: https://gist.github.com/i-like-robots/b9ab98b8c2cc99ceb9bc53cc7b907a79
+"""
+
 ONE_DARK_THEME = {
     Comment: "#5c6370 italic",  # mono-3
     Comment.Hashbang: "#5c6370 italic",  # mono-3
@@ -323,3 +389,7 @@ ONE_DARK_THEME = {
     Text.Whitespace: "#f8f8f2",
     Whitespace: "#f8f8f2",
 }
+"""Atom One Dark Theme
+
+See: https://github.com/mgyongyosi/OneDarkJekyll/blob/master/syntax.less
+"""
