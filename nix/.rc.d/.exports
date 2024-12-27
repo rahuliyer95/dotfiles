@@ -47,9 +47,6 @@ export BAT_STYLE="full"
 # Java
 [ -d "/Library/Java/Home" ] && export JAVA_HOME="/Library/Java/Home"
 
-# pyenv
-[ -d "$HOME/.pyenv" ] && export PYENV_ROOT="$HOME/.pyenv"
-
 # YarnJS
 export YARN_GLOBAL_PATH="$HOME/.config/yarn/global/node_modules/.bin"
 
@@ -73,5 +70,3 @@ export BUN_INSTALL="$HOME/.bun"
 
 export DIRENV_LOG_FORMAT=
 
-# Disable downloading python using `uv`
-export UV_PYTHON_DOWNLOADS="never"

@@ -86,28 +86,41 @@ fi
 # fi
 
 # pip3
-if command -v pip3 >/dev/null; then
+# if command -v pip3 >/dev/null; then
+#   echo ""
+#   echo -ne "\e[33m"
+#   echo -e "╭─────────╮"
+#   echo -e "│   pip  │" # \uE73C
+#   echo -e "╰─────────╯"
+#   echo -ne "\e[0m"
+#   echo ""
+#   pip3 install --upgrade pip || sudo pip3 install --upgrade pip
+#   if command -v pip-autoremove >/dev/null; then
+#     echo ""
+#     echo -ne "\e[33m"
+#     echo -e "╭──────────────────╮"
+#     echo -e "│   pip packages  │" # \uE73C
+#     echo -e "╰──────────────────╯"
+#     echo -ne "\e[0m"
+#     echo ""
+#     pip-autoremove -L |
+#       awk '{ printf "%s ", $1 }' |
+#       sort |
+#       xargs pip3 install --upgrade
+#   fi
+# fi
+
+# uv
+if command -v uv >/dev/null; then
   echo ""
   echo -ne "\e[33m"
-  echo -e "╭─────────╮"
-  echo -e "│   pip  │" # \uE73C
-  echo -e "╰─────────╯"
+  echo -e "╭────────╮"
+  echo -e "│   uv  │" # \uE73C
+  echo -e "╰────────╯"
   echo -ne "\e[0m"
   echo ""
-  pip3 install --upgrade pip || sudo pip3 install --upgrade pip
-  if command -v pip-autoremove >/dev/null; then
-    echo ""
-    echo -ne "\e[33m"
-    echo -e "╭──────────────────╮"
-    echo -e "│   pip packages  │" # \uE73C
-    echo -e "╰──────────────────╯"
-    echo -ne "\e[0m"
-    echo ""
-    pip-autoremove -L |
-      awk '{ printf "%s ", $1 }' |
-      sort |
-      xargs pip3 install --upgrade
-  fi
+  uv self upgrade
+  uv tool upgrade all
 fi
 
 # antibody

@@ -109,8 +109,8 @@ let g:loaded_perl_provider = 0
 " Disable optional `ruby` provider
 let g:loaded_ruby_provider = 0
 
-" Python setup using `pyenv`
-let g:python3_host_prog = $PYENV_ROOT . "/versions/neovim/bin/python3"
+" Python setup using `uv`
+let g:python3_host_prog = $HOME . "/.local/share/nvim/.venv/bin/python3"
 
 " Cursor blinking
 set guicursor=a:blinkwait200-blinkon250-blinkoff200,i:ver25-blinkwait200-blinkon200-blinkoff200
