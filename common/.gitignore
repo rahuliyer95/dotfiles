@@ -24,3 +24,7 @@ Thumbs.db
 .git-blame-ignore-revs
 
 .direnv
+
+# cSpell
+.cspell/
+cspell.config.yaml
