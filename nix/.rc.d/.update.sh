@@ -119,8 +119,8 @@ if command -v uv >/dev/null; then
   echo -e "╰────────╯"
   echo -ne "\e[0m"
   echo ""
-  uv self upgrade
-  uv tool upgrade all
+  uv self update
+  uv tool upgrade --all
 fi
 
 # antibody
