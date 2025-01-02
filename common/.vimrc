@@ -321,6 +321,7 @@ let g:coc_global_extensions = [
       \ 'coc-sh',
       \ 'coc-snippets',
       \ 'coc-sql',
+      \ 'coc-toml',
       \ 'coc-xml',
       \ 'coc-yaml',
       \ ]
