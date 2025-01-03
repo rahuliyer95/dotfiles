@@ -11,11 +11,15 @@ while true; do
 done 2> /dev/null &
 
 # Homebrew
-./brew.sh
+echo "🍺 Homebrew"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew doctor
+brew update
+brew bundle --file ./packages/Brewfile
 
 # tpm
-mkdir -p "$HOME/.tmux/plugins/tpm"
-git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm"
+# mkdir -p "$HOME/.tmux/plugins/tpm"
+# git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm"
 
 # vim-anywhere
 curl -fsSL "https://raw.github.com/cknadler/vim-anywhere/master/install" | bash
