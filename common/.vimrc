@@ -27,10 +27,12 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': function('NvimTreeSitterPostInst
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'joom/vim-commentary'
-Plug 'tmhedberg/SimpylFold'
 Plug 'darfink/vim-plist'
 Plug 'apple/pkl-neovim'
 Plug 'honza/vim-snippets'
+Plug 'kevinhwang91/nvim-ufo'
+Plug 'kevinhwang91/promise-async'
+Plug 'ggml-org/llama.vim'
 
 " }}}
 
@@ -253,13 +255,6 @@ EOF
 
 " }}}
 
-" SimplyFold {{{
-
-let g:SimpylFold_docstring_preview=1
-set foldlevel=99
-
-" }}}
-
 " coc.nvim {{{
 
 function! s:check_back_space() abort
@@ -327,6 +322,35 @@ let g:coc_global_extensions = [
       \ ]
 
 set sessionoptions+=globals
+
+" }}}
+
+" llama.vim {{{
+
+let g:llama_config = {
+    \ 'show_info': 0,
+    \ }
+
+" }}}
+
+" nvim-ufo {{{
+
+lua << EOF
+
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+vim.o.foldcolumn = '1'
+vim.o.foldenable = true
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+-- vim.o.foldmarker = '#region,#endregion'
+
+-- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+require('ufo').setup()
+
+EOF
 
 " }}}
 
@@ -407,7 +431,7 @@ nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 
 " }}}
 
-" {{{ vim-easy-align
+" vim-easy-align {{{
 
 let g:easy_align_ignore_groups = ['Comment', 'String']
 
@@ -416,7 +440,7 @@ xmap ga <Plug>(EasyAlign)
 
 " }}}
 
-" {{{ nvim-tree
+" nvim-tree {{{
 
 nnoremap <leader>n :NvimTreeToggle<CR>
 
