@@ -24,3 +24,11 @@ fi
 if [ -n "$ZSH_DEBUGRC" ]; then
   zprof
 fi
+
+# pnpm
+export PNPM_HOME="/Users/rahuliyer/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

@@ -42,7 +42,9 @@ set convert-meta off
 # vi-style input
 set editing-mode vi
 set keymap vi
+
 # vi-mode status
 set show-mode-in-prompt on
 set vi-ins-mode-string "❯"
 set vi-cmd-mode-string "❮"
+
