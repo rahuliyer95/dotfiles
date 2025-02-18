@@ -38,8 +38,9 @@ macos-titlebar-style = "tabs"
 
 # Window {{{
 
-window-height = 38
-window-width  = 118
+window-height     = 38
+window-width      = 118
+window-colorspace = display-p3
 
 # }}}
 
