@@ -81,7 +81,11 @@ fi
 
 for dir in "$HOME/.cache/pip" "$HOME/Library/Caches/pip" "$HOME/Library/Caches/pipenv"; do
   echo -en "ℹ️ Cleaning pip cache from $dir"
-  [ -d "$dir" ] && rm -rf "$dir" && echo -en "\r✅" || printf "\r❌"
+  if [ -d "$dir" ]; then
+    rm -rf "$dir" && echo -en "\r✅" || printf "\r❌"
+  else
+    printf "\r⏭️"
+  fi
   echo -en " Cleaning pip cache from $dir\n"
 done
 
@@ -113,7 +117,7 @@ for dir in "$HOME/Library/Caches" "/Library/Caches"; do
   if cd "$dir"; then
     while read -r file; do
       filename="$(basename "$file")"
-      fullpath="$(sudo realpath "$dir/$filename" 2>/dev/null)"
+      fullpath="$(sudo realpath "$dir/$filename" 2> /dev/null)"
       if [ -z "$fullpath" ]; then
         continue
       fi
@@ -121,7 +125,7 @@ for dir in "$HOME/Library/Caches" "/Library/Caches"; do
         echo -en "\r⏭️ Deleting $fullpath\n"
       else
         echo -en "ℹ️ $fullpath"
-        if sudo rm -rf "$file" &>/dev/null; then
+        if sudo rm -rf "$file" &> /dev/null; then
           echo -en "\r✅"
         else
           echo -en "\r❌"
