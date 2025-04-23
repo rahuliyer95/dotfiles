@@ -11,18 +11,6 @@ export VISUAL="vim"
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING="UTF-8"
 
-# gnupg pinentry
-if command -v pinentry-mac >/dev/null; then
-  PINENTRY_USER_DATA="$(command -v pinentry-mac)"
-  export PINENTRY_USER_DATA
-elif command -v pinentry >/dev/null; then
-  PINENTRY_USER_DATA="$(command -v pinentry)"
-  export PINENTRY_USER_DATA
-fi
-# gnupg tty
-GPG_TTY="$(tty)"
-export GPG_TTY
-
 # Increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE="32768"
 export SAVEHIST="${HISTSIZE}"
