@@ -32,7 +32,7 @@ Plug 'apple/pkl-neovim'
 Plug 'honza/vim-snippets'
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'kevinhwang91/promise-async'
-Plug 'ggml-org/llama.vim'
+" Plug 'ggml-org/llama.vim'
 
 " }}}
 
@@ -313,6 +313,7 @@ let g:coc_global_extensions = [
       \ 'coc-git',
       \ 'coc-gocode',
       \ 'coc-json',
+      \ 'coc-rust-analyzer',
       \ 'coc-sh',
       \ 'coc-snippets',
       \ 'coc-sql',
