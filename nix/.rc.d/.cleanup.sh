@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Ask for the administrator password upfront
+# Ask sudo and keep-alive
 sudo -v
 
-# Keep-alive sudo until `clenaup.sh` has finished
+# Keep-alive: update existing `sudo` time stamp until this script has finished
 while true; do
   sudo -n true
   sleep 60
@@ -112,7 +112,7 @@ if command -v yarnpkg &> /dev/null; then
   echo -en "\r✅ Cleanup YarnPkg cache\n"
 fi
 
-declare -A CACHE_ALLOW_LIST=([antibody]=1 [llama.cpp]=1)
+declare -A CACHE_ALLOW_LIST=([antidote]=1 [llama.cpp]=1)
 for dir in "$HOME/Library/Caches" "/Library/Caches"; do
   if cd "$dir"; then
     while read -r file; do

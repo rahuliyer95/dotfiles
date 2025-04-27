@@ -13,7 +13,7 @@ for file in "$HOME/.zshrc.d/."{plugins.bundle,local.pre.sh,zsh_prompt}; do
 done
 unset file
 
-# Kitty 0.24+
+# Kitty 0.24+/Ghostty
 typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION=true
 
 if command -v brew > /dev/null; then
@@ -68,46 +68,22 @@ bindkey -M visual S add-surround
 # https://github.com/zsh-users/zsh-autosuggestions/issues/254#issuecomment-465474362
 export KEYTIMEOUT=30
 
-autoload -Uz +X add-zsh-hook cdr chpwd_recent_dirs compinit zmv
+autoload -Uz +X add-zsh-hook cdr chpwd_recent_dirs zmv
 add-zsh-hook chpwd chpwd_recent_dirs
+
 # zsh-completions
-if [ -f "$HOME/.zcompdump" ]; then
-  cur_week="$(date +"%j")"
-  last_modified_week=""
-  case "$OSTYPE" in
-    darwin*)
-      last_modified_week="$(stat -f "%Sm" -t "%j" "$HOME/.zcompdump")"
-      ;;
-    linux*)
-      last_modified_week="$(date -d @"$(stat -c "%Y" "$HOME/.zcompdump")" +"%j")"
-      ;;
-  esac
-  if [ "$cur_week" != "$last_modified_week" ]; then
-    compinit -D
-  else
-    compinit -C
-  fi
-  unset cur_week last_modified_week
-else
-  compinit -C
-fi
-
-# Load bash-completions
-autoload -Uz +X bashcompinit
-bashcompinit
-
-# zstyle ":completion:*" accept-exact "*(N)"
-zstyle ":completion:*" use-cache on
-zstyle ":completion:*" cache-path ~/.zsh/cache
+zstyle ':plugin:ez-compinit' 'compstyle' 'zshzoo'
+zstyle ':plugin:ez-compinit' 'use-cache' 'yes'
 
 # zsh-autosuggestions
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
 export ZSH_AUTOSUGGEST_STRATEGY=(history match_prev_cmd completion)
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60"
-bindkey "TAB" autosuggest-fetch
-bindkey "^@" autosuggest-accept
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
+bindkey 'TAB' autosuggest-fetch
+bindkey '^@' autosuggest-accept
+
 # zsh-syntax-highlighting
-export ZSH_HIGHLIGHT_STYLES[comment]="fg=245"
+export ZSH_HIGHLIGHT_STYLES[comment]='fg=245'
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern regexp cursor root line)
 
 autoload edit-command-line
@@ -118,6 +94,7 @@ bindkey "^X^E" edit-command-line
 if command -v fzf > /dev/null; then
   source <(fzf --zsh 2> /dev/null)
 fi
+
 # fzf widgets
 bindkey -a "/" fzf-history-widget
 bindkey -a "?" fzf-history-widget
@@ -126,5 +103,10 @@ bindkey -a "?" fzf-history-widget
 # bindkey "^xf" fzf-insert-files
 # bindkey "^xd" fzf-insert-directory
 # bindkey "^xn" fzf-insert-named-directory
+
+# fzf-tab
+
+# Define a whitelist of commands to use fzf-tab with
+zstyle ':completion:*:git-checkout:*' sort false
 
 [ -f "$HOME/.zshrc.d/.local.post.sh" ] && . "$HOME/.zshrc.d/.local.post.sh"

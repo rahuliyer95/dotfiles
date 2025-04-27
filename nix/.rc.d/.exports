@@ -51,10 +51,20 @@ export FZF_DEFAULT_OPTS_FILE="$HOME/.fzfrc"
 # Homebrew disable auto-update
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# Enable Docker BuildKit
 export DOCKER_BUILD_KIT=1
 
 # bun.sh
 export BUN_INSTALL="$HOME/.bun"
 
+# direnv
+# disable logging to stdout
 export DIRENV_LOG_FORMAT=
 
+# antidote
+if command -v brew >/dev/null; then
+  PREFIX="$(brew --prefix antidote)/share/antidote/antidote.zsh"
+  # shellcheck source=/dev/null
+  [ -f "$PREFIX" ] && source "$PREFIX"
+  unset PREFIX
+fi

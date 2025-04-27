@@ -6,39 +6,36 @@ for file in "$HOME/.rc.d/."{exports,path,aliases}; do
   [ -f "$file" ] && source "$file"
 done
 
-# Ask sudo and keep-alive
-sudo -v
-while true; do
-  sudo -n true
-  sleep 60
-  kill -0 "$$" || exit
-done >/dev/null 2>&1 &
-
 # Homebrew
-if command -v brew >/dev/null; then
+if command -v brew > /dev/null; then
   echo ""
   echo "╭──────────────╮"
   echo "│ 🍺 Homebrew  │"
   echo "╰──────────────╯"
   echo ""
-  brew update &&
-    brew upgrade &&
-    brew upgrade --cask
+  brew update \
+    && brew upgrade \
+    && brew upgrade --cask
 fi
 
 # Aptitude
-if command -v apt-get >/dev/null; then
+if command -v apt-get > /dev/null; then
   echo ""
   echo -e "╭──────────────╮"
   echo -e "│   Aptitude  │"
   echo -e "╰──────────────╯"
   echo ""
-  sudo apt-get update -y &&
-    sudo apt-get upgrade -y
+  sudo apt-get update -y \
+    && sudo apt-get upgrade -y
+fi
+
+# 1Password CLI completion
+if command -v op > /dev/null; then
+  op completion zsh > "$(realpath "$HOME/.zsh.d/_op")"
 fi
 
 # pi-hole
-if command -v pihole >/dev/null; then
+if command -v pihole > /dev/null; then
   echo ""
   echo -ne "\e[31m"
   echo -e "╭────────────╮"
@@ -50,7 +47,7 @@ if command -v pihole >/dev/null; then
 fi
 
 # npm
-if command -v npm >/dev/null; then
+if command -v npm > /dev/null; then
   echo ""
   echo -ne "\e[32m"
   echo -e "╭─────────╮"
@@ -62,7 +59,7 @@ if command -v npm >/dev/null; then
 fi
 
 # YarnPkg
-if command -v yarnpkg >/dev/null; then
+if command -v yarnpkg > /dev/null; then
   echo ""
   echo -ne "\e[34m"
   echo -e "╭─────────────╮"
@@ -71,6 +68,19 @@ if command -v yarnpkg >/dev/null; then
   echo -ne "\e[0m"
   echo ""
   yarnpkg global upgrade
+fi
+
+# pnpm
+if command -v pnpm > /dev/null; then
+  echo ""
+  echo -ne "\e[33m"
+  echo -e "╭──────────╮"
+  echo -e "│   pnpm  │" # \ue865
+  echo -e "╰──────────╯"
+  echo -ne "\e[0m"
+  echo ""
+  pnpm self-update
+  pnpm completion zsh > "$(realpath "$HOME/.zsh.d/_pnpm")"
 fi
 
 # ruby
@@ -111,7 +121,7 @@ fi
 # fi
 
 # uv
-if command -v uv >/dev/null; then
+if command -v uv > /dev/null; then
   echo ""
   echo -ne "\e[33m"
   echo -e "╭────────╮"
@@ -121,21 +131,22 @@ if command -v uv >/dev/null; then
   echo ""
   uv self update
   uv tool upgrade --all
+  uv generate-shell-completion zsh > "$(realpath "$HOME/.zsh.d/_uv")"
+  uvx --generate-shell-completion zsh > "$(realpath "$HOME/.zsh.d/_uvx")"
 fi
 
-# antibody
-if command -v antibody >/dev/null && [ -f "$HOME/.zshrc.d/.plugins" ]; then
+# antidote
+if command -v antidote > /dev/null && [ -f "$HOME/.zshrc.d/.plugins" ]; then
   echo ""
-  echo "╭────────────╮"
-  echo "│  Antibody  │"
-  echo "╰────────────╯"
+  echo "╭──────────────╮"
+  echo "│  💉Antidote  │"
+  echo "╰──────────────╯"
   echo ""
-  antibody bundle <"$HOME/.zshrc.d/.plugins" >"$HOME/.zshrc.d/.plugins.bundle" &&
-    antibody update
+  antidote update
 fi
 
 # neovim
-if command -v nvim >/dev/null; then
+if command -v nvim > /dev/null; then
   echo ""
   echo -ne "\e[32m"
   echo -e "╭────────────╮"
@@ -143,12 +154,12 @@ if command -v nvim >/dev/null; then
   echo -e "╰────────────╯"
   echo -ne "\e[0m"
   echo ""
-  nvim +PlugUpgrade +PlugUpdate +qall &&
-    nvim +CocUpdate +qall
+  nvim +PlugUpgrade +PlugUpdate +qall \
+    && nvim +CocUpdate +qall
 fi
 
 # rustup
-if command -v rustup >/dev/null; then
+if command -v rustup > /dev/null; then
   echo ""
   echo -ne "\e[31m"
   echo -e "╭────────────╮"
@@ -157,8 +168,9 @@ if command -v rustup >/dev/null; then
   echo -ne "\e[0m"
   echo ""
   rustup update
+  rustup completions zsh > "$(realpath "$HOME/.zsh.d/_rustup")"
 fi
 
 # cleanup
-[ -x "$HOME/.rc.d/.cleanup.sh" ] &&
-  "$HOME/.rc.d/.cleanup.sh"
+[ -x "$HOME/.rc.d/.cleanup.sh" ] \
+  && "$HOME/.rc.d/.cleanup.sh"

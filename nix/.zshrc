@@ -18,17 +18,7 @@ fi
 # cargo
 [ -s "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && . "$HOME/.bun/_bun"
-
 if [ -n "$ZSH_DEBUGRC" ]; then
   zprof
 fi
 
-# pnpm
-export PNPM_HOME="/Users/rahuliyer/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
