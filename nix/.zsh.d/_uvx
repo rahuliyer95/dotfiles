@@ -17,8 +17,14 @@ _uvx() {
     _arguments "${_arguments_options[@]}" : \
 '--from=[Use the given package to provide the command]:FROM:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
-'*--with-editable=[Run with the given packages installed as editables]:WITH_EDITABLE:_default' \
+'*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
 '*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
+'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
+'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
+'*--overrides=[Override versions using the given requirements files]:OVERRIDES:_default' \
+'*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_files' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -59,7 +65,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '--python=[The Python interpreter to use to build the run environment.]:PYTHON:_default' \
 '--generate-shell-completion=[]:GENERATE_SHELL_COMPLETION:(bash elvish fish nushell powershell zsh)' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -74,6 +80,7 @@ never\:"Disables colored output"))' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--isolated[Run the tool in an isolated virtual environment, ignoring any already-installed tools]' \
+'--no-env-file[Avoid reading environment variables from a \`.env\` file]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
 '--upgrade[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -95,10 +102,12 @@ never\:"Disables colored output"))' \
 '--show-resolution[Whether to show resolver and installer output from any environment modifications]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \

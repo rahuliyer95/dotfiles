@@ -16,7 +16,7 @@ _uv() {
     local context curcontext="$curcontext" state line
     _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -32,10 +32,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -68,11 +70,11 @@ _arguments "${_arguments_options[@]}" : \
 '(--all-extras)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:_default' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
-'*--no-group=[Exclude dependencies from the specified dependency group]:NO_GROUP:_default' \
+'*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
 '*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_files' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
-'*--with-editable=[Run with the given packages installed as editables]:WITH_EDITABLE:_default' \
+'*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
 '*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
@@ -113,8 +115,9 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '(--all-packages)--package=[Run the command in a specific package in the workspace]:PACKAGE:_default' \
 '-p+[The Python interpreter to use for the run environment.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for the run environment.]:PYTHON:_default' \
+'--max-recursion-depth=[Number of times that \`uv run\` will allow recursive invocations]:MAX_RECURSION_DEPTH:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -131,8 +134,8 @@ never\:"Disables colored output"))' \
 '(--extra)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
 '--dev[Include the development dependency group]' \
-'--no-dev[Omit the development dependency group]' \
-'--no-default-groups[Exclude dependencies from default groups]' \
+'--no-dev[Disable the development dependency group]' \
+'--no-default-groups[Ignore the default dependency groups]' \
 '(--only-group --only-dev)--all-groups[Include dependencies from all dependency groups]' \
 '(-s --script --gui-script)-m[Run a Python module]' \
 '(-s --script --gui-script)--module[Run a Python module]' \
@@ -173,10 +176,12 @@ never\:"Disables colored output"))' \
 '--show-resolution[Whether to show resolver and installer output from any environment modifications]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -214,7 +219,7 @@ none\:"Do not infer the author information"))' \
 '-p+[The Python interpreter to use to determine the minimum supported Python version.]:PYTHON:_default' \
 '--python=[The Python interpreter to use to determine the minimum supported Python version.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -243,10 +248,12 @@ never\:"Disables colored output"))' \
 '--no-workspace[Avoid discovering a workspace and create a standalone project]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -272,6 +279,10 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '*-r+[Add all packages listed in the given \`requirements.txt\` files]:REQUIREMENTS:_files' \
 '*--requirements=[Add all packages listed in the given \`requirements.txt\` files]:REQUIREMENTS:_files' \
+'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
+'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
+'-m+[Apply this marker to all added packages]:MARKER:_default' \
+'--marker=[Apply this marker to all added packages]:MARKER:_default' \
 '(--dev --group)--optional=[Add the requirements to the package'\''s optional dependencies for the specified extra]:OPTIONAL:_default' \
 '(--dev --optional)--group=[Add the requirements to the specified dependency group]:GROUP:_default' \
 '--rev=[Commit to use when adding a dependency from Git]:REV:_default' \
@@ -319,7 +330,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '-p+[The Python interpreter to use for resolving and syncing.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for resolving and syncing.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -362,10 +373,12 @@ never\:"Disables colored output"))' \
 '(--offline)--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -432,7 +445,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '-p+[The Python interpreter to use for resolving and syncing.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for resolving and syncing.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -472,10 +485,12 @@ never\:"Disables colored output"))' \
 '(--offline)--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -502,7 +517,7 @@ _arguments "${_arguments_options[@]}" : \
 '(--all-extras)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:_default' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
-'*--no-group=[Exclude dependencies from the specified dependency group]:NO_GROUP:_default' \
+'*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
 '*--no-install-package=[Do not install the given package(s)]:NO_INSTALL_PACKAGE:_default' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -542,10 +557,11 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:_default' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:_default' \
 '(--all-packages)--package=[Sync for a specific package in the workspace]:PACKAGE:_default' \
+'(--all-packages --package --no-install-project --no-install-workspace --extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups)--script=[Sync the environment for a Python script, rather than the current project]:SCRIPT:_files' \
 '-p+[The Python interpreter to use for the project environment.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for the project environment.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -562,19 +578,20 @@ never\:"Disables colored output"))' \
 '(--extra)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
 '--dev[Include the development dependency group]' \
-'--no-dev[Omit the development dependency group]' \
+'--no-dev[Disable the development dependency group]' \
 '(--group --all-groups --no-dev)--only-dev[Only include the development dependency group]' \
-'--no-default-groups[Exclude dependencies from default groups]' \
+'--no-default-groups[Ignore the default dependency groups]' \
 '(--only-group --only-dev)--all-groups[Include dependencies from all dependency groups]' \
 '--no-editable[Install any editable dependencies, including the project and any workspace members, as non-editable]' \
 '--inexact[Do not remove extraneous packages present in the environment]' \
 '--exact[Perform an exact sync, removing extraneous packages]' \
-'--active[Prefer the active virtual environment over the project'\''s virtual environment]' \
+'--active[Sync dependencies to the active virtual environment]' \
 '--no-active[Prefer project'\''s virtual environment over an active environment]' \
 '--no-install-project[Do not install the current project]' \
 '--no-install-workspace[Do not install any workspace members, including the root project]' \
 '(--frozen -U --upgrade)--locked[Assert that the \`uv.lock\` will remain unchanged]' \
 '(--locked)--frozen[Sync without updating the \`uv.lock\` file]' \
+'--dry-run[Perform a dry run, without writing the lockfile or modifying the project environment]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
 '--upgrade[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -594,12 +611,16 @@ never\:"Disables colored output"))' \
 '(--offline)--refresh[Refresh all cached data]' \
 '(--offline)--no-refresh[]' \
 '(--package)--all-packages[Sync all packages in the workspace]' \
+'--check[Check if the Python environment is synchronized with the project]' \
+'--no-check[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -661,7 +682,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '-p+[The Python interpreter to use during resolution.]:PYTHON:_default' \
 '--python=[The Python interpreter to use during resolution.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -694,10 +715,12 @@ never\:"Disables colored output"))' \
 '(--offline)--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -720,13 +743,14 @@ never\:"Disables colored output"))' \
 ;;
 (export)
 _arguments "${_arguments_options[@]}" : \
-'--format=[The format to which \`uv.lock\` should be exported]:FORMAT:((requirements-txt\:"Export in \`requirements.txt\` format"))' \
+'--format=[The format to which \`uv.lock\` should be exported]:FORMAT:((requirements.txt\:"Export in \`requirements.txt\` format"
+pylock.toml\:"Export in \`pylock.toml\` format"))' \
 '(--all-packages)--package=[Export the dependencies for a specific package in the workspace]:PACKAGE:_default' \
-'(--all-packages)*--prune=[Prune the given package from the dependency tree]:PRUNE:_default' \
+'(--all-packages)*--prune=[Prune the given package from the dependency tree]:PACKAGE:_default' \
 '(--all-extras)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:_default' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
-'*--no-group=[Exclude dependencies from the specified dependency group]:NO_GROUP:_default' \
+'*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
 '-o+[Write the exported requirements to the given file]:OUTPUT_FILE:_files' \
 '--output-file=[Write the exported requirements to the given file]:OUTPUT_FILE:_files' \
@@ -770,7 +794,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '-p+[The Python interpreter to use during resolution.]:PYTHON:_default' \
 '--python=[The Python interpreter to use during resolution.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -788,10 +812,12 @@ never\:"Disables colored output"))' \
 '(--extra)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
 '--dev[Include the development dependency group]' \
-'--no-dev[Omit the development dependency group]' \
+'--no-dev[Disable the development dependency group]' \
 '(--group --all-groups --no-dev)--only-dev[Only include the development dependency group]' \
-'--no-default-groups[Exclude dependencies from default groups]' \
+'--no-default-groups[Ignore the default dependency groups]' \
 '(--only-group --only-dev)--all-groups[Include dependencies from all dependency groups]' \
+'--no-annotate[Exclude comment annotations indicating the source of each package]' \
+'--annotate[]' \
 '--no-header[Exclude the comment header at the top of the generated output file]' \
 '--header[]' \
 '--no-editable[Install any editable dependencies, including the project and any workspace members, as non-editable]' \
@@ -817,10 +843,12 @@ never\:"Disables colored output"))' \
 '(--offline)--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -848,7 +876,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--prune=[Prune the given package from the display of the dependency tree]:PRUNE:_default' \
 '*--package=[Display only the specified packages]:PACKAGE:_default' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
-'*--no-group=[Exclude dependencies from the specified dependency group]:NO_GROUP:_default' \
+'*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:_default' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:_default' \
@@ -926,7 +954,7 @@ aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"))'
 '-p+[The Python interpreter to use for locking and filtering.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for locking and filtering.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -946,8 +974,8 @@ never\:"Disables colored output"))' \
 '--outdated[Show the latest available version of each package in the tree]' \
 '--dev[Include the development dependency group]' \
 '(--group --all-groups --no-dev)--only-dev[Only include the development dependency group]' \
-'--no-dev[Omit the development dependency group]' \
-'--no-default-groups[Exclude dependencies from default groups]' \
+'--no-dev[Disable the development dependency group]' \
+'--no-default-groups[Ignore the default dependency groups]' \
 '(--only-group --only-dev)--all-groups[Include dependencies from all dependency groups]' \
 '(--frozen -U --upgrade)--locked[Assert that the \`uv.lock\` will remain unchanged]' \
 '(--locked)--frozen[Display the requirements without locking the project]' \
@@ -965,10 +993,12 @@ never\:"Disables colored output"))' \
 '--no-sources[Ignore the \`tool.uv.sources\` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -992,7 +1022,7 @@ never\:"Disables colored output"))' \
 (tool)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1008,10 +1038,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1044,8 +1076,14 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '--from=[Use the given package to provide the command]:FROM:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
-'*--with-editable=[Run with the given packages installed as editables]:WITH_EDITABLE:_default' \
+'*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
 '*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
+'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
+'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
+'*--overrides=[Override versions using the given requirements files]:OVERRIDES:_default' \
+'*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_files' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -1086,7 +1124,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '--python=[The Python interpreter to use to build the run environment.]:PYTHON:_default' \
 '--generate-shell-completion=[]:GENERATE_SHELL_COMPLETION:(bash elvish fish nushell powershell zsh)' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1101,6 +1139,7 @@ never\:"Disables colored output"))' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--isolated[Run the tool in an isolated virtual environment, ignoring any already-installed tools]' \
+'--no-env-file[Avoid reading environment variables from a \`.env\` file]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
 '--upgrade[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -1122,10 +1161,12 @@ never\:"Disables colored output"))' \
 '--show-resolution[Whether to show resolver and installer output from any environment modifications]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1149,8 +1190,14 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '--from=[Use the given package to provide the command]:FROM:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
-'*--with-editable=[Run with the given packages installed as editables]:WITH_EDITABLE:_default' \
+'*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
 '*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
+'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
+'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
+'*--overrides=[Override versions using the given requirements files]:OVERRIDES:_default' \
+'*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_files' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -1191,7 +1238,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '--python=[The Python interpreter to use to build the run environment.]:PYTHON:_default' \
 '--generate-shell-completion=[]:GENERATE_SHELL_COMPLETION:(bash elvish fish nushell powershell zsh)' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1206,6 +1253,7 @@ never\:"Disables colored output"))' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--isolated[Run the tool in an isolated virtual environment, ignoring any already-installed tools]' \
+'--no-env-file[Avoid reading environment variables from a \`.env\` file]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
 '--upgrade[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -1227,10 +1275,12 @@ never\:"Disables colored output"))' \
 '--show-resolution[Whether to show resolver and installer output from any environment modifications]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1254,11 +1304,13 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '--from=[The package to install commands from]:FROM:_default' \
 '*--with=[Include the following extra requirements]:WITH:_default' \
-'*--with-editable=[Include the given packages as editables]:WITH_EDITABLE:_default' \
 '*--with-requirements=[Run all requirements listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
+'*--with-editable=[Include the given packages in editable mode]:WITH_EDITABLE:_default' \
 '*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*--overrides=[Override versions using the given requirements files]:OVERRIDES:_default' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -1298,7 +1350,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '-p+[The Python interpreter to use to build the tool environment.]:PYTHON:_default' \
 '--python=[The Python interpreter to use to build the tool environment.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1312,8 +1364,8 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
-'-e[]' \
-'--editable[]' \
+'-e[Install the target package in editable mode, such that changes in the package'\''s source directory are reflected without reinstallation]' \
+'--editable[Install the target package in editable mode, such that changes in the package'\''s source directory are reflected without reinstallation]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
 '--upgrade[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -1335,10 +1387,12 @@ never\:"Disables colored output"))' \
 '--force[Force installation of the tool]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1400,7 +1454,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:_default' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1432,10 +1486,12 @@ never\:"Disables colored output"))' \
 '--binary[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1479,9 +1535,11 @@ never\:"Disables colored output"))' \
 '--no-python-downloads[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1505,7 +1563,7 @@ never\:"Disables colored output"))' \
 (uninstall)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1522,10 +1580,12 @@ never\:"Disables colored output"))' \
 '()--all[Uninstall all tools]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1550,7 +1610,7 @@ never\:"Disables colored output"))' \
 (update-shell)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1566,10 +1626,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1593,7 +1655,7 @@ never\:"Disables colored output"))' \
 (dir)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1610,10 +1672,12 @@ never\:"Disables colored output"))' \
 '--bin[Show the directory into which \`uv tool\` will install executables.]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1641,7 +1705,7 @@ esac
 (python)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1657,10 +1721,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1694,7 +1760,7 @@ _arguments "${_arguments_options[@]}" : \
 '--output-format=[Select the output format]:OUTPUT_FORMAT:((text\:"Plain text (for humans)"
 json\:"JSON (for computers)"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1711,15 +1777,17 @@ never\:"Disables colored output"))' \
 '--all-versions[List all Python versions, including old patch versions]' \
 '--all-platforms[List Python downloads for all platforms]' \
 '--all-arches[List Python downloads for all architectures]' \
-'(--only-downloads)--only-installed[Only show installed Python versions, exclude available downloads]' \
-'(--only-installed)--only-downloads[Only show Python downloads, exclude installed distributions]' \
+'(--only-downloads)--only-installed[Only show installed Python versions]' \
+'(--only-installed)--only-downloads[Only show available Python downloads]' \
 '--show-urls[Show the URLs of available Python downloads]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1738,6 +1806,7 @@ never\:"Disables colored output"))' \
 '--help[Display the concise help for this command]' \
 '-V[Display the uv version]' \
 '--version[Display the uv version]' \
+'::request -- A Python request to filter by:_default' \
 && ret=0
 ;;
 (install)
@@ -1747,7 +1816,7 @@ _arguments "${_arguments_options[@]}" : \
 '--mirror=[Set the URL to use as the source for downloading Python installations]:MIRROR:_default' \
 '--pypy-mirror=[Set the URL to use as the source for downloading PyPy installations]:PYPY_MIRROR:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1768,10 +1837,12 @@ never\:"Disables colored output"))' \
 '--default[Use as the default Python version]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1795,8 +1866,9 @@ never\:"Disables colored output"))' \
 ;;
 (find)
 _arguments "${_arguments_options[@]}" : \
+'(--no-project --system --no-system)--script=[Find the environment for a Python script, rather than the current project]:SCRIPT:_files' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1813,12 +1885,15 @@ never\:"Disables colored output"))' \
 '--no-project[Avoid discovering a project or workspace]' \
 '--system[Only find system Python interpreters]' \
 '--no-system[]' \
+'--show-version[Show the Python version that would be used instead of the path to the interpreter]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1843,7 +1918,7 @@ never\:"Disables colored output"))' \
 (pin)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1860,12 +1935,15 @@ never\:"Disables colored output"))' \
 '--resolved[Write the resolved Python interpreter path instead of the request]' \
 '--no-resolved[]' \
 '--no-project[Avoid validating the Python pin is compatible with the project or workspace]' \
+'--global[Update the global Python version pin]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1890,7 +1968,7 @@ never\:"Disables colored output"))' \
 (dir)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1907,10 +1985,12 @@ never\:"Disables colored output"))' \
 '--bin[Show the directory into which \`uv python\` will install Python executables.]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1936,7 +2016,7 @@ _arguments "${_arguments_options[@]}" : \
 '-i+[The directory where the Python was installed]:INSTALL_DIR:_files' \
 '--install-dir=[The directory where the Python was installed]:INSTALL_DIR:_files' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -1953,10 +2033,12 @@ never\:"Disables colored output"))' \
 '()--all[Uninstall all managed Python versions]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -1985,7 +2067,7 @@ esac
 (pip)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2001,10 +2083,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2074,15 +2158,18 @@ copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:_default' \
-'-o+[Write the compiled requirements to the given \`requirements.txt\` file]:OUTPUT_FILE:_files' \
-'--output-file=[Write the compiled requirements to the given \`requirements.txt\` file]:OUTPUT_FILE:_files' \
+'*--group=[Install the specified dependency group from a \`pyproject.toml\`]:GROUP:_default' \
+'-o+[Write the compiled requirements to the given \`requirements.txt\` or \`pylock.toml\` file]:OUTPUT_FILE:_files' \
+'--output-file=[Write the compiled requirements to the given \`requirements.txt\` or \`pylock.toml\` file]:OUTPUT_FILE:_files' \
+'--format=[The format in which the resolution should be output]:FORMAT:((requirements.txt\:"Export in \`requirements.txt\` format"
+pylock.toml\:"Export in \`pylock.toml\` format"))' \
 '--annotation-style=[The style of the annotation comments included in the output file, used to indicate the source of each package]:ANNOTATION_STYLE:((line\:"Render the annotations on a single, comma-separated line"
 split\:"Render each annotation on its own line"))' \
 '--custom-compile-command=[The header comment to include at the top of the output file generated by \`uv pip compile\`]:CUSTOM_COMPILE_COMMAND:_default' \
+'-p+[The Python interpreter to use during resolution.]:PYTHON:_default' \
 '--python=[The Python interpreter to use during resolution.]:PYTHON:_default' \
 '(--no-build)*--no-binary=[Don'\''t install pre-built wheels]:NO_BINARY:_default' \
 '(--no-build)*--only-binary=[Only use pre-built wheels; don'\''t build source distributions]:ONLY_BINARY:_default' \
-'-p+[The Python version to use for resolution]:PYTHON_VERSION:_default' \
 '--python-version=[The Python version to use for resolution]:PYTHON_VERSION:_default' \
 '--python-platform=[The platform for which requirements should be resolved]:PYTHON_PLATFORM:((windows\:"An alias for \`x86_64-pc-windows-msvc\`, the default target for Windows"
 linux\:"An alias for \`x86_64-unknown-linux-gnu\`, the default target for Linux"
@@ -2122,6 +2209,32 @@ aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"))' \
 '*--no-emit-package=[Specify a package to omit from the output resolution. Its dependencies will still be included in the resolution. Equivalent to pip-compile'\''s \`--unsafe-package\` option]:NO_EMIT_PACKAGE:_default' \
+'--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
+cpu\:"Use the CPU-only PyTorch index"
+cu128\:"Use the PyTorch index for CUDA 12.8"
+cu126\:"Use the PyTorch index for CUDA 12.6"
+cu125\:"Use the PyTorch index for CUDA 12.5"
+cu124\:"Use the PyTorch index for CUDA 12.4"
+cu123\:"Use the PyTorch index for CUDA 12.3"
+cu122\:"Use the PyTorch index for CUDA 12.2"
+cu121\:"Use the PyTorch index for CUDA 12.1"
+cu120\:"Use the PyTorch index for CUDA 12.0"
+cu118\:"Use the PyTorch index for CUDA 11.8"
+cu117\:"Use the PyTorch index for CUDA 11.7"
+cu116\:"Use the PyTorch index for CUDA 11.6"
+cu115\:"Use the PyTorch index for CUDA 11.5"
+cu114\:"Use the PyTorch index for CUDA 11.4"
+cu113\:"Use the PyTorch index for CUDA 11.3"
+cu112\:"Use the PyTorch index for CUDA 11.2"
+cu111\:"Use the PyTorch index for CUDA 11.1"
+cu110\:"Use the PyTorch index for CUDA 11.0"
+cu102\:"Use the PyTorch index for CUDA 10.2"
+cu101\:"Use the PyTorch index for CUDA 10.1"
+cu100\:"Use the PyTorch index for CUDA 10.0"
+cu92\:"Use the PyTorch index for CUDA 9.2"
+cu91\:"Use the PyTorch index for CUDA 9.1"
+cu90\:"Use the PyTorch index for CUDA 9.0"
+cu80\:"Use the PyTorch index for CUDA 8.0"))' \
 '--resolver=[]:RESOLVER:(backtracking legacy)' \
 '--max-rounds=[]:MAX_ROUNDS:_default' \
 '--cert=[]:CERT:_default' \
@@ -2129,7 +2242,7 @@ aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"))'
 '--config=[]:CONFIG:_default' \
 '--pip-args=[]:PIP_ARGS:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2194,10 +2307,12 @@ never\:"Disables colored output"))' \
 '--no-emit-options[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2289,13 +2404,39 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"))' \
+'--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
+cpu\:"Use the CPU-only PyTorch index"
+cu128\:"Use the PyTorch index for CUDA 12.8"
+cu126\:"Use the PyTorch index for CUDA 12.6"
+cu125\:"Use the PyTorch index for CUDA 12.5"
+cu124\:"Use the PyTorch index for CUDA 12.4"
+cu123\:"Use the PyTorch index for CUDA 12.3"
+cu122\:"Use the PyTorch index for CUDA 12.2"
+cu121\:"Use the PyTorch index for CUDA 12.1"
+cu120\:"Use the PyTorch index for CUDA 12.0"
+cu118\:"Use the PyTorch index for CUDA 11.8"
+cu117\:"Use the PyTorch index for CUDA 11.7"
+cu116\:"Use the PyTorch index for CUDA 11.6"
+cu115\:"Use the PyTorch index for CUDA 11.5"
+cu114\:"Use the PyTorch index for CUDA 11.4"
+cu113\:"Use the PyTorch index for CUDA 11.3"
+cu112\:"Use the PyTorch index for CUDA 11.2"
+cu111\:"Use the PyTorch index for CUDA 11.1"
+cu110\:"Use the PyTorch index for CUDA 11.0"
+cu102\:"Use the PyTorch index for CUDA 10.2"
+cu101\:"Use the PyTorch index for CUDA 10.1"
+cu100\:"Use the PyTorch index for CUDA 10.0"
+cu92\:"Use the PyTorch index for CUDA 9.2"
+cu91\:"Use the PyTorch index for CUDA 9.1"
+cu90\:"Use the PyTorch index for CUDA 9.0"
+cu80\:"Use the PyTorch index for CUDA 8.0"))' \
 '--python-executable=[]:PYTHON_EXECUTABLE:_default' \
 '--cert=[]:CERT:_default' \
 '--client-cert=[]:CLIENT_CERT:_default' \
 '--config=[]:CONFIG:_default' \
 '--pip-args=[]:PIP_ARGS:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2340,10 +2481,12 @@ never\:"Disables colored output"))' \
 '--no-config[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2410,6 +2553,7 @@ copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:_default' \
+'*--group=[Install the specified dependency group from a \`pyproject.toml\`]:GROUP:_default' \
 '-p+[The Python interpreter into which packages should be installed.]:PYTHON:_default' \
 '--python=[The Python interpreter into which packages should be installed.]:PYTHON:_default' \
 '(--prefix)--target=[Install packages into the specified directory, rather than into the virtual or system Python environment. The packages will be installed at the top-level of the directory]:TARGET:_files' \
@@ -2454,8 +2598,34 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"))' \
+'--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
+cpu\:"Use the CPU-only PyTorch index"
+cu128\:"Use the PyTorch index for CUDA 12.8"
+cu126\:"Use the PyTorch index for CUDA 12.6"
+cu125\:"Use the PyTorch index for CUDA 12.5"
+cu124\:"Use the PyTorch index for CUDA 12.4"
+cu123\:"Use the PyTorch index for CUDA 12.3"
+cu122\:"Use the PyTorch index for CUDA 12.2"
+cu121\:"Use the PyTorch index for CUDA 12.1"
+cu120\:"Use the PyTorch index for CUDA 12.0"
+cu118\:"Use the PyTorch index for CUDA 11.8"
+cu117\:"Use the PyTorch index for CUDA 11.7"
+cu116\:"Use the PyTorch index for CUDA 11.6"
+cu115\:"Use the PyTorch index for CUDA 11.5"
+cu114\:"Use the PyTorch index for CUDA 11.4"
+cu113\:"Use the PyTorch index for CUDA 11.3"
+cu112\:"Use the PyTorch index for CUDA 11.2"
+cu111\:"Use the PyTorch index for CUDA 11.1"
+cu110\:"Use the PyTorch index for CUDA 11.0"
+cu102\:"Use the PyTorch index for CUDA 10.2"
+cu101\:"Use the PyTorch index for CUDA 10.1"
+cu100\:"Use the PyTorch index for CUDA 10.0"
+cu92\:"Use the PyTorch index for CUDA 9.2"
+cu91\:"Use the PyTorch index for CUDA 9.1"
+cu90\:"Use the PyTorch index for CUDA 9.0"
+cu80\:"Use the PyTorch index for CUDA 8.0"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2506,10 +2676,12 @@ never\:"Disables colored output"))' \
 '--user[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2542,7 +2714,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 '(--prefix)--target=[Uninstall packages from the specified \`--target\` directory]:TARGET:_files' \
 '(--target)--prefix=[Uninstall packages from the specified \`--prefix\` directory]:PREFIX:_files' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2564,10 +2736,12 @@ never\:"Disables colored output"))' \
 '--disable-pip-version-check[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2595,7 +2769,7 @@ _arguments "${_arguments_options[@]}" : \
 '--python=[The Python interpreter for which packages should be listed.]:PYTHON:_default' \
 '*--path=[Restrict to the specified installation path for listing packages (can be used multiple times)]:PATHS:_files' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2617,10 +2791,12 @@ never\:"Disables colored output"))' \
 '--disable-pip-version-check[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2663,7 +2839,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 '-p+[The Python interpreter for which packages should be listed.]:PYTHON:_default' \
 '--python=[The Python interpreter for which packages should be listed.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2690,10 +2866,12 @@ never\:"Disables colored output"))' \
 '--disable-pip-version-check[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2719,7 +2897,7 @@ _arguments "${_arguments_options[@]}" : \
 '-p+[The Python interpreter to find the package in.]:PYTHON:_default' \
 '--python=[The Python interpreter to find the package in.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2742,10 +2920,12 @@ never\:"Disables colored output"))' \
 '--disable-pip-version-check[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2789,7 +2969,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 '-p+[The Python interpreter for which packages should be listed.]:PYTHON:_default' \
 '--python=[The Python interpreter for which packages should be listed.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2815,10 +2995,12 @@ never\:"Disables colored output"))' \
 '--disable-pip-version-check[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2844,7 +3026,7 @@ _arguments "${_arguments_options[@]}" : \
 '-p+[The Python interpreter for which packages should be checked.]:PYTHON:_default' \
 '--python=[The Python interpreter for which packages should be checked.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2862,10 +3044,12 @@ never\:"Disables colored output"))' \
 '--no-system[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -2914,7 +3098,7 @@ hardlink\:"Hard link packages from the wheel into the \`site-packages\` director
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -2945,10 +3129,12 @@ never\:"Disables colored output"))' \
 '--no-wheel[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3015,7 +3201,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:_default' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3056,10 +3242,12 @@ never\:"Disables colored output"))' \
 '(--offline)--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3083,7 +3271,7 @@ never\:"Disables colored output"))' \
 ;;
 (publish)
 _arguments "${_arguments_options[@]}" : \
-'(--publish-url --check-url)--index=[The name of an index in the configuration to use for publishing]:INDEX:_default' \
+'(--publish-url --check-url)--index=[The name of an index in the configuration to use for publishing.]:INDEX:_default' \
 '-u+[The username for the upload]:USERNAME:_default' \
 '--username=[The username for the upload]:USERNAME:_default' \
 '-p+[The password for the upload]:PASSWORD:_default' \
@@ -3098,7 +3286,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 '--publish-url=[The URL of the upload endpoint (not the index URL)]:PUBLISH_URL:_default' \
 '--check-url=[Check an index URL for existing files to skip duplicate uploads]:CHECK_URL:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3115,10 +3303,12 @@ never\:"Disables colored output"))' \
 '--skip-existing[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3143,7 +3333,7 @@ never\:"Disables colored output"))' \
 (build-backend)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3159,10 +3349,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3194,7 +3386,7 @@ never\:"Disables colored output"))' \
             (build-sdist)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3210,10 +3402,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3239,7 +3433,7 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '--metadata-directory=[]:METADATA_DIRECTORY:_files' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3255,10 +3449,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3284,7 +3480,7 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '--metadata-directory=[]:METADATA_DIRECTORY:_files' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3300,10 +3496,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3328,7 +3526,7 @@ never\:"Disables colored output"))' \
 (get-requires-for-build-sdist)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3344,10 +3542,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3371,7 +3571,7 @@ never\:"Disables colored output"))' \
 (get-requires-for-build-wheel)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3387,10 +3587,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3414,7 +3616,7 @@ never\:"Disables colored output"))' \
 (prepare-metadata-for-build-wheel)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3430,10 +3632,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3458,7 +3662,7 @@ never\:"Disables colored output"))' \
 (get-requires-for-build-editable)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3474,10 +3678,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3501,7 +3707,7 @@ never\:"Disables colored output"))' \
 (prepare-metadata-for-build-editable)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3517,10 +3723,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3549,7 +3757,7 @@ esac
 (cache)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3565,10 +3773,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3600,7 +3810,7 @@ never\:"Disables colored output"))' \
             (clean)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3616,10 +3826,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3644,7 +3856,7 @@ never\:"Disables colored output"))' \
 (prune)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3661,10 +3873,12 @@ never\:"Disables colored output"))' \
 '--ci[Optimize the cache for persistence in a continuous integration environment, like GitHub Actions]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3688,7 +3902,7 @@ never\:"Disables colored output"))' \
 (dir)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3704,10 +3918,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3735,7 +3951,7 @@ esac
 (self)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3751,10 +3967,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3787,7 +4005,7 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '--token=[A GitHub token for authentication. A token is not required but can be used to reduce the chance of encountering rate limits]:TOKEN:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3803,10 +4021,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3835,7 +4055,7 @@ esac
 (clean)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3851,10 +4071,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3881,7 +4103,7 @@ _arguments "${_arguments_options[@]}" : \
 '--output-format=[]:OUTPUT_FORMAT:((text\:"Display the version as plain text"
 json\:"Display the version as JSON"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3897,10 +4119,12 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
@@ -3941,8 +4165,8 @@ never\:"Do not ever allow Python downloads"))' \
 '-n[]' \
 '--no-cache[]' \
 '--no-python-downloads[]' \
-'(-v --verbose)-q[]' \
-'(-v --verbose)--quiet[]' \
+'(-v --verbose)*-q[]' \
+'(-v --verbose)*--quiet[]' \
 '(-q --quiet)*-v[]' \
 '(-q --quiet)*--verbose[]' \
 '--native-tls[]' \
@@ -3953,6 +4177,8 @@ never\:"Do not ever allow Python downloads"))' \
 '--help[]' \
 '-V[]' \
 '--version[]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '(--color)--no-color[Disable colors]' \
 '--no-native-tls[]' \
@@ -3968,7 +4194,7 @@ never\:"Do not ever allow Python downloads"))' \
 (help)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[Whether to prefer uv-managed or system Python installations]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
@@ -3985,10 +4211,12 @@ never\:"Disables colored output"))' \
 '--no-pager[Disable pager when printing help]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
 '--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
 '--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)-q[Do not print any output]' \
-'(-v --verbose)--quiet[Do not print any output]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
