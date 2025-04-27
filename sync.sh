@@ -10,8 +10,10 @@ esac
 
 for DIR in "${DIRS[@]}"; do
   while read -r file; do
-    homepath="$(echo "$file" | sed "s/$DIR\///")"
-    rm "$HOME/$homepath"
-    ln -s "$PWD/$file" "$HOME/$homepath"
+    homepath="$HOME/$(echo "$file" | sed "s/$DIR\///")"
+    homedir="$(dirname "$homepath")"
+    rm "$homepath"
+    mkdir -p "$homedir"
+    ln -s "$PWD/$file" "$homepath"
   done < <(find "$DIR" -type f)
 done
