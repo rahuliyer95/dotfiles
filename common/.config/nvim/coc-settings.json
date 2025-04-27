@@ -1,26 +1,18 @@
 {
   "basedpyright.analysis.typeCheckingMode": "off",
   "basedpyright.disableOrganizeImports": true,
+  "bashIde.shfmt.binaryNextLine": true,
+  "bashIde.shfmt.caseIndent": true,
+  "bashIde.shfmt.simplifyCode": true,
+  "bashIde.shfmt.spaceRedirects": true,
   // "diagnostic.warningSign": "", // 0xf071 nerd-font
   "diagnostic-languageserver.filetypes": {
     "bzl": [
       "buildifier"
-    ],
-    "markdown": [
-      "vale-md"
-    ],
-    "rst": [
-      "vale-rst"
-    ],
-    "sh": "shellcheck",
-    "text": [
-      "vale"
     ]
   },
   "diagnostic-languageserver.formatFiletypes": {
-    "bzl": "buildifier",
-    "sh": "shfmt",
-    "zsh": "shfmt"
+    "bzl": "buildifier"
   },
   "diagnostic-languageserver.formatters": {
     "buildifier": {
@@ -30,17 +22,6 @@
         "%file"
       ],
       "command": "buildifier"
-    },
-    "shfmt": {
-      "args": [
-        "-i",
-        "2",
-        "-bn",
-        "-ci",
-        "-sr",
-        "-s"
-      ],
-      "command": "shfmt"
     }
   },
   "diagnostic-languageserver.linters": {
