@@ -70,4 +70,7 @@ if command -v brew >/dev/null; then
   # shellcheck source=/dev/null
   [ -f "$PREFIX" ] && source "$PREFIX"
   unset PREFIX
+elif [ -d "$HOME/.antidote" ]; then
+  # shellcheck source=/dev/null
+  source "$HOME/.antidote/antidote.zsh"
 fi

@@ -43,7 +43,7 @@ if command -v pihole > /dev/null; then
   echo -e "╰────────────╯"
   echo -ne "\e[0m"
   echo ""
-  pihole -up
+  sudo pihole -up
 fi
 
 # npm

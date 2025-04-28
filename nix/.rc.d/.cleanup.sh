@@ -114,7 +114,7 @@ fi
 
 declare -A CACHE_ALLOW_LIST=([antidote]=1 [llama.cpp]=1)
 for dir in "$HOME/Library/Caches" "/Library/Caches"; do
-  if cd "$dir"; then
+  if cd "$dir" 2> /dev/null; then
     while read -r file; do
       filename="$(basename "$file")"
       fullpath="$(sudo realpath "$dir/$filename" 2> /dev/null)"
@@ -139,14 +139,18 @@ for dir in "$HOME/Library/Caches" "/Library/Caches"; do
   fi
 done
 
-echo -en "ℹ️ Purge inactive memory"
-sudo purge
-echo -en "\r✅ Purge inactive memory\n"
+if command -v purge > /dev/null; then
+  echo -en "ℹ️ Purge inactive memory"
+  sudo purge
+  echo -en "\r✅ Purge inactive memory\n"
+fi
 
 new_available="$(df -k / | tail -1 | awk '{print $4}')"
-if type "numfmt" &> /dev/null; then
-  count="$((new_available - old_available))"
-  [ $count -lt 0 ] && count="0"
-  count="${count}K"
+count="$((new_available - old_available))"
+[ $count -lt 0 ] && count="0"
+count="${count}K"
+if command -v numfmt > /dev/null; then
   echo "🚀 $(numfmt --from iec --to iec --suffix B $count) of space was cleaned up"
+else
+  echo "🚀 $count of space was cleaned up"
 fi
