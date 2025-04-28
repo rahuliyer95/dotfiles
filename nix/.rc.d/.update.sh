@@ -155,7 +155,8 @@ if command -v nvim > /dev/null; then
   echo -ne "\e[0m"
   echo ""
   nvim +PlugUpgrade +PlugUpdate +qall \
-    && nvim +CocUpdate +qall
+    && nvim +CocUpdate +qall \
+    && nvim +TSUpdateSync +qall
 fi
 
 # rustup
