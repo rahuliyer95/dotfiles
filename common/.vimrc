@@ -60,7 +60,7 @@ endif
 Plug 'luochen1990/rainbow'
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
 Plug 'gisphm/vim-gitignore'
 Plug 'dstein64/vim-startuptime'
 Plug 'osyo-manga/vim-anzu'
@@ -410,7 +410,7 @@ let g:rainbow_active = 1
 
 " vim-indent-guides {{{
 
-let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_enable_on_vim_startup = 1
 
 " }}}
 
