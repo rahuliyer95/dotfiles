@@ -15,7 +15,6 @@ tap "beeftornado/rmtree"
 tap "eth-p/software"
 tap "fabianishere/personal"
 tap "jorgelbg/tap"
-tap "nodenv/nodenv"
 tap "rahuliyer95/personal"
 # endregion }}}
 
@@ -64,9 +63,6 @@ brew "kind"
 brew "known_hosts"
 brew "lsd"
 brew "neovim"
-brew "nodenv"
-brew "nodenv/nodenv/nodenv-aliases"
-brew "nodenv/nodenv/nodenv-update"
 # brew "openjdk@17", link: true
 # brew "openjdk@21"
 brew "pam-reattach"
