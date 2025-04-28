@@ -77,3 +77,6 @@ fi
 # bun.sh
 [ -d "$BUN_INSTALL" ] && export PATH="$BUN_INSTALL/bin:$PATH"
 
+# pnpm
+[ -d "$PNPM_HOME" ] && export PATH="$PATH:$PNPM_HOME"
+

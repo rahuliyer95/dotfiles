@@ -15,9 +15,6 @@ if [[ $- == *i* ]]; then
   [ -f "$HOME/.zshrc.d/.zsh_profile" ] && . "$HOME/.zshrc.d/.zsh_profile"
 fi
 
-# cargo
-[ -s "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-
 if [ -n "$ZSH_DEBUGRC" ]; then
   zprof
 fi
