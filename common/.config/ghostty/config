@@ -7,7 +7,7 @@ adjust-cell-height      = 20%
 
 # 0xProto {{{
 
-font-family             = "0xProto"
+font-family             = 0xProto
 font-family-bold-italic = false
 font-feature            = calt, ss01
 
@@ -31,6 +31,13 @@ font-feature            = calt, ss01
 # font-feature            = cv32
 # # @_
 # font-feature            = cv62
+
+# }}}
+
+# Maple {{{
+
+font-family  = Maple Mono NF
+font-feature = calt, cv01, cv03, ss03, ss08
 
 # }}}
 
@@ -59,8 +66,9 @@ focus-follows-mouse = true
 
 # macOS {{{
 
-macos-option-as-alt  = true
-macos-titlebar-style = "tabs"
+macos-option-as-alt           = true
+macos-secure-input-indication = false
+macos-titlebar-style          = tabs
 
 # }}}
 
@@ -82,8 +90,8 @@ shell-integration-features = no-cursor
 # Miscellaneous {{{
 
 auto-update             = download
+keybind                 = super+f=write_screen_file:open
 scrollback-limit        = 25_000_000
 unfocused-split-opacity = 0.7
-keybind                 = super+f=write_screen_file:open
 
 # }}}
