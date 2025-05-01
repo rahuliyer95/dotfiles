@@ -19,8 +19,8 @@
   # Credit an author on the latest commit
   credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
   bd = branch -D
-  # Interactive rebase with the given number of latest commits
-  reb = "!r() { git rebase -i HEAD~$1; }; r"
+  # Interactive rebase with the given number of latest commits (preserves original commit date)
+  reb = "!r() { git rebase --committer-date-is-author-date -i HEAD~$1; }; r"
   # Rebase with origin main
   rom = "!f() { git fetch origin main; git rebase origin/main; }; f"
   # Remove the old tag with this name and tag the latest commit with it.
