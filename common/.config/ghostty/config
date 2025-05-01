@@ -7,9 +7,9 @@ adjust-cell-height      = 20%
 
 # 0xProto {{{
 
-font-family             = 0xProto
-font-family-bold-italic = false
-font-feature            = calt, ss01
+# font-family             = 0xProto
+# font-family-bold-italic = false
+# font-feature            = calt, ss01
 
 # }}}
 
@@ -41,7 +41,7 @@ font-feature = calt, cv01, cv03, ss03, ss08
 
 # }}}
 
-font-size               = 16
+font-size               = 20
 
 # }}}
 
