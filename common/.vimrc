@@ -3,45 +3,43 @@ call plug#begin()
 
 " Core {{{
 
-Plug 'sheerun/vim-polyglot'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf.vim'
 Plug 'raimondi/delimitmate'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-eunuch'
-
-function NvimTreeSitterPostInstall(info)
-  TSUpdate
-  TSInstall! lua
-  TSInstall! vim
-  TSInstall! vimdoc
-endfunction
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': function('NvimTreeSitterPostInstall') }
+Plug 'nvim-treesitter/nvim-treesitter'
 
 " }}}
 
 " Code {{{
 
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'joom/vim-commentary'
-Plug 'darfink/vim-plist'
-Plug 'apple/pkl-neovim'
-Plug 'honza/vim-snippets'
-Plug 'kevinhwang91/nvim-ufo'
-Plug 'kevinhwang91/promise-async'
-" Plug 'ggml-org/llama.vim'
+" LSP {{{
+
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+
+"}}}
+
+" TAB completion {{{
+
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 " }}}
 
-" Documentation {{{
-
-Plug 'vim-scripts/DoxygenToolkit.vim'
-Plug 'PeterRincker/vim-argumentative'
-Plug 'FooSoft/vim-argwrap'
-Plug 'heavenshell/vim-pydocstring'
+Plug 'ray-x/lsp_signature.nvim'
+Plug 'joom/vim-commentary'
+Plug 'darfink/vim-plist'
+Plug 'apple/pkl-neovim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'folke/trouble.nvim'
 
 " }}}
 
@@ -50,17 +48,9 @@ Plug 'heavenshell/vim-pydocstring'
 Plug 'kana/vim-repeat'
 Plug 'anyakichi/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'editorconfig/editorconfig-vim'
-if has('unix')
-  let s:uname = system('uname -s')
-  if s:uname == 'Darwin\n'
-    Plug 'rizzatti/dash.vim'
-  endif
-endif
 Plug 'luochen1990/rainbow'
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
-" Plug 'nathanaelkane/vim-indent-guides'
 Plug 'gisphm/vim-gitignore'
 Plug 'dstein64/vim-startuptime'
 Plug 'osyo-manga/vim-anzu'
@@ -76,12 +66,12 @@ Plug 'christoomey/vim-sort-motion'
 " Look & Feel {{{
 
 Plug 'olimorris/onedarkpro.nvim'
-Plug 'loctvl842/monokai-pro.nvim'
-Plug 'lunacookies/vim-colors-xcode'
+" Plug 'navarasu/onedark.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'RRethy/vim-illuminate'
 Plug 'romgrk/barbar.nvim'
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'nvim-lualine/lualine.nvim'
 
 " }}}
@@ -127,10 +117,39 @@ set background=dark
 
 lua << EOF
 
-require('onedarkpro').setup {
+require('onedarkpro').setup({
+  highlights = {
+    -- barbar.nvim {{{
+    -- diagnostics {{{
+    BufferCurrentERROR = {
+      fg = "${red}",
+    },
+    BufferCurrentINFO = {
+      fg = "${blue}",
+    },
+    BufferCurrentWARN = {
+      fg = "${yellow}",
+    },
+    -- }}}
+    -- git signs {{{
+    BufferCurrentADDED = {
+      fg = "${green}",
+    },
+    BufferCurrentCHANGED = {
+      fg = "${yellow}",
+    },
+    BufferCurrentDELETED = {
+      fg = "${red}",
+    },
+    -- }}}
+    -- }}}
+  },
   options = {
     cursorline   = true,
-    transparency = true,
+    transparency = false,
+  },
+  plugins = {
+    all = true,
   },
   styles = {
     types        = "NONE",
@@ -138,7 +157,7 @@ require('onedarkpro').setup {
     numbers      = "NONE",
     strings      = "NONE",
     comments     = "italic",
-    keywords     = "NONE",
+    keywords     = "italic",
     constants    = "NONE",
     functions    = "NONE",
     operators    = "NONE",
@@ -147,44 +166,11 @@ require('onedarkpro').setup {
     conditionals = "italic",
     virtual_text = "italic",
   },
-}
+})
 
 EOF
 
-" colorscheme onedarkpro
-
-" }}}
-
-" Monokai Pro {{{
-
-lua << EOF
-
-require("monokai-pro").setup {
-  terminal_colors = true,
-  devicons = true,
-  filter = "machine",
-}
-
-EOF
-
-colorscheme monokai-pro
-
-" }}}
-
-" XCode {{{
-
-" Italic Comments
-
-" augroup vim-colors-xcode
-"   autocmd!
-" augroup END
-" autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
-" autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
-
-" let g:xcodedark_green_comments = 1
-" let g:xcodedark_dim_punctuation = 0
-
-" colorscheme xcodedark
+colorscheme onedark
 
 " }}}
 
@@ -240,13 +226,19 @@ map <S-Tab> :bp<cr>
 
 lua << EOF
 
+vim.g.barbar_auto_setup = false
 require('barbar').setup {
   icons = {
     diagnostics = {
-      [vim.diagnostic.severity.ERROR] = {enabled = true},
-      [vim.diagnostic.severity.WARN] = {enabled = true},
-      [vim.diagnostic.severity.INFO] = {enabled = true},
-      [vim.diagnostic.severity.HINT] = {enabled = true},
+      [vim.diagnostic.severity.ERROR] = { enabled = true },
+      [vim.diagnostic.severity.WARN] = { enabled = true },
+      [vim.diagnostic.severity.INFO] = { enabled = true },
+      [vim.diagnostic.severity.HINT] = { enabled = false },
+    },
+    gitsigns = {
+      added = { enabled = true },
+      deleted = { enabled = true },
+      changed = { enabled = true },
     },
   }
 }
@@ -255,129 +247,24 @@ EOF
 
 " }}}
 
-" coc.nvim {{{
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Map <tab> for trigger completion, completion confirm, snippet expand and jump like VSCode:
-inoremap <silent><expr> <TAB>
-  \ coc#pum#visible() ? coc#_select_confirm() :
-  \ coc#expandableOrJumpable() ?
-  \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ coc#refresh()
-
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-" Use <c-space> to trigger completion: >
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-" To make <CR> to confirm selection of selected complete item or notify coc.nvim to format on enter
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-let g:coc_snippet_next = '<tab>'
-
-" Key maps
-inoremap <C-Space><expr> CocAction("showSignatureHelp")
-inoremap <C-q> <ESC>:call CocAction("doHover")<CR>
-inoremap <C-S-p> <ESC>:CocCommand<CR>
-nnoremap <C-q> :call CocAction("doHover")<CR>
-nnoremap <C-S-p> :CocCommand<CR>
-nnoremap <F2> <Plug>(coc-rename)
-nnoremap <silent> <F12> <Plug>(coc-definition)
-nnoremap <silent> <F8> :CocDiagnostics<CR>
-nnoremap <silent> <leader><F12> <Plug>(coc-references)
-nnoremap <silent> <leader>f <Plug>(coc-format)<ESC>:call CocAction("organizeImport")<CR>
-nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
-nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
-xnoremap <leader>f <Plug>(coc-format-selected)
-" navigate conflicts of current buffer
-nnoremap [c <Plug>(coc-git-prevconflict)
-nnoremap ]c <Plug>(coc-git-nextconflict)
-
-" 'coc-highlight' => Add this to support highlight
-let g:coc_global_extensions = [
-      \ '@yaegassy/coc-ruff',
-      \ '@yaegassy/coc-mypy',
-      \ 'coc-basedpyright',
-      \ 'coc-diagnostic',
-      \ 'coc-docker',
-      \ 'coc-emoji',
-      \ 'coc-git',
-      \ 'coc-gocode',
-      \ 'coc-json',
-      \ 'coc-rust-analyzer',
-      \ 'coc-sh',
-      \ 'coc-snippets',
-      \ 'coc-sql',
-      \ 'coc-toml',
-      \ 'coc-xml',
-      \ 'coc-yaml',
-      \ ]
-
-set sessionoptions+=globals
-
-" }}}
-
-" llama.vim {{{
-
-let g:llama_config = {
-    \ 'show_info': 0,
-    \ }
-
-" }}}
-
-" nvim-ufo {{{
-
-lua << EOF
-
-vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-vim.o.foldcolumn = '1'
-vim.o.foldenable = true
-vim.o.foldlevel = 99
-vim.o.foldlevelstart = 99
--- vim.o.foldmarker = '#region,#endregion'
-
--- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-
-require('ufo').setup()
-
-EOF
-
-" }}}
-
 " pkl {{{
 
 lua << EOF
+
 local hasConfigs, configs = pcall(require, "nvim-treesitter.configs")
 if hasConfigs then
   configs.setup {
     ensure_installed = { "pkl" },
     highlight = {
-      enable = true,              -- false will disable the whole extension
+      enable = true,
     },
     indent = {
       enable = true,
     },
   }
 end
+
 EOF
-
-" }}}
-
-" vim-pydocstring {{{
-
-nmap <silent> <C-_> <Plug>(pydocstring)
-let g:pydocstring_formatter = "google"
 
 " }}}
 
@@ -436,9 +323,6 @@ nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 
 let g:easy_align_ignore_groups = ['Comment', 'String']
 
-nmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
-
 " }}}
 
 " nvim-tree {{{
@@ -486,12 +370,11 @@ EOF
 
 " }}}
 
-" gitsigns {{{
+" gitsigns.nvim {{{
 
 lua << EOF
 
-require('gitsigns').setup {
-}
+require('gitsigns').setup {}
 
 EOF
 
@@ -503,6 +386,129 @@ lua << EOF
 
 require('illuminate').configure({
   delay = 0,
+})
+
+EOF
+
+" }}}
+
+" mason.nvim {{{
+
+lua << EOF
+
+require('mason').setup()
+require("mason-lspconfig").setup({
+  ensure_installed = {
+    'basedpyright',
+    'bashls',
+    'lua_ls',
+    'ruff'
+  },
+})
+-- Setup LSP servers (:h mason-lspconfig-automatic-server-setup)
+require("mason-lspconfig").setup_handlers {
+  -- The first entry (without a key) will be the default handler and will be called for each
+  -- installed server that doesn't have a dedicated handler.
+  function (server_name)
+    require("lspconfig")[server_name].setup {}
+  end,
+  ["basedpyright"] = function()
+    require("lspconfig").basedpyright.setup({
+      -- we are using Ruff for this
+      analysis = {
+        ignore = { "*" }
+      },
+      disableOrganizeImports = true,
+    })
+  end,
+}
+
+-- Show diagnostic information on the current line as virtual text
+vim.diagnostic.config({
+  virtual_text = {
+    current_line = true
+  }
+})
+
+-- Format document
+vim.keymap.set(
+  "n",
+  "<leader>f",
+  function()
+    vim.lsp.buf.code_action({
+      context = { only = { "source.organizeImports" } },
+      apply = true,
+    })
+    vim.lsp.buf.format()
+  end,
+  { desc = "Format Document" }
+)
+
+EOF
+
+" }}}
+
+" nvim-cmp  {{{
+
+lua << EOF
+
+local cmp = require('cmp')
+
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<TAB>'] = cmp.mapping.confirm({ select = true }),
+  }),
+  snippet = {
+    expand = function(args)
+      vim.fn["UltiSnips#Anon"](args.body)
+    end
+  },
+  sources = cmp.config.sources(
+    {
+      { name = 'nvim_lsp' },
+      { name = 'ultisnips' },
+    },
+    {
+      { name = 'buffer' },
+    }
+  )
+})
+
+EOF
+
+" }}}
+
+" trouble.nvim {{{
+
+lua << EOF
+
+require('trouble').setup({
+  mode = 'float'
+})
+
+EOF
+
+nnoremap <F8> <ESC>:Trouble diagnostics toggle<CR>
+inoremap <F8> <ESC>:Trouble diagnostics toggle<CR>a
+
+" }}}
+
+" lsp_signature.nvim {{{
+
+lua << EOF
+
+require("lsp_signature").setup({
+  bind = true,
+  handler_opts = {
+    border = "rounded"
+  },
+  hint_prefix = "",
+  hint_inline = function() return true end,
+  transparency = 100,
 })
 
 EOF
