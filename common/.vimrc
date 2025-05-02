@@ -19,6 +19,8 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvimtools/none-ls.nvim'
+Plug 'jay-babu/mason-null-ls.nvim'
 
 "}}}
 
@@ -396,15 +398,17 @@ EOF
 
 lua << EOF
 
-require('mason').setup()
+require("mason").setup()
+
 require("mason-lspconfig").setup({
   ensure_installed = {
-    'basedpyright',
-    'bashls',
-    'lua_ls',
-    'ruff'
+    "basedpyright",
+    "bashls",
+    "lua_ls",
+    "ruff",
   },
 })
+
 -- Setup LSP servers (:h mason-lspconfig-automatic-server-setup)
 require("mason-lspconfig").setup_handlers {
   -- The first entry (without a key) will be the default handler and will be called for each
@@ -414,14 +418,61 @@ require("mason-lspconfig").setup_handlers {
   end,
   ["basedpyright"] = function()
     require("lspconfig").basedpyright.setup({
-      -- we are using Ruff for this
-      analysis = {
-        ignore = { "*" }
+      settings = {
+        basedpyright = {
+          -- we are using Ruff for this
+          analysis = {
+            ignore = { "*" }
+          },
+          disableOrganizeImports = true,
+        },
       },
-      disableOrganizeImports = true,
+    })
+  end,
+  ["bashls"] = function()
+    require("lspconfig").bashls.setup({
+      settings = {
+        bashIde = {
+          shfmt = {
+            binaryNextLine = true,
+            caseIndent = true,
+            simplifyCode = true,
+            spaceRedirects = true,
+          },
+        },
+      },
+    })
+  end,
+  ["lua_ls"] = function()
+    require("lspconfig").lua_ls.setup({
+      on_attach = function(client, _)
+        -- Disable formatting capability for lua_ls and use StyLua
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+      end,
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { "vim" },
+          },
+          runtime = { version = "LuaJIT" },
+        }
+      },
     })
   end,
 }
+
+require("mason-null-ls").setup({
+  ensure_installed = {
+    "selene",
+    "stylua",
+  },
+  handlers = {},
+})
+
+require("null-ls").setup({
+  sources = {},
+})
 
 -- Show diagnostic information on the current line as virtual text
 vim.diagnostic.config({
