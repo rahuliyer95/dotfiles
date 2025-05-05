@@ -404,7 +404,6 @@ require("mason-lspconfig").setup({
   ensure_installed = {
     "basedpyright",
     "bashls",
-    "lua_ls",
     "ruff",
   },
 })
@@ -443,30 +442,10 @@ require("mason-lspconfig").setup_handlers {
       },
     })
   end,
-  ["lua_ls"] = function()
-    require("lspconfig").lua_ls.setup({
-      on_attach = function(client, _)
-        -- Disable formatting capability for lua_ls and use StyLua
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
-      end,
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          },
-          runtime = { version = "LuaJIT" },
-        }
-      },
-    })
-  end,
 }
 
 require("mason-null-ls").setup({
-  ensure_installed = {
-    "selene",
-    "stylua",
-  },
+  ensure_installed = {},
   handlers = {},
 })
 
@@ -520,11 +499,11 @@ cmp.setup({
   },
   sources = cmp.config.sources(
     {
-      { name = 'nvim_lsp' },
-      { name = 'ultisnips' },
-    },
-    {
       { name = 'buffer' },
+      { name = 'cmdline' },
+      { name = 'nvim_lsp' },
+      { name = 'path' },
+      { name = 'ultisnips' },
     }
   )
 })
