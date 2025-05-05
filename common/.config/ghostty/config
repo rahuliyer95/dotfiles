@@ -3,7 +3,8 @@
 
 # Font {{{
 
-adjust-cell-height      = 20%
+adjust-cell-height = 20%
+font-size          = 20
 
 # 0xProto {{{
 
@@ -37,11 +38,9 @@ adjust-cell-height      = 20%
 # Maple {{{
 
 font-family  = Maple Mono NF
-font-feature = calt, cv01, cv03, ss03, ss08
+font-feature = calt, cv01, cv02, cv03, cv05, cv06, cv08, cv38, cv40, cv41, cv62, ss03, ss09, ss10, ss11
 
 # }}}
-
-font-size               = 20
 
 # }}}
 
