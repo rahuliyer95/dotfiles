@@ -50,7 +50,6 @@ Plug 'folke/trouble.nvim'
 Plug 'kana/vim-repeat'
 Plug 'anyakichi/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'luochen1990/rainbow'
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'gisphm/vim-gitignore'
@@ -68,12 +67,12 @@ Plug 'christoomey/vim-sort-motion'
 " Look & Feel {{{
 
 Plug 'olimorris/onedarkpro.nvim'
-" Plug 'navarasu/onedark.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'RRethy/vim-illuminate'
+Plug 'HiPhish/rainbow-delimiters.nvim'
 Plug 'romgrk/barbar.nvim'
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 
 " }}}
@@ -122,6 +121,7 @@ lua << EOF
 require('onedarkpro').setup({
   highlights = {
     -- barbar.nvim {{{
+    -- }}}
     -- diagnostics {{{
     BufferCurrentERROR = {
       fg = "${red}",
@@ -144,11 +144,10 @@ require('onedarkpro').setup({
       fg = "${red}",
     },
     -- }}}
-    -- }}}
   },
   options = {
     cursorline   = true,
-    transparency = false,
+    transparency = true,
   },
   plugins = {
     all = true,
@@ -191,7 +190,7 @@ lua << EOF
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'auto',
+    theme = require('lualine.themes.onedark'),
     section_separators = { left = '', right = '' },
     component_separators = { left = '', right = '' },
     always_divide_middle = true,
@@ -205,7 +204,7 @@ require('lualine').setup {
     lualine_b = {'branch', 'diff', 'diagnostics'},
     lualine_c = {'filename', 'HasPaste'},
     lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
+    lualine_y = {},
     lualine_z = {'location'}
   },
 }
@@ -291,15 +290,46 @@ set rtp+=~/.fzf
 
 " }}}
 
-" rainbow {{{
+" rainbow-delimiters.nvim {{{
 
-let g:rainbow_active = 1
+lua << EOF
+
+---@type rainbow_delimiters.config
+vim.g.rainbow_delimiters = {
+    strategy = {
+        [""] = "rainbow-delimiters.strategy.global",
+        vim = "rainbow-delimiters.strategy.local",
+    },
+    query = {
+        [""] = "rainbow-delimiters",
+        lua = "rainbow-blocks",
+    },
+    priority = {
+        [""] = 110,
+        lua = 210,
+    },
+    highlight = {
+        "RainbowDelimiterRed",
+        "RainbowDelimiterYellow",
+        "RainbowDelimiterBlue",
+        "RainbowDelimiterOrange",
+        "RainbowDelimiterGreen",
+        "RainbowDelimiterViolet",
+        "RainbowDelimiterCyan",
+    },
+}
+
+EOF
 
 " }}}
 
-" vim-indent-guides {{{
+" indent-blankline.nvim {{{
 
-" let g:indent_guides_enable_on_vim_startup = 1
+lua << EOF
+
+require("ibl").setup({})
+
+EOF
 
 " }}}
 
