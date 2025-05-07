@@ -1,9 +1,8 @@
 #!/usrbin/env bash
-
-# vim:ft=bash
+# vi: foldmethod=marker,ft=sh
 
 # base path
-export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin"
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin"
 
 # Snap
 [ -d "/snap/bin" ] && export PATH="$PATH:/snap/bin"
@@ -22,57 +21,34 @@ fi
 # Java
 [ -n "$JAVA_HOME" ] && export PATH="$PATH:$JAVA_HOME/bin"
 
-[ -n "$ANT_ROOT" ] && export PATH="$PATH:$ANT_ROOT"
-
-# yarn
-[ -n "$YARN_GLOBAL_PATH" ] && export PATH="$PATH:$YARN_GLOBAL_PATH"
-
 # local bin
 [ -d "$HOME/.local/bin" ] && export PATH="$PATH:$HOME/.local/bin"
 
 # home bin
 [ -d "$HOME/.bin" ] && export PATH="$PATH:$HOME/.bin"
 
-# node@10
-[ -d "/usr/local/opt/node@10" ] && export PATH="$PATH:/usr/local/opt/node@10/bin"
-
 # golang
 [ -d "$HOME/go/bin" ] && export PATH="$PATH:$HOME/go/bin"
-
-# pyenv
-[ -d "$PYENV_ROOT" ] && export PATH="$PATH:$PYENV_ROOT/bin"
-
-if command -v pyenv >/dev/null; then
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-  PYENV_ROOT="$(pyenv root)"
-  export PYENV_ROOT
-fi
 
 # rbenv
 if command -v rbenv >/dev/null; then
   eval "$(rbenv init -)"
 fi
 
-# nodenv
-if command -v nodenv >/dev/null; then
-  eval "$(nodenv init -)"
-fi
-
 # goenv
-# TODO: uncomment after https://github.com/go-nv/goenv/issues/396 is resolved
+# [TODO] uncomment after https://github.com/go-nv/goenv/issues/396 is resolved
 # if command -v goenv > /dev/null; then
 #   eval "$(goenv init -)"
 # fi
 
 # direnv
 if command -v direnv >/dev/null && [ -n "$PS1" ]; then
-  eval "$(direnv hook $SHELL)"
+  eval "$(direnv hook "$SHELL")"
 fi
 
 # cargo
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+# shellcheck source=/dev/null
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
 # bun.sh
 [ -d "$BUN_INSTALL" ] && export PATH="$BUN_INSTALL/bin:$PATH"

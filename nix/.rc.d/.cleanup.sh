@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 # Ask sudo and keep-alive
+# Keep-alive: update existing `sudo` timestamp until this script has finished
 sudo -v
-
-# Keep-alive: update existing `sudo` time stamp until this script has finished
 while true; do
   sudo -n true
   sleep 60
