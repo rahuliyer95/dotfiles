@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+echo ""
+echo "╭─────────────╮"
+echo "│ 🗑️ Cleanup  │"
+echo "╰─────────────╯"
+echo ""
+
 # Ask sudo and keep-alive
 # Keep-alive: update existing `sudo` timestamp until this script has finished
 sudo -v
@@ -8,12 +14,6 @@ while true; do
   sleep 60
   kill -0 "$$" || exit
 done 2> /dev/null &
-
-echo ""
-echo "╭─────────────╮"
-echo "│ 🗑️ Cleanup  │"
-echo "╰─────────────╯"
-echo ""
 
 old_available="$(df -k / | tail -1 | awk '{print $4}')"
 
@@ -111,8 +111,8 @@ if command -v yarnpkg &> /dev/null; then
   echo -en "\r✅ Cleanup YarnPkg cache\n"
 fi
 
-declare -A CACHE_ALLOW_LIST=([antidote]=1 [llama.cpp]=1)
-for dir in "$HOME/Library/Caches" "/Library/Caches"; do
+declare -A CACHE_ALLOW_LIST=([antidote]=1 [bat]=1 [cargo]=1 [llama.cpp]=1 [uv]=1)
+for dir in "$HOME/Library/Caches" "/Library/Caches" "$HOME/.cache"; do
   if cd "$dir" 2> /dev/null; then
     while read -r file; do
       filename="$(basename "$file")"
