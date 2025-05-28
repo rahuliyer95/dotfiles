@@ -1,6 +1,3 @@
-# Compiled Python files
-*.pyc
-
 # Folder view configuration files
 .DS_Store
 Desktop.ini
@@ -12,19 +9,3 @@ Thumbs.db
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
-
-.vscode
-.venv
-.envrc
-
-.node-version
-.go-version
-
-# Force add this because all repos don't have this file
-.git-blame-ignore-revs
-
-.direnv
-
-# cSpell
-.cspell/
-cspell.config.yaml
