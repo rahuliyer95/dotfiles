@@ -106,7 +106,7 @@ bindkey -a "?" fzf-history-widget
 
 # Define a whitelist of commands to use fzf-tab with
 zstyle -d ':completion:*' format
-# zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*:descriptions' format '-- %d --'
 zstyle ':completion:*:git-checkout:*' sort false
 
 [ -f "$HOME/.zshrc.d/.local.post.sh" ] && . "$HOME/.zshrc.d/.local.post.sh"
