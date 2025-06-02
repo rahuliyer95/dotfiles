@@ -4,7 +4,7 @@
 ds_store-cleanup() {
   local dir="${1:-.}"
   if command -v fd >/dev/null; then
-    fd --hidden '.DS_Store' "${dir}" --exec rm
+    fd -H -I '\.DS_Store' "${dir}" --exec rm
   else
     find "${dir}" -name '.DS_Store' -print -delete
   fi
