@@ -8,9 +8,16 @@ font-size          = 20
 
 # 0xProto {{{
 
-font-family             = ZxProto
-font-family-bold-italic = false
-font-feature            = calt, ss01
+# font-family             = 0xProto NL
+# font-family-bold-italic = false
+# font-feature            = calt, ss01
+
+# }}}
+
+# Maple Mono {{{
+
+font-family  = Maple Mono NF
+font-feature = calt, cv01, cv02, cv03, cv05, cv06, cv08, cv38, cv40, cv41, cv62, ss03, ss09, ss10, ss11
 
 # }}}
 
@@ -32,13 +39,6 @@ font-feature            = calt, ss01
 # font-feature            = cv32
 # # @_
 # font-feature            = cv62
-
-# }}}
-
-# Maple Mono {{{
-
-# font-family  = Maple Mono NF
-# font-feature = calt, cv01, cv02, cv03, cv05, cv06, cv08, cv38, cv40, cv41, cv62, ss03, ss09, ss10, ss11
 
 # }}}
 
