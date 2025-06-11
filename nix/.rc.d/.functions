@@ -10,3 +10,35 @@ ds_store-cleanup() {
   fi
 }
 
+# Split the command into it's multi-line equivalent representation.
+# e.g:
+#   `curl -X POST -d '{"hello": "world"}'` "https://example.com/test"
+# will becomes
+#   ```
+#   curl \
+#     -X POST \
+#     -d '{"hello": "world"}' \
+#     "https://example.com/test"
+#   ```
+function splitcmd {
+  local cmd=(${(z)1})
+  local i=2
+  printf '%s \\\n\t' "${cmd[1]}"
+  while (( i <= ${#cmd} )); do
+    for (( j=0; j < 2 && i <= ${#cmd}; j++, i++ )); do
+      printf '%s ' "${cmd[i]}"
+    done
+    if (( i <= ${#cmd} )); then
+      printf '\\\n\t'
+    fi
+  done
+}
+
+# zsh widget to load and run the `splitcmd` function
+function splitcmd_widget {
+  local cmd="${BUFFER}"
+  local split=$(splitcmd "${cmd}")
+  BUFFER="${split%$'\n'}"  # Remove trailing newline for most cases
+  zle end-of-line
+}
+

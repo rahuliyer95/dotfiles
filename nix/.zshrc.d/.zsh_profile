@@ -109,4 +109,9 @@ zstyle -d ':completion:*' format
 zstyle ':completion:*:descriptions' format '-- %d --'
 zstyle ':completion:*:git-checkout:*' sort false
 
+# splitcmd
+zle -N splitcmd_widget
+# [Alt|Option]+s to run the splitcmd widget
+bindkey '^[s' splitcmd_widget
+
 [ -f "$HOME/.zshrc.d/.local.post.sh" ] && . "$HOME/.zshrc.d/.local.post.sh"
