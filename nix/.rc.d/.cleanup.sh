@@ -111,7 +111,15 @@ if command -v yarnpkg &> /dev/null; then
   echo -en "\r✅ Cleanup YarnPkg cache\n"
 fi
 
-declare -A CACHE_ALLOW_LIST=([antidote]=1 [bat]=1 [cargo]=1 [llama.cpp]=1 [uv]=1)
+declare -A CACHE_ALLOW_LIST=(
+  [antidote]=1
+  [bat]=1
+  [cargo]=1
+  [gitstatus]=1
+  [llama.cpp]=1
+  [pnpm]=1
+  [uv]=1
+)
 for dir in "$HOME/Library/Caches" "/Library/Caches" "$HOME/.cache"; do
   if cd "$dir" 2> /dev/null; then
     while read -r file; do
