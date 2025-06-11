@@ -29,11 +29,6 @@ if command -v apt-get > /dev/null; then
     && sudo apt-get upgrade -y
 fi
 
-# 1Password CLI completion
-if command -v op > /dev/null; then
-  op completion zsh > "$(realpath "$HOME/.zsh.d/_op")"
-fi
-
 # pi-hole
 if command -v pihole > /dev/null; then
   echo ""
@@ -170,6 +165,16 @@ if command -v rustup > /dev/null; then
   echo ""
   rustup update
   rustup completions zsh > "$(realpath "$HOME/.zsh.d/_rustup")"
+fi
+
+# Regenerate completion scripts
+# 1Password
+if command -v op > /dev/null; then
+  op completion zsh > "$(realpath "$HOME/.zsh.d/_op")"
+fi
+# xh
+if command -v xh > /dev/null; then
+  xh --generate complete-zsh > "$(realpath "$HOME/.zsh.d/_xh")"
 fi
 
 # cleanup
