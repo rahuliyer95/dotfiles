@@ -282,6 +282,10 @@ _arguments "${_arguments_options[@]}" : \
 '--marker=[Apply this marker to all added packages]:MARKER:_default' \
 '(--dev --group)--optional=[Add the requirements to the package'\''s optional dependencies for the specified extra]:OPTIONAL:_default' \
 '(--dev --optional)--group=[Add the requirements to the specified dependency group]:GROUP:_default' \
+'--bounds=[The kind of version specifier to use when adding dependencies]:BOUNDS:((lower\:"Only a lower bound, e.g., \`>=1.2.3\`"
+major\:"Allow the same major version, similar to the semver caret, e.g., \`>=1.2.3, <2.0.0\`"
+minor\:"Allow the same minor version, similar to the semver tilde, e.g., \`>=1.2.3, <1.3.0\`"
+exact\:"Pin the exact version, e.g., \`==1.2.3\`"))' \
 '--rev=[Commit to use when adding a dependency from Git]:REV:_default' \
 '--tag=[Tag to use when adding a dependency from Git]:TAG:_default' \
 '--branch=[Branch to use when adding a dependency from Git]:BRANCH:_default' \
@@ -344,7 +348,7 @@ never\:"Disables colored output"))' \
 '(--optional --group)--dev[Add the requirements to the development dependency group]' \
 '--editable[Add the requirements as editable]' \
 '--no-editable[]' \
-'(--editable --no-editable --rev --tag --branch)--raw-sources[Add source requirements to \`project.dependencies\`, rather than \`tool.uv.sources\`]' \
+'(--editable --no-editable --rev --tag --branch)--raw[Add a dependency as provided]' \
 '(--frozen)--no-sync[Avoid syncing the virtual environment]' \
 '(--frozen -U --upgrade)--locked[Assert that the \`uv.lock\` will remain unchanged]' \
 '(--locked -U --upgrade --no-sources)--frozen[Add dependencies without re-locking the project]' \
@@ -503,6 +507,119 @@ never\:"Disables colored output"))' \
 '-h[Display the concise help for this command]' \
 '--help[Display the concise help for this command]' \
 '*::packages -- The names of the dependencies to remove (e.g., `ruff`):_default' \
+&& ret=0
+;;
+(version)
+_arguments "${_arguments_options[@]}" : \
+'--bump=[Update the project version using the given semantics]:BUMP:((major\:"Increase the major version (1.2.3 => 2.0.0)"
+minor\:"Increase the minor version (1.2.3 => 1.3.0)"
+patch\:"Increase the patch version (1.2.3 => 1.2.4)"))' \
+'--output-format=[The format of the output]:OUTPUT_FORMAT:((text\:"Display the version as plain text"
+json\:"Display the version as JSON"))' \
+'*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
+'--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
+'-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
+'--index-url=[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
+'*--extra-index-url=[(Deprecated\: use \`--index\` instead) Extra URLs of package indexes to use, in addition to \`--index-url\`]:EXTRA_INDEX_URL:_default' \
+'*-f+[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
+'*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
+'*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:_default' \
+'--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
+unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
+unsafe-best-match\:"Search for every package name across all indexes, preferring the "best" version found. If a package version is in multiple indexes, only look at the entry for the first index"))' \
+'--keyring-provider=[Attempt to use \`keyring\` for authentication for index URLs]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
+subprocess\:"Use the \`keyring\` command for credential lookup"))' \
+'--resolution=[The strategy to use when selecting between the different compatible versions for a given package requirement]:RESOLUTION:((highest\:"Resolve the highest compatible version of each package"
+lowest\:"Resolve the lowest compatible version of each package"
+lowest-direct\:"Resolve the lowest compatible version of any direct dependencies, and the highest compatible version of any transitive dependencies"))' \
+'--prerelease=[The strategy to use when considering pre-release versions]:PRERELEASE:((disallow\:"Disallow all pre-release versions"
+allow\:"Allow all pre-release versions"
+if-necessary\:"Allow pre-release versions if all versions of a package are pre-release"
+explicit\:"Allow pre-release versions for first-party packages with explicit pre-release markers in their version requirements"
+if-necessary-or-explicit\:"Allow pre-release versions if all versions of a package are pre-release, or if the package has an explicit pre-release marker in its version requirements"))' \
+'--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
+requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
+'*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
+'*--config-setting=[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
+'*--no-build-isolation-package=[Disable isolation when building source distributions for a specific package]:NO_BUILD_ISOLATION_PACKAGE:_default' \
+'--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
+'--link-mode=[The method to use when installing packages from the global cache]:LINK_MODE:((clone\:"Clone (i.e., copy-on-write) packages from the wheel into the \`site-packages\` directory"
+copy\:"Copy packages from the wheel into the \`site-packages\` directory"
+hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
+symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:_default' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:_default' \
+'*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:_default' \
+'(--isolated)--package=[Update the version of a specific package in the workspace]:PACKAGE:_default' \
+'-p+[The Python interpreter to use for resolving and syncing.]:PYTHON:_default' \
+'--python=[The Python interpreter to use for resolving and syncing.]:PYTHON:_default' \
+'--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+managed\:"Prefer managed Python installations over system Python installations"
+system\:"Prefer system Python installations over managed Python installations"
+only-system\:"Only use system Python installations; never use managed Python installations"))' \
+'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+manual\:"Do not automatically download managed Python installations; require explicit installation"
+never\:"Do not ever allow Python downloads"))' \
+'(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
+always\:"Enables colored output regardless of the detected environment"
+never\:"Disables colored output"))' \
+'*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
+'--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
+'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'--dry-run[Don'\''t write a new version to the \`pyproject.toml\`]' \
+'--short[Only show the version]' \
+'(--frozen)--no-sync[Avoid syncing the virtual environment after re-locking the project]' \
+'--active[Prefer the active virtual environment over the project'\''s virtual environment]' \
+'--no-active[Prefer project'\''s virtual environment over an active environment]' \
+'(--frozen -U --upgrade)--locked[Assert that the \`uv.lock\` will remain unchanged]' \
+'(--locked -U --upgrade --no-sources)--frozen[Update the version without re-locking the project]' \
+'--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
+'-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
+'--upgrade[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
+'--no-upgrade[]' \
+'--reinstall[Reinstall all packages, regardless of whether they'\''re already installed. Implies \`--refresh\`]' \
+'--no-reinstall[]' \
+'--pre[]' \
+'--no-build-isolation[Disable isolation when building source distributions]' \
+'--build-isolation[]' \
+'--compile-bytecode[Compile Python files to bytecode after installation]' \
+'--no-compile-bytecode[]' \
+'--no-sources[Ignore the \`tool.uv.sources\` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any workspace, Git, URL, or local path sources]' \
+'--no-build[Don'\''t build source distributions]' \
+'--build[]' \
+'--no-binary[Don'\''t install pre-built wheels]' \
+'--binary[]' \
+'(--offline)--refresh[Refresh all cached data]' \
+'(--offline)--no-refresh[]' \
+'-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
+'--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
+'--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
+'(-q --quiet)*-v[Use verbose output]' \
+'(-q --quiet)*--verbose[Use verbose output]' \
+'(--color)--no-color[Disable colors]' \
+'--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store]' \
+'--no-native-tls[]' \
+'--offline[Disable network access]' \
+'--no-offline[]' \
+'--preview[Whether to enable experimental, preview features]' \
+'--no-preview[]' \
+'--isolated[Avoid discovering a \`pyproject.toml\` or \`uv.toml\` file]' \
+'--show-settings[Show the resolved settings for the current command]' \
+'--no-progress[Hide all progress outputs]' \
+'--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories]' \
+'--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
+'-h[Display the concise help for this command]' \
+'--help[Display the concise help for this command]' \
+'::value -- Set the project version to this value:_default' \
 && ret=0
 ;;
 (sync)
@@ -809,7 +926,7 @@ never\:"Disables colored output"))' \
 '--annotate[]' \
 '--no-header[Exclude the comment header at the top of the generated output file]' \
 '--header[]' \
-'--no-editable[Install any editable dependencies, including the project and any workspace members, as non-editable]' \
+'--no-editable[Export any editable dependencies, including the project and any workspace members, as non-editable]' \
 '--hashes[Include hashes for all dependencies]' \
 '--no-hashes[Omit hashes in the generated output]' \
 '--no-emit-project[Do not emit the current project]' \
@@ -937,7 +1054,8 @@ aarch64-manylinux_2_36\:"An ARM64 target for the \`manylinux_2_36\` platform"
 aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
-aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"))' \
+aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
+wasm32-pyodide2024\:"A wasm32 target using the the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
 '-p+[The Python interpreter to use for locking and filtering.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for locking and filtering.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
@@ -1284,8 +1402,8 @@ never\:"Disables colored output"))' \
 (install)
 _arguments "${_arguments_options[@]}" : \
 '--from=[The package to install commands from]:FROM:_default' \
-'*--with=[Include the following extra requirements]:WITH:_default' \
-'*--with-requirements=[Run all requirements listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
+'*--with=[Include the following additional requirements]:WITH:_default' \
+'*--with-requirements=[Include all requirements listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
 '*--with-editable=[Include the given packages in editable mode]:WITH_EDITABLE:_default' \
 '*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
@@ -1509,6 +1627,8 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--show-paths[Whether to display the path to each tool environment and installed executable]' \
 '--show-version-specifiers[Whether to display the version specifier(s) used to install each tool]' \
+'--show-with[Whether to display the additional requirements installed with each tool]' \
+'--show-extras[Whether to display the extra requirements installed with each tool]' \
 '--no-python-downloads[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -1726,6 +1846,7 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '--output-format=[Select the output format]:OUTPUT_FORMAT:((text\:"Plain text (for humans)"
 json\:"JSON (for computers)"))' \
+'--python-downloads-json-url=[URL pointing to JSON of custom Python installations]:PYTHON_DOWNLOADS_JSON_URL:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -1780,6 +1901,7 @@ _arguments "${_arguments_options[@]}" : \
 '--install-dir=[The directory to store the Python installation in]:INSTALL_DIR:_files' \
 '--mirror=[Set the URL to use as the source for downloading Python installations]:MIRROR:_default' \
 '--pypy-mirror=[Set the URL to use as the source for downloading PyPy installations]:PYPY_MIRROR:_default' \
+'--python-downloads-json-url=[URL pointing to JSON of custom Python installations]:PYTHON_DOWNLOADS_JSON_URL:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -1897,6 +2019,7 @@ never\:"Disables colored output"))' \
 '--no-resolved[]' \
 '--no-project[Avoid validating the Python pin is compatible with the project or workspace]' \
 '--global[Update the global Python version pin]' \
+'(--resolved)--rm[Remove the Python version pin]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
@@ -2160,7 +2283,8 @@ aarch64-manylinux_2_36\:"An ARM64 target for the \`manylinux_2_36\` platform"
 aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
-aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"))' \
+aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
+wasm32-pyodide2024\:"A wasm32 target using the the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
 '*--no-emit-package=[Specify a package to omit from the output resolution. Its dependencies will still be included in the resolution. Equivalent to pip-compile'\''s \`--unsafe-package\` option]:NO_EMIT_PACKAGE:_default' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
@@ -2354,7 +2478,8 @@ aarch64-manylinux_2_36\:"An ARM64 target for the \`manylinux_2_36\` platform"
 aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
-aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"))' \
+aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
+wasm32-pyodide2024\:"A wasm32 target using the the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -2546,7 +2671,8 @@ aarch64-manylinux_2_36\:"An ARM64 target for the \`manylinux_2_36\` platform"
 aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
-aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"))' \
+aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
+wasm32-pyodide2024\:"A wasm32 target using the the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -3920,6 +4046,7 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'--dry-run[Run without performing the update]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
@@ -4041,57 +4168,6 @@ never\:"Disables colored output"))' \
 '*::package -- The packages to remove from the cache:_default' \
 && ret=0
 ;;
-(version)
-_arguments "${_arguments_options[@]}" : \
-'--bump=[Update the project version using the given semantics]:BUMP:((major\:"Increase the major version (1.2.3 => 2.0.0)"
-minor\:"Increase the minor version (1.2.3 => 1.3.0)"
-patch\:"Increase the patch version (1.2.3 => 1.2.4)"))' \
-'--output-format=[]:OUTPUT_FORMAT:((text\:"Display the version as plain text"
-json\:"Display the version as JSON"))' \
-'--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
-'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
-managed\:"Prefer managed Python installations over system Python installations"
-system\:"Prefer system Python installations over managed Python installations"
-only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
-manual\:"Do not automatically download managed Python installations; require explicit installation"
-never\:"Do not ever allow Python downloads"))' \
-'(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
-always\:"Enables colored output regardless of the detected environment"
-never\:"Disables colored output"))' \
-'*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
-'--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
-'--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
-'--dry-run[Don'\''t write a new version to the \`pyproject.toml\`]' \
-'--short[Only show the version]' \
-'-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
-'--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
-'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
-'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
-'--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
-'--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
-'(-v --verbose)*-q[Use quiet output]' \
-'(-v --verbose)*--quiet[Use quiet output]' \
-'(-q --quiet)*-v[Use verbose output]' \
-'(-q --quiet)*--verbose[Use verbose output]' \
-'(--color)--no-color[Disable colors]' \
-'--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store]' \
-'--no-native-tls[]' \
-'--offline[Disable network access]' \
-'--no-offline[]' \
-'--preview[Whether to enable experimental, preview features]' \
-'--no-preview[]' \
-'--isolated[Avoid discovering a \`pyproject.toml\` or \`uv.toml\` file]' \
-'--show-settings[Show the resolved settings for the current command]' \
-'--no-progress[Hide all progress outputs]' \
-'--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories]' \
-'--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
-'-h[Display the concise help for this command]' \
-'--help[Display the concise help for this command]' \
-'::value -- Set the project version to this value:_default' \
-&& ret=0
-;;
 (generate-shell-completion)
 _arguments "${_arguments_options[@]}" : \
 '--cache-dir=[]:CACHE_DIR:_files' \
@@ -4195,6 +4271,7 @@ _uv_commands() {
 'init:Create a new project' \
 'add:Add dependencies to the project' \
 'remove:Remove dependencies from the project' \
+'version:Read or update the project'\''s version' \
 'sync:Update the project'\''s environment' \
 'lock:Update the project'\''s lockfile' \
 'export:Export the project'\''s lockfile to an alternate format' \
@@ -4209,7 +4286,6 @@ _uv_commands() {
 'cache:Manage uv'\''s cache' \
 'self:Manage the uv executable' \
 'clean:Clear the cache, removing all entries or those linked to specific packages' \
-'version:Read or update the project'\''s version' \
 'generate-shell-completion:Generate shell completion' \
 'help:Display documentation for a command' \
     )
