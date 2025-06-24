@@ -35,9 +35,10 @@ endif
 " default updatetime 4000ms is not good for async update
 set updatetime=100
 
-" Add `-` and `_` to word boundaries
+" Add `-` to word boundaries
 set iskeyword-=-
-set iskeyword-=_
+" Add `_` to word boundaries
+" set ikeyword-=_
 
 " }}}
 

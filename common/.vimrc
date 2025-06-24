@@ -16,11 +16,13 @@ Plug 'nvim-treesitter/nvim-treesitter'
 
 " LSP {{{
 
-Plug 'williamboman/mason.nvim'
-Plug 'williamboman/mason-lspconfig.nvim'
+" Plug 'mason-org/mason.nvim'
+Plug 'rahuliyer95/mason.nvim', { 'branch': 'feats' } " temporary solution till my PRs are merged
+Plug 'mason-org/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvimtools/none-ls.nvim'
 Plug 'jay-babu/mason-null-ls.nvim'
+Plug 'massolari/lsp-auto-setup.nvim'
 
 "}}}
 
@@ -428,52 +430,20 @@ EOF
 
 lua << EOF
 
-require("mason").setup()
-
-require("mason-lspconfig").setup({
-  ensure_installed = {
-    "basedpyright",
-    "bashls",
-    "ruff",
+require("mason").setup({
+  npm = {
+    use_pnpm = true,
+  },
+  pip = {
+    use_python3_host_prog = true,
   },
 })
 
--- Setup LSP servers (:h mason-lspconfig-automatic-server-setup)
-require("mason-lspconfig").setup_handlers {
-  -- The first entry (without a key) will be the default handler and will be called for each
-  -- installed server that doesn't have a dedicated handler.
-  function (server_name)
-    require("lspconfig")[server_name].setup {}
-  end,
-  ["basedpyright"] = function()
-    require("lspconfig").basedpyright.setup({
-      settings = {
-        basedpyright = {
-          -- we are using Ruff for this
-          analysis = {
-            ignore = { "*" }
-          },
-          disableOrganizeImports = true,
-        },
-      },
-    })
-  end,
-  ["bashls"] = function()
-    require("lspconfig").bashls.setup({
-      settings = {
-        bashIde = {
-          shfmt = {
-            binaryNextLine = true,
-            caseIndent = true,
-            simplifyCode = true,
-            spaceRedirects = true,
-          },
-        },
-      },
-    })
-  end,
-}
+require("mason-lspconfig").setup({
+  ensure_installed = {"bashls"},
+})
 
+-- Configure LSP serevrs
 require("mason-null-ls").setup({
   ensure_installed = {},
   handlers = {},
@@ -481,6 +451,41 @@ require("mason-null-ls").setup({
 
 require("null-ls").setup({
   sources = {},
+})
+
+-- Setup all available servers
+require("lsp-auto-setup").setup({
+  server_config = {
+    basedpyright = function(default_config)
+      return {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+        settings = {
+          basedpyright = {
+            -- we are using Ruff for this
+            analysis = {
+              ignore = { "*" }
+            },
+            disableOrganizeImports = true,
+          },
+        },
+      }
+    end,
+    bashls = function(default_config)
+      return {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+        settings = {
+          bashIde = {
+            shfmt = {
+              binaryNextLine = true,
+              caseIndent = true,
+              simplifyCode = true,
+              spaceRedirects = true,
+            },
+          },
+        },
+      }
+    end,
+  }
 })
 
 -- Show diagnostic information on the current line as virtual text
@@ -531,7 +536,7 @@ cmp.setup({
     {
       { name = 'buffer' },
       { name = 'cmdline' },
-      { name = 'nvim_lsp' },
+      { name = 'nvim_cmp' },
       { name = 'path' },
       { name = 'ultisnips' },
     }
