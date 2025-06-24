@@ -281,7 +281,7 @@ _arguments "${_arguments_options[@]}" : \
 '-m+[Apply this marker to all added packages]:MARKER:_default' \
 '--marker=[Apply this marker to all added packages]:MARKER:_default' \
 '(--dev --group)--optional=[Add the requirements to the package'\''s optional dependencies for the specified extra]:OPTIONAL:_default' \
-'(--dev --optional)--group=[Add the requirements to the specified dependency group]:GROUP:_default' \
+'(--dev --optional --script)--group=[Add the requirements to the specified dependency group]:GROUP:_default' \
 '--bounds=[The kind of version specifier to use when adding dependencies]:BOUNDS:((lower\:"Only a lower bound, e.g., \`>=1.2.3\`"
 major\:"Allow the same major version, similar to the semver caret, e.g., \`>=1.2.3, <2.0.0\`"
 minor\:"Allow the same minor version, similar to the semver tilde, e.g., \`>=1.2.3, <1.3.0\`"
@@ -345,7 +345,7 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
-'(--optional --group)--dev[Add the requirements to the development dependency group]' \
+'(--optional --group --script)--dev[Add the requirements to the development dependency group]' \
 '--editable[Add the requirements as editable]' \
 '--no-editable[]' \
 '(--editable --no-editable --rev --tag --branch)--raw[Add a dependency as provided]' \
@@ -401,8 +401,8 @@ never\:"Disables colored output"))' \
 ;;
 (remove)
 _arguments "${_arguments_options[@]}" : \
-'(--dev --group)--optional=[Remove the packages from the project'\''s optional dependencies for the specified extra]:OPTIONAL:_default' \
-'(--dev --optional)--group=[Remove the packages from the specified dependency group]:GROUP:_default' \
+'(--dev --group --script)--optional=[Remove the packages from the project'\''s optional dependencies for the specified extra]:OPTIONAL:_default' \
+'(--dev --optional --script)--group=[Remove the packages from the specified dependency group]:GROUP:_default' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
