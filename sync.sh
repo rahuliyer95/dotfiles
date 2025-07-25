@@ -19,5 +19,5 @@ for DIR in "${DIRS[@]}"; do
     rm "$homepath"
     mkdir -p "$homedir"
     ln -s "$PWD/$file" "$homepath"
-  done < <(find "$DIR" -type f,l)
+  done < <(find "$DIR" -type f -o -type l)
 done
