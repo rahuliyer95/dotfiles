@@ -56,3 +56,5 @@ fi
 # pnpm
 [ -d "$PNPM_HOME" ] && export PATH="$PATH:$PNPM_HOME"
 
+# toolgit
+[ -d "$HOME/Documents/ahmetsait/toolgit" ] && export PATH="$PATH:$HOME/Documents/ahmetsait/toolgit"
