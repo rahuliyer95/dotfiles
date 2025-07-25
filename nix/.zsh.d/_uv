@@ -73,6 +73,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
 '*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_files' \
+'*-w+[Run with the given packages installed]:WITH:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
 '*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
 '*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
@@ -327,7 +328,7 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:_default' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:_default' \
 '(--isolated)--package=[Add the dependency to a specific package in the workspace]:PACKAGE:_default' \
-'(--dev --optional --package)--script=[Add the dependency to the specified Python script, rather than to a project]:SCRIPT:_files' \
+'(--dev --optional --package --workspace)--script=[Add the dependency to the specified Python script, rather than to a project]:SCRIPT:_files' \
 '-p+[The Python interpreter to use for resolving and syncing.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for resolving and syncing.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
@@ -372,6 +373,8 @@ never\:"Disables colored output"))' \
 '--binary[]' \
 '(--offline)--refresh[Refresh all cached data]' \
 '(--offline)--no-refresh[]' \
+'--workspace[Add the dependency as a workspace member]' \
+'--no-workspace[Don'\''t add the dependency as a workspace member]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
@@ -511,9 +514,15 @@ never\:"Disables colored output"))' \
 ;;
 (version)
 _arguments "${_arguments_options[@]}" : \
-'--bump=[Update the project version using the given semantics]:BUMP:((major\:"Increase the major version (1.2.3 => 2.0.0)"
-minor\:"Increase the minor version (1.2.3 => 1.3.0)"
-patch\:"Increase the patch version (1.2.3 => 1.2.4)"))' \
+'*--bump=[Update the project version using the given semantics]:BUMP:((major\:"Increase the major version (e.g., 1.2.3 => 2.0.0)"
+minor\:"Increase the minor version (e.g., 1.2.3 => 1.3.0)"
+patch\:"Increase the patch version (e.g., 1.2.3 => 1.2.4)"
+stable\:"Move from a pre-release to stable version (e.g., 1.2.3b4.post5.dev6 => 1.2.3)"
+alpha\:"Increase the alpha version (e.g., 1.2.3a4 => 1.2.3a5)"
+beta\:"Increase the beta version (e.g., 1.2.3b4 => 1.2.3b5)"
+rc\:"Increase the rc version (e.g., 1.2.3rc4 => 1.2.3rc5)"
+post\:"Increase the post version (e.g., 1.2.3.post5 => 1.2.3.post6)"
+dev\:"Increase the dev version (e.g., 1.2.3a4.dev6 => 1.2.3.dev7)"))' \
 '--output-format=[The format of the output]:OUTPUT_FORMAT:((text\:"Display the version as plain text"
 json\:"Display the version as JSON"))' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -625,6 +634,8 @@ never\:"Disables colored output"))' \
 (sync)
 _arguments "${_arguments_options[@]}" : \
 '(--all-extras)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
+'--output-format=[Select the output format]:OUTPUT_FORMAT:((text\:"Display the result in a human-readable format"
+json\:"Display the result in JSON format"))' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:_default' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
 '*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
@@ -670,6 +681,44 @@ symlink\:"Symbolically link packages from the wheel into the \`site-packages\` d
 '(--all-packages --package --no-install-project --no-install-workspace --extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups)--script=[Sync the environment for a Python script, rather than the current project]:SCRIPT:_files' \
 '-p+[The Python interpreter to use for the project environment.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for the project environment.]:PYTHON:_default' \
+'--python-platform=[The platform for which requirements should be installed]:PYTHON_PLATFORM:((windows\:"An alias for \`x86_64-pc-windows-msvc\`, the default target for Windows"
+linux\:"An alias for \`x86_64-unknown-linux-gnu\`, the default target for Linux"
+macos\:"An alias for \`aarch64-apple-darwin\`, the default target for macOS"
+x86_64-pc-windows-msvc\:"A 64-bit x86 Windows target"
+i686-pc-windows-msvc\:"A 32-bit x86 Windows target"
+x86_64-unknown-linux-gnu\:"An x86 Linux target. Equivalent to \`x86_64-manylinux_2_28\`"
+aarch64-apple-darwin\:"An ARM-based macOS target, as seen on Apple Silicon devices"
+x86_64-apple-darwin\:"An x86 macOS target"
+aarch64-unknown-linux-gnu\:"An ARM64 Linux target. Equivalent to \`aarch64-manylinux_2_28\`"
+aarch64-unknown-linux-musl\:"An ARM64 Linux target"
+x86_64-unknown-linux-musl\:"An \`x86_64\` Linux target"
+x86_64-manylinux2014\:"An \`x86_64\` target for the \`manylinux2014\` platform. Equivalent to \`x86_64-manylinux_2_17\`"
+x86_64-manylinux_2_17\:"An \`x86_64\` target for the \`manylinux_2_17\` platform"
+x86_64-manylinux_2_28\:"An \`x86_64\` target for the \`manylinux_2_28\` platform"
+x86_64-manylinux_2_31\:"An \`x86_64\` target for the \`manylinux_2_31\` platform"
+x86_64-manylinux_2_32\:"An \`x86_64\` target for the \`manylinux_2_32\` platform"
+x86_64-manylinux_2_33\:"An \`x86_64\` target for the \`manylinux_2_33\` platform"
+x86_64-manylinux_2_34\:"An \`x86_64\` target for the \`manylinux_2_34\` platform"
+x86_64-manylinux_2_35\:"An \`x86_64\` target for the \`manylinux_2_35\` platform"
+x86_64-manylinux_2_36\:"An \`x86_64\` target for the \`manylinux_2_36\` platform"
+x86_64-manylinux_2_37\:"An \`x86_64\` target for the \`manylinux_2_37\` platform"
+x86_64-manylinux_2_38\:"An \`x86_64\` target for the \`manylinux_2_38\` platform"
+x86_64-manylinux_2_39\:"An \`x86_64\` target for the \`manylinux_2_39\` platform"
+x86_64-manylinux_2_40\:"An \`x86_64\` target for the \`manylinux_2_40\` platform"
+aarch64-manylinux2014\:"An ARM64 target for the \`manylinux2014\` platform. Equivalent to \`aarch64-manylinux_2_17\`"
+aarch64-manylinux_2_17\:"An ARM64 target for the \`manylinux_2_17\` platform"
+aarch64-manylinux_2_28\:"An ARM64 target for the \`manylinux_2_28\` platform"
+aarch64-manylinux_2_31\:"An ARM64 target for the \`manylinux_2_31\` platform"
+aarch64-manylinux_2_32\:"An ARM64 target for the \`manylinux_2_32\` platform"
+aarch64-manylinux_2_33\:"An ARM64 target for the \`manylinux_2_33\` platform"
+aarch64-manylinux_2_34\:"An ARM64 target for the \`manylinux_2_34\` platform"
+aarch64-manylinux_2_35\:"An ARM64 target for the \`manylinux_2_35\` platform"
+aarch64-manylinux_2_36\:"An ARM64 target for the \`manylinux_2_36\` platform"
+aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
+aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
+aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
+aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -1023,10 +1072,10 @@ linux\:"An alias for \`x86_64-unknown-linux-gnu\`, the default target for Linux"
 macos\:"An alias for \`aarch64-apple-darwin\`, the default target for macOS"
 x86_64-pc-windows-msvc\:"A 64-bit x86 Windows target"
 i686-pc-windows-msvc\:"A 32-bit x86 Windows target"
-x86_64-unknown-linux-gnu\:"An x86 Linux target. Equivalent to \`x86_64-manylinux_2_17\`"
+x86_64-unknown-linux-gnu\:"An x86 Linux target. Equivalent to \`x86_64-manylinux_2_28\`"
 aarch64-apple-darwin\:"An ARM-based macOS target, as seen on Apple Silicon devices"
 x86_64-apple-darwin\:"An x86 macOS target"
-aarch64-unknown-linux-gnu\:"An ARM64 Linux target. Equivalent to \`aarch64-manylinux_2_17\`"
+aarch64-unknown-linux-gnu\:"An ARM64 Linux target. Equivalent to \`aarch64-manylinux_2_28\`"
 aarch64-unknown-linux-musl\:"An ARM64 Linux target"
 x86_64-unknown-linux-musl\:"An \`x86_64\` Linux target"
 x86_64-manylinux2014\:"An \`x86_64\` target for the \`manylinux2014\` platform. Equivalent to \`x86_64-manylinux_2_17\`"
@@ -1055,7 +1104,7 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
 '-p+[The Python interpreter to use for locking and filtering.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for locking and filtering.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
@@ -1176,6 +1225,7 @@ never\:"Disables colored output"))' \
             (run)
 _arguments "${_arguments_options[@]}" : \
 '--from=[Use the given package to provide the command]:FROM:_default' \
+'*-w+[Run with the given packages installed]:WITH:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
 '*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
 '*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
@@ -1288,6 +1338,7 @@ never\:"Disables colored output"))' \
 (uvx)
 _arguments "${_arguments_options[@]}" : \
 '--from=[Use the given package to provide the command]:FROM:_default' \
+'*-w+[Run with the given packages installed]:WITH:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
 '*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
 '*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
@@ -1402,6 +1453,7 @@ never\:"Disables colored output"))' \
 (install)
 _arguments "${_arguments_options[@]}" : \
 '--from=[The package to install commands from]:FROM:_default' \
+'*-w+[Include the following additional requirements]:WITH:_default' \
 '*--with=[Include the following additional requirements]:WITH:_default' \
 '*--with-requirements=[Include all requirements listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
 '*--with-editable=[Include the given packages in editable mode]:WITH_EDITABLE:_default' \
@@ -1917,11 +1969,15 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'--bin[Install a Python executable into the \`bin\` directory]' \
+'(--default)--no-bin[Do not install a Python executable into the \`bin\` directory]' \
+'--registry[Register the Python installation in the Windows registry]' \
+'--no-registry[Do not register the Python installation in the Windows registry]' \
 '-r[Reinstall the requested Python version, if it'\''s already installed]' \
 '--reinstall[Reinstall the requested Python version, if it'\''s already installed]' \
 '-f[Replace existing Python executables during installation]' \
 '--force[Replace existing Python executables during installation]' \
-'--default[Use as the default Python version]' \
+'(--no-bin)--default[Use as the default Python version]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
@@ -1947,6 +2003,55 @@ never\:"Disables colored output"))' \
 '-h[Display the concise help for this command]' \
 '--help[Display the concise help for this command]' \
 '*::targets -- The Python version(s) to install:_default' \
+&& ret=0
+;;
+(upgrade)
+_arguments "${_arguments_options[@]}" : \
+'-i+[The directory Python installations are stored in]:INSTALL_DIR:_files' \
+'--install-dir=[The directory Python installations are stored in]:INSTALL_DIR:_files' \
+'--mirror=[Set the URL to use as the source for downloading Python installations]:MIRROR:_default' \
+'--pypy-mirror=[Set the URL to use as the source for downloading PyPy installations]:PYPY_MIRROR:_default' \
+'--python-downloads-json-url=[URL pointing to JSON of custom Python installations]:PYTHON_DOWNLOADS_JSON_URL:_default' \
+'--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+managed\:"Prefer managed Python installations over system Python installations"
+system\:"Prefer system Python installations over managed Python installations"
+only-system\:"Only use system Python installations; never use managed Python installations"))' \
+'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+manual\:"Do not automatically download managed Python installations; require explicit installation"
+never\:"Do not ever allow Python downloads"))' \
+'(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
+always\:"Enables colored output regardless of the detected environment"
+never\:"Disables colored output"))' \
+'*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
+'--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
+'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
+'--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
+'--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
+'(-q --quiet)*-v[Use verbose output]' \
+'(-q --quiet)*--verbose[Use verbose output]' \
+'(--color)--no-color[Disable colors]' \
+'--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store]' \
+'--no-native-tls[]' \
+'--offline[Disable network access]' \
+'--no-offline[]' \
+'--preview[Whether to enable experimental, preview features]' \
+'--no-preview[]' \
+'--isolated[Avoid discovering a \`pyproject.toml\` or \`uv.toml\` file]' \
+'--show-settings[Show the resolved settings for the current command]' \
+'--no-progress[Hide all progress outputs]' \
+'--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories]' \
+'--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
+'-h[Display the concise help for this command]' \
+'--help[Display the concise help for this command]' \
+'*::targets -- The Python minor version(s) to upgrade:_default' \
 && ret=0
 ;;
 (find)
@@ -2138,6 +2243,49 @@ never\:"Disables colored output"))' \
 '*::targets -- The Python version(s) to uninstall:_default' \
 && ret=0
 ;;
+(update-shell)
+_arguments "${_arguments_options[@]}" : \
+'--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+managed\:"Prefer managed Python installations over system Python installations"
+system\:"Prefer system Python installations over managed Python installations"
+only-system\:"Only use system Python installations; never use managed Python installations"))' \
+'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+manual\:"Do not automatically download managed Python installations; require explicit installation"
+never\:"Do not ever allow Python downloads"))' \
+'(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
+always\:"Enables colored output regardless of the detected environment"
+never\:"Disables colored output"))' \
+'*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
+'--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
+'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
+'--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
+'--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
+'(-q --quiet)*-v[Use verbose output]' \
+'(-q --quiet)*--verbose[Use verbose output]' \
+'(--color)--no-color[Disable colors]' \
+'--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store]' \
+'--no-native-tls[]' \
+'--offline[Disable network access]' \
+'--no-offline[]' \
+'--preview[Whether to enable experimental, preview features]' \
+'--no-preview[]' \
+'--isolated[Avoid discovering a \`pyproject.toml\` or \`uv.toml\` file]' \
+'--show-settings[Show the resolved settings for the current command]' \
+'--no-progress[Hide all progress outputs]' \
+'--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories]' \
+'--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
+'-h[Display the concise help for this command]' \
+'--help[Display the concise help for this command]' \
+&& ret=0
+;;
         esac
     ;;
 esac
@@ -2252,10 +2400,10 @@ linux\:"An alias for \`x86_64-unknown-linux-gnu\`, the default target for Linux"
 macos\:"An alias for \`aarch64-apple-darwin\`, the default target for macOS"
 x86_64-pc-windows-msvc\:"A 64-bit x86 Windows target"
 i686-pc-windows-msvc\:"A 32-bit x86 Windows target"
-x86_64-unknown-linux-gnu\:"An x86 Linux target. Equivalent to \`x86_64-manylinux_2_17\`"
+x86_64-unknown-linux-gnu\:"An x86 Linux target. Equivalent to \`x86_64-manylinux_2_28\`"
 aarch64-apple-darwin\:"An ARM-based macOS target, as seen on Apple Silicon devices"
 x86_64-apple-darwin\:"An x86 macOS target"
-aarch64-unknown-linux-gnu\:"An ARM64 Linux target. Equivalent to \`aarch64-manylinux_2_17\`"
+aarch64-unknown-linux-gnu\:"An ARM64 Linux target. Equivalent to \`aarch64-manylinux_2_28\`"
 aarch64-unknown-linux-musl\:"An ARM64 Linux target"
 x86_64-unknown-linux-musl\:"An \`x86_64\` Linux target"
 x86_64-manylinux2014\:"An \`x86_64\` target for the \`manylinux2014\` platform. Equivalent to \`x86_64-manylinux_2_17\`"
@@ -2284,7 +2432,7 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
 '*--no-emit-package=[Specify a package to omit from the output resolution. Its dependencies will still be included in the resolution. Equivalent to pip-compile'\''s \`--unsafe-package\` option]:NO_EMIT_PACKAGE:_default' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
@@ -2311,7 +2459,24 @@ cu100\:"Use the PyTorch index for CUDA 10.0"
 cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
-cu80\:"Use the PyTorch index for CUDA 8.0"))' \
+cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm6.3\:"Use the PyTorch index for ROCm 6.3"
+rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
+rocm6.2\:"Use the PyTorch index for ROCm 6.2"
+rocm6.1\:"Use the PyTorch index for ROCm 6.1"
+rocm6.0\:"Use the PyTorch index for ROCm 6.0"
+rocm5.7\:"Use the PyTorch index for ROCm 5.7"
+rocm5.6\:"Use the PyTorch index for ROCm 5.6"
+rocm5.5\:"Use the PyTorch index for ROCm 5.5"
+rocm5.4.2\:"Use the PyTorch index for ROCm 5.4.2"
+rocm5.4\:"Use the PyTorch index for ROCm 5.4"
+rocm5.3\:"Use the PyTorch index for ROCm 5.3"
+rocm5.2\:"Use the PyTorch index for ROCm 5.2"
+rocm5.1.1\:"Use the PyTorch index for ROCm 5.1.1"
+rocm4.2\:"Use the PyTorch index for ROCm 4.2"
+rocm4.1\:"Use the PyTorch index for ROCm 4.1"
+rocm4.0.1\:"Use the PyTorch index for ROCm 4.0.1"
+xpu\:"Use the PyTorch index for Intel XPU"))' \
 '--resolver=[]:RESOLVER:(backtracking legacy)' \
 '--max-rounds=[]:MAX_ROUNDS:_default' \
 '--cert=[]:CERT:_default' \
@@ -2447,10 +2612,10 @@ linux\:"An alias for \`x86_64-unknown-linux-gnu\`, the default target for Linux"
 macos\:"An alias for \`aarch64-apple-darwin\`, the default target for macOS"
 x86_64-pc-windows-msvc\:"A 64-bit x86 Windows target"
 i686-pc-windows-msvc\:"A 32-bit x86 Windows target"
-x86_64-unknown-linux-gnu\:"An x86 Linux target. Equivalent to \`x86_64-manylinux_2_17\`"
+x86_64-unknown-linux-gnu\:"An x86 Linux target. Equivalent to \`x86_64-manylinux_2_28\`"
 aarch64-apple-darwin\:"An ARM-based macOS target, as seen on Apple Silicon devices"
 x86_64-apple-darwin\:"An x86 macOS target"
-aarch64-unknown-linux-gnu\:"An ARM64 Linux target. Equivalent to \`aarch64-manylinux_2_17\`"
+aarch64-unknown-linux-gnu\:"An ARM64 Linux target. Equivalent to \`aarch64-manylinux_2_28\`"
 aarch64-unknown-linux-musl\:"An ARM64 Linux target"
 x86_64-unknown-linux-musl\:"An \`x86_64\` Linux target"
 x86_64-manylinux2014\:"An \`x86_64\` target for the \`manylinux2014\` platform. Equivalent to \`x86_64-manylinux_2_17\`"
@@ -2479,7 +2644,7 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -2505,7 +2670,24 @@ cu100\:"Use the PyTorch index for CUDA 10.0"
 cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
-cu80\:"Use the PyTorch index for CUDA 8.0"))' \
+cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm6.3\:"Use the PyTorch index for ROCm 6.3"
+rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
+rocm6.2\:"Use the PyTorch index for ROCm 6.2"
+rocm6.1\:"Use the PyTorch index for ROCm 6.1"
+rocm6.0\:"Use the PyTorch index for ROCm 6.0"
+rocm5.7\:"Use the PyTorch index for ROCm 5.7"
+rocm5.6\:"Use the PyTorch index for ROCm 5.6"
+rocm5.5\:"Use the PyTorch index for ROCm 5.5"
+rocm5.4.2\:"Use the PyTorch index for ROCm 5.4.2"
+rocm5.4\:"Use the PyTorch index for ROCm 5.4"
+rocm5.3\:"Use the PyTorch index for ROCm 5.3"
+rocm5.2\:"Use the PyTorch index for ROCm 5.2"
+rocm5.1.1\:"Use the PyTorch index for ROCm 5.1.1"
+rocm4.2\:"Use the PyTorch index for ROCm 4.2"
+rocm4.1\:"Use the PyTorch index for ROCm 4.1"
+rocm4.0.1\:"Use the PyTorch index for ROCm 4.0.1"
+xpu\:"Use the PyTorch index for Intel XPU"))' \
 '--python-executable=[]:PYTHON_EXECUTABLE:_default' \
 '--cert=[]:CERT:_default' \
 '--client-cert=[]:CLIENT_CERT:_default' \
@@ -2640,10 +2822,10 @@ linux\:"An alias for \`x86_64-unknown-linux-gnu\`, the default target for Linux"
 macos\:"An alias for \`aarch64-apple-darwin\`, the default target for macOS"
 x86_64-pc-windows-msvc\:"A 64-bit x86 Windows target"
 i686-pc-windows-msvc\:"A 32-bit x86 Windows target"
-x86_64-unknown-linux-gnu\:"An x86 Linux target. Equivalent to \`x86_64-manylinux_2_17\`"
+x86_64-unknown-linux-gnu\:"An x86 Linux target. Equivalent to \`x86_64-manylinux_2_28\`"
 aarch64-apple-darwin\:"An ARM-based macOS target, as seen on Apple Silicon devices"
 x86_64-apple-darwin\:"An x86 macOS target"
-aarch64-unknown-linux-gnu\:"An ARM64 Linux target. Equivalent to \`aarch64-manylinux_2_17\`"
+aarch64-unknown-linux-gnu\:"An ARM64 Linux target. Equivalent to \`aarch64-manylinux_2_28\`"
 aarch64-unknown-linux-musl\:"An ARM64 Linux target"
 x86_64-unknown-linux-musl\:"An \`x86_64\` Linux target"
 x86_64-manylinux2014\:"An \`x86_64\` target for the \`manylinux2014\` platform. Equivalent to \`x86_64-manylinux_2_17\`"
@@ -2672,7 +2854,7 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -2698,7 +2880,24 @@ cu100\:"Use the PyTorch index for CUDA 10.0"
 cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
-cu80\:"Use the PyTorch index for CUDA 8.0"))' \
+cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm6.3\:"Use the PyTorch index for ROCm 6.3"
+rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
+rocm6.2\:"Use the PyTorch index for ROCm 6.2"
+rocm6.1\:"Use the PyTorch index for ROCm 6.1"
+rocm6.0\:"Use the PyTorch index for ROCm 6.0"
+rocm5.7\:"Use the PyTorch index for ROCm 5.7"
+rocm5.6\:"Use the PyTorch index for ROCm 5.6"
+rocm5.5\:"Use the PyTorch index for ROCm 5.5"
+rocm5.4.2\:"Use the PyTorch index for ROCm 5.4.2"
+rocm5.4\:"Use the PyTorch index for ROCm 5.4"
+rocm5.3\:"Use the PyTorch index for ROCm 5.3"
+rocm5.2\:"Use the PyTorch index for ROCm 5.2"
+rocm5.1.1\:"Use the PyTorch index for ROCm 5.1.1"
+rocm4.2\:"Use the PyTorch index for ROCm 4.2"
+rocm4.1\:"Use the PyTorch index for ROCm 4.1"
+rocm4.0.1\:"Use the PyTorch index for ROCm 4.0.1"
+xpu\:"Use the PyTorch index for Intel XPU"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -3177,13 +3376,14 @@ never\:"Disables colored output"))' \
 '--no-system[This flag is included for compatibility only, it has no effect]' \
 '--no-project[Avoid discovering a project or workspace]' \
 '--seed[Install seed packages (one or more of\: \`pip\`, \`setuptools\`, and \`wheel\`) into the virtual environment]' \
+'-c[Remove any existing files or directories at the target path]' \
+'--clear[Remove any existing files or directories at the target path]' \
 '--allow-existing[Preserve any existing files or directories at the target path]' \
 '--system-site-packages[Give the virtual environment access to the system site packages directory]' \
 '--relocatable[Make the virtual environment relocatable]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '(--offline)--refresh[Refresh all cached data]' \
 '(--offline)--no-refresh[]' \
-'--clear[]' \
 '--no-seed[]' \
 '--no-pip[]' \
 '--no-setuptools[]' \
@@ -4479,10 +4679,12 @@ _uv__python_commands() {
     local commands; commands=(
 'list:List the available Python installations' \
 'install:Download and install Python versions' \
+'upgrade:Upgrade installed Python versions to the latest supported patch release (requires the \`--preview\` flag)' \
 'find:Search for a Python installation' \
 'pin:Pin to a specific Python version' \
 'dir:Show the uv Python installation directory' \
 'uninstall:Uninstall Python versions' \
+'update-shell:Ensure that the Python executable directory is on the \`PATH\`' \
     )
     _describe -t commands 'uv python commands' commands "$@"
 }
@@ -4515,6 +4717,16 @@ _uv__python__pin_commands() {
 _uv__python__uninstall_commands() {
     local commands; commands=()
     _describe -t commands 'uv python uninstall commands' commands "$@"
+}
+(( $+functions[_uv__python__update-shell_commands] )) ||
+_uv__python__update-shell_commands() {
+    local commands; commands=()
+    _describe -t commands 'uv python update-shell commands' commands "$@"
+}
+(( $+functions[_uv__python__upgrade_commands] )) ||
+_uv__python__upgrade_commands() {
+    local commands; commands=()
+    _describe -t commands 'uv python upgrade commands' commands "$@"
 }
 (( $+functions[_uv__remove_commands] )) ||
 _uv__remove_commands() {

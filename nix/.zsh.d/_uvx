@@ -16,6 +16,7 @@ _uvx() {
     local context curcontext="$curcontext" state line
     _arguments "${_arguments_options[@]}" : \
 '--from=[Use the given package to provide the command]:FROM:_default' \
+'*-w+[Run with the given packages installed]:WITH:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
 '*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
 '*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
