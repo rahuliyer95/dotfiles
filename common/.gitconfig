@@ -20,13 +20,13 @@
   credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
   bd = branch -D
   # Interactive rebase with the given number of latest commits (preserves original commit date)
-  reb = "!r() { git rebase --committer-date-is-author-date -i HEAD~$1; }; r"
+  reb = "!r() { git rebase --committer-date-is-author-date -S -i HEAD~$1; }; r"
   # Rebase with origin main
   rom = "!f() { git fetch origin main; git rebase origin/main; }; f"
   # Remove the old tag with this name and tag the latest commit with it.
   retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
   # Remove branches that have already been merged with master
-  # a.k.a. ‘delete merged’
+  # a.k.a. 'delete merged'
   dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
   # List contributors with number of commits
   contributors = shortlog --summary --numbered
@@ -122,3 +122,6 @@
 
 [include]
   path = ~/.gitconfig.local
+
+[include]
+  path = ~/Documents/ahmetsait/toolgit/aliases.ini
