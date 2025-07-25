@@ -1,3 +1,4 @@
+" vi:ft=vimrc
 " Basic Settings {{{
 
 " Enable project specific vimrc files ==> https://andrew.stwrt.ca/posts/project-specific-vimrc/
@@ -51,9 +52,13 @@ set so=8
 
 " Turn on the WiLd menu
 set wildmenu
-
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+set wildmode=list:longest     " Wildcard matches show a list, matching the longest first
+set wildignore+=.git,.hg,.svn " Ignore version control repos
+set wildignore+=*.6           " Ignore Go compiled files
+set wildignore+=*.pyc         " Ignore Python compiled files
+set wildignore+=*.rbc         " Ignore Rubinius compiled files
+set wildignore+=*.swp         " Ignore vim backups
+set wildignore+=*.o           " Ignore compiled objects
 
 "Always show current position
 set ruler
@@ -108,10 +113,13 @@ endif
 set relativenumber
 set number
 
-" Show TAB and newline characters
-" set list
-" set listchars=tab:▸\ ,eol:⏎
-
+" Set the characters for the invisibles
+set list
+set listchars=tab:›\ ,trail:⋅
+" set listchars+=eol:¬,
+if !has("win32")
+  set showbreak=↪ " The character to put to show a line has been wrapped
+end
 " }}}
 
 " Colors and Fonts {{{
@@ -121,12 +129,23 @@ set background=dark
 syntax enable
 if !has('gui_running')
   set t_Co=256
+  " vim hardcodes background color erase even if the terminfo file does not contain bce
+  " (not to mention that libvte based terminals incorrectly contain bce in their terminfo files).
+  " This causes incorrect background rendering when using a color theme with a background color.
+  " See: https://github.com/kovidgoyal/kitty/issues/108
+  " Copied from: https://github.com/mitchellh/vim-misc/blob/fddb7ee3a856b298fe33fb6ef0c8c67f79b801d9/vimrc.vim#L78
+  let &t_ut=''
 endif
-if (has('nvim'))
+if has('nvim')
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+else
+  set guioptions=cegmt
 endif
-if (has('termguicolors'))
+if has('termguicolors')
   set termguicolors
+endif
+if exists("&fuopt")
+  set fuopt+=maxhorz
 endif
 " Column at text end
 set colorcolumn=+1
@@ -193,7 +212,7 @@ nnoremap <c-space> ?
 nnoremap <silent> <leader><cr> :noh<cr>
 
 " Close the current buffer
-nnoremap <leader>bd :Bclose<cr>
+nnoremap <leader>bd :bdelete!<cr>
 
 " Close all the buffers
 nnoremap <leader>ba :%bd!<cr>
@@ -244,5 +263,7 @@ nnoremap <leader>pp :setlocal paste!<cr>
 " Select pasted text
 nnoremap gp `[v`]
 
-" }}}
+" Command to write as root if we don't have permissions
+cmap w!! %!sudo tee > /dev/null %
 
+" }}}

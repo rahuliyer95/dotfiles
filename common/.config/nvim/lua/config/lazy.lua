@@ -1,0 +1,163 @@
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+
+vim.opt.rtp:prepend(lazypath)
+
+-- Setup lazy.nvim
+require("lazy").setup({
+  -- Core plugins
+  { "tpope/vim-fugitive" },
+  { "junegunn/fzf.vim" },
+  { "raimondi/delimitmate" },
+  { "tpope/vim-sensible" },
+  { "tpope/vim-eunuch" },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      require("plugins.treesitter")
+    end
+  },
+
+  -- LSP and completion
+  { "neovim/nvim-lspconfig" },
+  {
+    "rahuliyer95/mason.nvim",
+    branch = "feats",
+    config = function()
+      require("plugins.mason")
+    end
+  },
+  { "mason-org/mason-lspconfig.nvim" },
+  { "nvimtools/none-ls.nvim" },
+  { "jay-babu/mason-null-ls.nvim" },
+  { "massolari/lsp-auto-setup.nvim" },
+
+  -- Completion
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "quangnguyen30192/cmp-nvim-ultisnips",
+    },
+    config = function()
+      require("plugins.cmp")
+    end
+  },
+
+  -- Other code plugins
+  {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      require("plugins.lsp-signature")
+    end
+  },
+  { "joom/vim-commentary" },
+  { "darfink/vim-plist" },
+  { "apple/pkl-neovim" },
+  { "SirVer/ultisnips" },
+  { "honza/vim-snippets" },
+  {
+    "folke/trouble.nvim",
+    config = function()
+      require("plugins.trouble")
+    end
+  },
+
+  -- Utilities
+  { "kana/vim-repeat" },
+  { "anyakichi/vim-surround" },
+  { "tpope/vim-unimpaired" },
+  { "junegunn/vim-easy-align" },
+  {
+    "ntpeters/vim-better-whitespace",
+    config = function()
+      require("plugins.better-whitespace")
+    end
+  },
+  { "gisphm/vim-gitignore" },
+  { "dstein64/vim-startuptime" },
+  { "osyo-manga/vim-anzu" },
+  { "tpope/vim-abolish" },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("plugins.telescope")
+    end
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("plugins.gitsigns")
+    end
+  },
+  { "christoomey/vim-sort-motion" },
+
+  -- Look & Feel
+  {
+    "olimorris/onedarkpro.nvim",
+    config = function()
+      require("plugins.onedarkpro")
+    end
+  },
+  { "kyazdani42/nvim-web-devicons" },
+  {
+    "kyazdani42/nvim-tree.lua",
+    config = function()
+      require("plugins.nvim-tree")
+    end
+  },
+  {
+    "RRethy/vim-illuminate",
+    config = function()
+      require("plugins.illuminate")
+    end
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    config = function()
+      require("plugins.rainbow-delimiters")
+    end
+  },
+  {
+    "romgrk/barbar.nvim",
+    config = function()
+      require("plugins.barbar")
+    end
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("plugins.indent-blankline")
+    end
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    config = function()
+      require("plugins.lualine")
+    end
+  },
+}, {
+  -- Lazy.nvim configuration
+  install = {
+    colorscheme = { "onedark" },
+  },
+  checker = {
+    enabled = true,
+  },
+})
