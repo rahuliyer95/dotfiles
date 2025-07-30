@@ -1,4 +1,4 @@
-" vi:ft=vimrc
+" vi:ft=vim
 " Basic Settings {{{
 
 " Enable project specific vimrc files ==> https://andrew.stwrt.ca/posts/project-specific-vimrc/

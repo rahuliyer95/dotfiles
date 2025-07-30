@@ -51,8 +51,7 @@ require("lazy").setup({
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-      "quangnguyen30192/cmp-nvim-ultisnips",
+      "saadparwaiz1/cmp_luasnip",
     },
     config = function()
       require("plugins.cmp")
@@ -69,8 +68,13 @@ require("lazy").setup({
   { "joom/vim-commentary" },
   { "darfink/vim-plist" },
   { "apple/pkl-neovim" },
-  { "SirVer/ultisnips" },
-  { "honza/vim-snippets" },
+  {
+    "L3MON4D3/LuaSnip",
+    config = function()
+      require("plugins.luasnip")
+    end
+  },
+  { "rafamadriz/friendly-snippets" },
   {
     "folke/trouble.nvim",
     config = function()
@@ -116,6 +120,7 @@ require("lazy").setup({
     end
   },
   { "kyazdani42/nvim-web-devicons" },
+  { "onsails/lspkind.nvim" },
   {
     "kyazdani42/nvim-tree.lua",
     config = function()
