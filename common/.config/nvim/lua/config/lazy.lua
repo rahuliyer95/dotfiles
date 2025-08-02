@@ -35,11 +35,16 @@ require("lazy").setup({
   {
     "rahuliyer95/mason.nvim",
     branch = "feats",
+    build = ":MasonUpdate",
     config = function()
       require("plugins.mason")
-    end
+    end,
+    dependencies = { "neovim/nvim-lspconfig" }
   },
-  { "mason-org/mason-lspconfig.nvim" },
+  {
+    "mason-org/mason-lspconfig.nvim",
+    dependencies = { "rahuliyer95/mason.nvim"}
+  },
   { "nvimtools/none-ls.nvim" },
   { "jay-babu/mason-null-ls.nvim" },
   { "massolari/lsp-auto-setup.nvim" },
@@ -158,11 +163,12 @@ require("lazy").setup({
     end
   },
 }, {
-  -- Lazy.nvim configuration
+  -- lazy.nvim configuration
   install = {
     colorscheme = { "onedark" },
   },
   checker = {
     enabled = true,
+    notify = false,
   },
 })
