@@ -149,9 +149,9 @@ if command -v nvim > /dev/null; then
   echo -e "╰────────────╯"
   echo -ne "\e[0m"
   echo ""
-  nvim +PlugUpgrade +PlugUpdate +qall \
-    && nvim +MasonUpdate +qall \
-    && nvim +TSUpdateSync +qall
+  nvim --headless "+Lazy! sync" +qall \
+    && nvim --headless +MasonUpdate +qall \
+    && nvim --headless +TSUpdateSync +qall
 fi
 
 # rustup
