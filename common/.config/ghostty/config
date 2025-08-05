@@ -14,10 +14,16 @@ font-size          = 16
 
 # }}}
 
+# Google Sans Code {{{
+
+font-family = Google Sans Code
+
+# }}}
+
 # Maple Mono {{{
 
-font-family  = Maple Mono NF
-font-feature = calt, cv01, cv02, cv03, cv05, cv06, cv08, cv38, cv40, cv41, cv62, ss03, ss09, ss10, ss11
+# font-family  = Maple Mono NF
+# font-feature = calt, cv01, cv02, cv03, cv05, cv06, cv08, cv38, cv40, cv41, cv62, ss03, ss09, ss10, ss11
 
 # }}}
 
