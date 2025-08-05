@@ -17,7 +17,6 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
   -- Core plugins
-  { "tpope/vim-fugitive" },
   { "junegunn/fzf.vim" },
   { "raimondi/delimitmate" },
   { "tpope/vim-sensible" },
@@ -29,6 +28,14 @@ require("lazy").setup({
       require("plugins.treesitter")
     end
   },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
+  },
+  { "sindrets/diffview.nvim" },
 
   -- LSP and completion
   { "neovim/nvim-lspconfig" },
