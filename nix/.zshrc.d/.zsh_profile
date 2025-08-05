@@ -1,35 +1,35 @@
 #!/usr/bin/env zsh
 
 # Load path
-for file in "$HOME/.rc.d/."{exports,path}; do
-  [ -f "$file" ] && . "$file" 2> /dev/null
+for file in $HOME/.rc.d/.{exports,path}; do
+  [ -f "$file" ] && . "$file" 2>/dev/null
 done
 # Load the common shell dotfiles
-for file in "$HOME/.rc.d/."{aliases,extras,functions}; do
-  [ -f "$file" ] && . "$file" 2> /dev/null
+for file in $HOME/.rc.d/.{aliases,extras,functions}; do
+  [ -f "$file" ] && . "$file" 2>/dev/null
 done
-for file in "$HOME/.zshrc.d/."{plugins.bundle,local.pre.sh,zsh_prompt}; do
-  [ -f "$file" ] && . "$file" 2> /dev/null
+for file in $HOME/.zshrc.d/.{plugins.bundle,local.pre.sh,zsh_prompt}; do
+  [ -f "$file" ] && . "$file" 2>/dev/null
 done
 unset file
 
 # Kitty 0.24+/Ghostty
-typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION=true
+typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION="true"
 
-if command -v brew > /dev/null; then
-  PREFIX="$(brew --prefix bash-completion 2> /dev/null)"
+if command -v brew >/dev/null; then
+  PREFIX="$(brew --prefix bash-completion 2>/dev/null)"
   export BASH_COMPLETION_COMPAT_DIR="$PREFIX/etc/bash_completion.d"
-  [ -d "$PREFIX" ] && . "$PREFIX/etc/profile.d/bash_completion.sh" 2> /dev/null
+  [ -d "$PREFIX" ] && . "$PREFIX/etc/profile.d/bash_completion.sh" 2>/dev/null
   PREFIX="$(brew --prefix)/share/zsh/site-functions"
-  [ -d "$PREFIX" ] && fpath=("$PREFIX" $fpath)
+  [ -d "$PREFIX" ] && fpath=("$PREFIX" "${fpath[@]}")
   unset PREFIX
 fi
 
 # Custom completions
-[ -d "$HOME/.zsh.d" ] && fpath=("$HOME/.zsh.d" $fpath)
+[ -d "$HOME/.zsh.d" ] && fpath=("$HOME/.zsh.d" "${fpath[@]}")
 
 for option in appendhistory autocd autopushd interactivecomments vi; do
-  set -o "$option" 2> /dev/null
+  set -o "$option" 2>/dev/null
 done
 unset option
 
@@ -65,8 +65,10 @@ bindkey -a cs change-surround
 bindkey -a ds delete-surround
 bindkey -a ys add-surround
 bindkey -M visual S add-surround
+# https://dougblack.io/words/zsh-vi-mode.html
 # https://github.com/zsh-users/zsh-autosuggestions/issues/254#issuecomment-465474362
-export KEYTIMEOUT=30
+export KEYTIMEOUT=1
+# export KEYTIMEOUT=30
 
 autoload -Uz +X add-zsh-hook cdr chpwd_recent_dirs zmv
 add-zsh-hook chpwd chpwd_recent_dirs
@@ -79,32 +81,18 @@ zstyle ':plugin:ez-compinit' 'use-cache' 'yes'
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
 export ZSH_AUTOSUGGEST_STRATEGY=(history match_prev_cmd completion)
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
-bindkey 'TAB' autosuggest-fetch
 bindkey '^@' autosuggest-accept
-
-# zsh-syntax-highlighting
-export ZSH_HIGHLIGHT_STYLES[comment]='fg=245'
-export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern regexp cursor root line)
 
 autoload edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
-# fzf
-command -v fzf > /dev/null && source <(fzf --zsh 2> /dev/null)
-
 # fzf widgets
 bindkey -a "/" fzf-history-widget
 bindkey -a "?" fzf-history-widget
-# bindkey '^\' fzf-change-recent-directory
-# bindkey "^r" fzf-insert-history
-# bindkey "^xf" fzf-insert-files
-# bindkey "^xd" fzf-insert-directory
-# bindkey "^xn" fzf-insert-named-directory
 
 # fzf-tab
-
-# Define a whitelist of commands to use fzf-tab with
+# Define an allow list of commands to use with fzf-tab
 zstyle -d ':completion:*' format
 zstyle ':completion:*:descriptions' format '-- %d --'
 zstyle ':completion:*:git-checkout:*' sort false
