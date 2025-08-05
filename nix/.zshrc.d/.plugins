@@ -7,7 +7,7 @@ zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-history-substring-search post:post-history-substring-search
 romkatv/powerlevel10k
-ohmyzsh/ohmyzsh path:plugins/docker-compose type:fpath
+ohmyzsh/ohmyzsh path:plugins/docker-compose
 MichaelAquilina/zsh-you-should-use
 # mbenford/zsh-tmux-auto-title
 hlissner/zsh-autopair
