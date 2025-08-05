@@ -6,7 +6,7 @@ export LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 export EDITOR="vim"
 export VISUAL="vim"
 # use neovim if available
-if command -v nvim > /dev/null; then
+if command -v nvim >/dev/null; then
   export EDITOR="nvim"
   export VISUAL="nvim"
 fi
@@ -26,12 +26,12 @@ export HISTFILE="$HOME/.history"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-# Don’t clear the screen after quitting a manual page.
-if ! command -v batman > /dev/null; then
+# Don't clear the screen after quitting a manual page.
+if ! command -v batman >/dev/null; then
   export MANPAGER="less -X"
 fi
 
-if command -v bat > /dev/null; then
+if command -v bat >/dev/null; then
   # bat theme
   export BAT_THEME="OneDark"
   # bat style
@@ -41,33 +41,34 @@ fi
 # Java
 [ -d "/Library/Java/Home" ] && export JAVA_HOME="/Library/Java/Home"
 
-# vi-mode timeout
-# https://dougblack.io/words/zsh-vi-mode.html
-export KEYTIMEOUT=1
-
 # ripgrep
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 # fzf
+# shellcheck source=/dev/null
+command -v fzf >/dev/null && source <(fzf "--$(basename "$SHELL")" 2>/dev/null)
+
 export FZF_DEFAULT_OPTS_FILE="$HOME/.fzfrc"
 
-# Homebrew disable auto-update
-command -v brew > /dev/null && export HOMEBREW_NO_AUTO_UPDATE="1"
+# Homebrew
+if command -v brew >/dev/null; then
+  # Disable auto update
+  export HOMEBREW_NO_AUTO_UPDATE="1"
+  # Enable concurrent downloads
+  export HOMEBREW_DOWNLOAD_CONCURRENCY="auto"
+fi
 
 # Enable Docker BuildKit
-command -v docker > /dev/null && export DOCKER_BUILD_KIT="1"
-
-# bun.sh
-[ -d "$HOME/.bun" ] && export BUN_INSTALL="$HOME/.bun"
+command -v docker >/dev/null && export DOCKER_BUILD_KIT="1"
 
 # pnpm
 [ -d "$HOME/Library/pnpm" ] && export PNPM_HOME="$HOME/Library/pnpm"
 
 # direnv disable logging to stdout
-command -v direnv > /dev/null && export DIRENV_LOG_FORMAT=
+command -v direnv >/dev/null && export DIRENV_LOG_FORMAT=
 
 # antidote
-if command -v brew > /dev/null; then
+if command -v brew >/dev/null; then
   PREFIX="$(brew --prefix antidote)/share/antidote/antidote.zsh"
   # shellcheck source=/dev/null
   [ -f "$PREFIX" ] && source "$PREFIX"
@@ -76,3 +77,6 @@ elif [ -d "$HOME/.antidote" ]; then
   # shellcheck source=/dev/null
   source "$HOME/.antidote/antidote.zsh"
 fi
+
+# zoxide
+command -v zoxide >/dev/null && eval "$(zoxide init "$(basename "$SHELL")")"
