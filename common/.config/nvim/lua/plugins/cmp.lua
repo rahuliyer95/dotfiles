@@ -45,6 +45,7 @@ cmp.setup({
     { name = "buffer" },
     { name = "luasnip" },
     { name = "nvim_cmp" },
+    { name = "nvim_lsp" },
     { name = "path" },
   }),
   window = {

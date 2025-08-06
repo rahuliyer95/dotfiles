@@ -17,44 +17,17 @@ require("mason-null-ls").setup({
   handlers = {},
 })
 
-require("null-ls").setup({
-  sources = {},
+-- null-ls
+local null_ls = require("null-ls")
+
+null_ls.setup({
+  sources = {
+    null_ls.builtins.diagnostics.mypy
+  },
 })
 
 -- Setup all available servers
-require("lsp-auto-setup").setup({
-  server_config = {
-    basedpyright = function(default_config)
-      return {
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
-        settings = {
-          basedpyright = {
-            -- we are using Ruff for this
-            analysis = {
-              ignore = { "*" }
-            },
-            disableOrganizeImports = true,
-          },
-        },
-      }
-    end,
-    bashls = function(default_config)
-      return {
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
-        settings = {
-          bashIde = {
-            shfmt = {
-              binaryNextLine = true,
-              caseIndent = true,
-              simplifyCode = true,
-              spaceRedirects = true,
-            },
-          },
-        },
-      }
-    end,
-  }
-})
+require("lsp-auto-setup").setup({})
 
 -- Show diagnostic information on the current line as virtual text
 vim.diagnostic.config({
