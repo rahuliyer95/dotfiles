@@ -53,8 +53,10 @@ if-necessary-or-explicit\:"Allow pre-release versions if all versions of a packa
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
 '*--config-setting=[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
+'*--config-settings-package=[Settings to pass to the PEP 517 build backend for a specific package, specified as \`PACKAGE\:KEY=VALUE\` pairs]:CONFIG_SETTINGS_PACKAGE:_default' \
 '*--no-build-isolation-package=[Disable isolation when building source distributions for a specific package]:NO_BUILD_ISOLATION_PACKAGE:_default' \
 '--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
+'*--exclude-newer-package=[Limit candidate packages for specific packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
 '--link-mode=[The method to use when installing packages from the global cache]:LINK_MODE:((clone\:"Clone (i.e., copy-on-write) packages from the wheel into the \`site-packages\` directory"
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
@@ -77,6 +79,7 @@ never\:"Do not ever allow Python downloads"))' \
 always\:"Enables colored output regardless of the detected environment"
 never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
+'*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
@@ -118,7 +121,7 @@ never\:"Disables colored output"))' \
 '--no-native-tls[]' \
 '--offline[Disable network access]' \
 '--no-offline[]' \
-'--preview[Whether to enable experimental, preview features]' \
+'--preview[Whether to enable all experimental preview features]' \
 '--no-preview[]' \
 '--show-settings[Show the resolved settings for the current command]' \
 '--no-progress[Hide all progress outputs]' \
@@ -126,6 +129,7 @@ never\:"Disables colored output"))' \
 '--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
 '-h[Display the concise help for this command]' \
 '--help[Display the concise help for this command]' \
+"*::external_command:_default" \
 && ret=0
 }
 
