@@ -35,17 +35,3 @@ vim.diagnostic.config({
     current_line = true
   }
 })
-
--- Format document
-vim.keymap.set(
-  "n",
-  "<leader>f",
-  function()
-    vim.lsp.buf.code_action({
-      context = { only = { "source.organizeImports" } },
-      apply = true,
-    })
-    vim.lsp.buf.format()
-  end,
-  { desc = "Format Document" }
-)
