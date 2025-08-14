@@ -19,8 +19,7 @@ require("lazy").setup({
   -- Core plugins
   { "junegunn/fzf.vim" },
   { "raimondi/delimitmate" },
-  { "tpope/vim-sensible" },
-  { "tpope/vim-eunuch" },
+  -- { "tpope/vim-sensible" },
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -86,7 +85,7 @@ require("lazy").setup({
       require("plugins.lsp-signature")
     end
   },
-  { "joom/vim-commentary" },
+  { "tpope/vim-commentary" },
   { "darfink/vim-plist" },
   { "apple/pkl-neovim" },
   {
@@ -102,11 +101,19 @@ require("lazy").setup({
       require("plugins.trouble")
     end
   },
+  {
+    "filipdutescu/renamer.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim"
+    },
+    config = function()
+      require("plugins.renamer")
+    end
+  },
 
   -- Utilities
   { "kana/vim-repeat" },
   { "anyakichi/vim-surround" },
-  { "tpope/vim-unimpaired" },
   { "junegunn/vim-easy-align" },
   {
     "ntpeters/vim-better-whitespace",
@@ -117,7 +124,6 @@ require("lazy").setup({
   { "gisphm/vim-gitignore" },
   { "dstein64/vim-startuptime" },
   { "osyo-manga/vim-anzu" },
-  { "tpope/vim-abolish" },
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },

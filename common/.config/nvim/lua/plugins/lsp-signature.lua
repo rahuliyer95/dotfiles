@@ -3,7 +3,7 @@ require("lsp_signature").setup({
   handler_opts = {
     border = "rounded"
   },
+  hint_enable = true,
   hint_prefix = "",
-  hint_inline = function() return true end,
   transparency = 100,
 })

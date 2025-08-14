@@ -28,11 +28,11 @@ vim.keymap.set(
   { desc = "Format Document" }
 )
 -- Jump to definition
-vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, { buffer = bufnr, desc = "Jump to definition" })
-vim.keymap.set('i', '<F12>', vim.lsp.buf.definition, { buffer = bufnr, desc = "Jump to definition" })
+vim.keymap.set("n", "<F12>", vim.lsp.buf.definition, { buffer = bufnr, desc = "Jump to definition" })
+vim.keymap.set("i", "<F12>", vim.lsp.buf.definition, { buffer = bufnr, desc = "Jump to definition" })
 -- Rename
-vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename" })
-vim.keymap.set('i', '<F2>', vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename" })
+vim.keymap.set("n", "<F2>", '<cmd>lua require("renamer").rename()<cr>', { desc = "Rename" })
+vim.keymap.set("i", "<F2>", '<cmd>lua require("renamer").rename()<cr>', { desc = "Rename" })
 
 -- nvim-tree
 vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>", { desc = "Toggle file tree" })

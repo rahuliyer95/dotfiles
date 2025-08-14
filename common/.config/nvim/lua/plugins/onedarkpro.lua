@@ -20,6 +20,8 @@ require("onedarkpro").setup({
     BufferCurrentDELETED = {
       fg = "${red}",
     },
+    -- lsp
+    LspInlayHint = { fg = "${inlay_hint}", italic = true }
   },
   options = {
     cursorline = true,

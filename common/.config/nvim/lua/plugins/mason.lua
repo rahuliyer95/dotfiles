@@ -35,3 +35,6 @@ vim.diagnostic.config({
     current_line = true
   }
 })
+
+-- Enable inlay hints
+vim.lsp.inlay_hint.enable(true)
