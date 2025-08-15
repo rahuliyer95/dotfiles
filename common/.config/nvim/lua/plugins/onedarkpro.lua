@@ -21,7 +21,7 @@ require("onedarkpro").setup({
       fg = "${red}",
     },
     -- lsp
-    LspInlayHint = { fg = "${inlay_hint}", italic = true }
+    LspInlayHint = { fg = "${comment}", italic = true }
   },
   options = {
     cursorline = true,

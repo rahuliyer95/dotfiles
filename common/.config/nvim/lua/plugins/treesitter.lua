@@ -1,7 +1,15 @@
 local hasConfigs, configs = pcall(require, "nvim-treesitter.configs")
 if hasConfigs then
   configs.setup({
-    ensure_installed = { "pkl" },
+    ensure_installed = {
+      "json",
+      "lua",
+      "markdown",
+      "python",
+      "vim",
+      "vimdoc",
+      "yaml",
+    },
     highlight = {
       enable = true,
     },

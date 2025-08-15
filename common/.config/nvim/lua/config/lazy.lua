@@ -138,6 +138,7 @@ require("lazy").setup({
     end
   },
   { "christoomey/vim-sort-motion" },
+  { "mbbill/undotree" },
 
   -- Look & Feel
   {
@@ -183,12 +184,9 @@ require("lazy").setup({
     config = function()
       require("plugins.lualine")
     end
-  },
+  }
 }, {
   -- lazy.nvim configuration
-  install = {
-    colorscheme = { "onedark" },
-  },
   checker = {
     enabled = true,
     notify = false,

@@ -28,3 +28,7 @@ vim.g.vim_markdown_conceal = 0
 
 -- RTF support
 vim.g.html_number_lines = 1
+
+-- Undo
+vim.opt.undodir = vim.fn.stdpath("data") .. "/undodir"
+vim.opt.undofile = true

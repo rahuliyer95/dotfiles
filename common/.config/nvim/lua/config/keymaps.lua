@@ -3,7 +3,7 @@ vim.keymap.set("n", "<Tab>", ":bn<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<S-Tab>", ":bp<cr>", { desc = "Previous buffer" })
 
 -- telescope.nvim
-vim.keymap.set("n", "<C-f>", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
+vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 vim.keymap.set("n", "<C-g>", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 
 -- vim-anzu search progress
@@ -12,6 +12,9 @@ vim.keymap.set("n", "N", "<Plug>(anzu-N-with-echo)", { desc = "Previous search r
 vim.keymap.set("n", "*", "<Plug>(anzu-star-with-echo)", { desc = "Search word under cursor" })
 vim.keymap.set("n", "#", "<Plug>(anzu-sharp-with-echo)", { desc = "Search word under cursor backwards" })
 vim.keymap.set("n", "<Esc><Esc>", "<Plug>(anzu-clear-search-status)", { desc = "Clear search status" })
+
+-- undotree
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
 -- LSP
 -- Format document
@@ -33,6 +36,15 @@ vim.keymap.set("i", "<F12>", vim.lsp.buf.definition, { buffer = bufnr, desc = "J
 -- Rename
 vim.keymap.set("n", "<F2>", '<cmd>lua require("renamer").rename()<cr>', { desc = "Rename" })
 vim.keymap.set("i", "<F2>", '<cmd>lua require("renamer").rename()<cr>', { desc = "Rename" })
+-- Show callers
+vim.keymap.set(
+  "n",
+  "<leader>fr",
+  function()
+    require("telescope.builtin").lsp_references()
+  end,
+  { buffer = bufnr, desc = "Show callers" }
+)
 
 -- nvim-tree
 vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>", { desc = "Toggle file tree" })
