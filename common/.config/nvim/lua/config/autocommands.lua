@@ -7,5 +7,5 @@ vim.api.nvim_create_autocmd("BufReadPost", {
       vim.cmd("normal! g`\"")
     end
   end,
-  desc = "Return to last edit position"
+  desc = "Return to last edit position",
 })

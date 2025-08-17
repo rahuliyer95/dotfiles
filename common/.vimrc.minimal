@@ -1,4 +1,4 @@
-" vi:ft=vim
+" vi:ft=vim:foldmethod=marker
 " Basic Settings {{{
 
 " Enable project specific vimrc files ==> https://andrew.stwrt.ca/posts/project-specific-vimrc/
@@ -64,7 +64,7 @@ set wildignore+=*.o           " Ignore compiled objects
 set ruler
 
 " Height of the command bar
-set cmdheight=2
+set cmdheight=1
 
 " A buffer becomes hidden when it is abandoned
 set hid
@@ -183,7 +183,7 @@ set shiftwidth=2
 set tabstop=2
 set autoindent
 
-" Linebreak on 500 characters
+" Linebreak on 100 characters
 set lbr
 set tw=100
 

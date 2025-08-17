@@ -1,4 +1,3 @@
----@type rainbow_delimiters.config
 vim.g.rainbow_delimiters = {
   strategy = {
     [""] = "rainbow-delimiters.strategy.global",

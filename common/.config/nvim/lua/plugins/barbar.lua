@@ -1,4 +1,5 @@
 vim.g.barbar_auto_setup = false
+
 require("barbar").setup({
   icons = {
     diagnostics = {
@@ -12,5 +13,5 @@ require("barbar").setup({
       deleted = { enabled = true },
       changed = { enabled = true },
     },
-  }
+  },
 })

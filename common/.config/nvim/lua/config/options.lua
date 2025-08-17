@@ -1,7 +1,7 @@
 -- Auto reload init.lua
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "init.lua",
-  command = "source $MYVIMRC"
+  command = "source $MYVIMRC",
 })
 
 -- Disable optional providers
@@ -12,7 +12,8 @@ vim.g.loaded_ruby_provider = 0
 vim.g.python3_host_prog = vim.fn.stdpath("data") .. "/.venv/bin/python3"
 
 -- Cursor blinking
-vim.opt.guicursor = "a:blinkwait200-blinkon250-blinkoff200,i:ver25-blinkwait200-blinkon200-blinkoff200"
+vim.opt.guicursor =
+  "a:blinkwait200-blinkon250-blinkoff200,i:ver25-blinkwait200-blinkon200-blinkoff200"
 
 -- Colors and appearance
 vim.opt.background = "dark"
