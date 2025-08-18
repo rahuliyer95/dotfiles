@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-. "$HOME/.gitstatus/gitstatus.plugin.sh"
+# shellcheck source=/dev/null
+[ -f "$HOME/.gitstatus/gitstatus.plugin.sh" ] && . "$HOME/.gitstatus/gitstatus.plugin.sh"
 
 if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color > /dev/null 2>&1; then
   export TERM='gnome-256color'
@@ -88,9 +89,9 @@ __prompt_git() {
     else
       "$ECHO" -ne " @${VCS_STATUS_COMMIT//\\/\\\\} "
     fi
-    [[ "$VCS_STATUS_HAS_STAGED" == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")+"
-    [[ "$VCS_STATUS_HAS_UNSTAGED" == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")!"
-    [[ "$VCS_STATUS_HAS_UNTRACKED" == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")?"
+    [[ $VCS_STATUS_HAS_STAGED == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")+"
+    [[ $VCS_STATUS_HAS_UNSTAGED == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")!"
+    [[ $VCS_STATUS_HAS_UNTRACKED == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")?"
   fi
 }
 

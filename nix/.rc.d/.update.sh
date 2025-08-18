@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Load profile
-for file in "$HOME/.rc.d/."{exports,path,aliases}; do
+for file in $HOME/.rc.d/.{exports,path,aliases}; do
   # shellcheck source=/dev/null
   [ -f "$file" ] && source "$file"
 done

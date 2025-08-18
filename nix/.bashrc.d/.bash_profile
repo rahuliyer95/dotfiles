@@ -1,23 +1,25 @@
-#!/bin/bash
-
 # Load path
-for file in "$HOME/.rc.d/."{exports,path}; do
+for file in $HOME/.rc.d/.{exports,path}; do
+  # shellcheck source=/dev/null
   [ -f "$file" ] && . "$file" 2> /dev/null
 done
 
 # Load the common shell dotfiles
-for file in "$HOME/.rc.d/."{aliases,extras,functions}; do
+for file in $HOME/.rc.d/.{aliases,extras,functions}; do
+  # shellcheck source=/dev/null
   [ -f "$file" ] && . "$file" 2> /dev/null
 done
 
-for file in "$HOME/.bashrc.d/."{grc.bashrc,local,bash_prompt}; do
+for file in $HOME/.bashrc.d/.{grc.bashrc,local,bash_prompt}; do
+  # shellcheck source=/dev/null
   [ -f "$file" ] && . "$file" 2> /dev/null
 done
 
 unset file
 
 # fzf goodness
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# shellcheck source=/dev/null
+[ -f "$HOME/.fzf.bash" ] && . "$HOME/.fzf.bash"
 
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
@@ -37,18 +39,22 @@ if [ -n "$(command -v brew 2> /dev/null)" ]; then
   PREFIX="$(brew --prefix bash-completion 2> /dev/null)"
   export BASH_COMPLETION_COMPAT_DIR="$PREFIX/etc/bash_completion.d"
   if [ -d "$PREFIX" ]; then
+    # shellcheck source=/dev/null
     . "$PREFIX/etc/profile.d/bash_completion.sh" 2> /dev/null
   fi
   for file in "$PREFIX/etc/bash_completion.d/"*; do
+    # shellcheck source=/dev/null
     . "$file" 2> /dev/null
   done
   # mcfly
   if [ -f "$(brew --prefix)/opt/mcfly/mcfly.bash" ]; then
+    # shellcheck source=/dev/null
     . "$(brew --prefix)/opt/mcfly/mcfly.bash"
   fi
 elif [ -d "/usr/local/etc/bash_completion.d/" ]; then
   [ -f "/usr/local/etc/bash_completion.d/.bash_completion" ] && . "/usr/local/etc/bash_completion.d/.bash_completion"
   for file in "/usr/local/etc/bash_completion.d/"*; do
+    # shellcheck source=/dev/null
     [ -f "$file" ] && . "$file" 2> /dev/null
   done
 fi

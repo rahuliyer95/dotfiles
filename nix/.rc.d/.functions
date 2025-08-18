@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # Cleanup .DS_Store
 ds_store-cleanup() {
@@ -41,4 +41,3 @@ function splitcmd_widget {
   BUFFER="${split%$'\n'}"  # Remove trailing newline for most cases
   zle end-of-line
 }
-
