@@ -1494,6 +1494,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--with=[Include the following additional requirements]:WITH:_default' \
 '*--with-requirements=[Include all requirements listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
 '*--with-editable=[Include the given packages in editable mode]:WITH_EDITABLE:_default' \
+'*--with-executables-from=[Install executables from the following packages]:WITH_EXECUTABLES_FROM:_default' \
 '*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*--overrides=[Override versions using the given requirements files]:OVERRIDES:_default' \
@@ -2078,6 +2079,8 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'-r[Reinstall the latest Python patch, if it'\''s already installed]' \
+'--reinstall[Reinstall the latest Python patch, if it'\''s already installed]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
