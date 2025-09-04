@@ -116,9 +116,10 @@ declare -A CACHE_ALLOW_LIST=(
   [bat]=1
   [cargo]=1
   [gitstatus]=1
+  [gopls]=1
   [llama.cpp]=1
   [pnpm]=1
-  [pre - commit]=1
+  [prek]=1
   [uv]=1
 )
 for dir in "$HOME/Library/Caches" "/Library/Caches" "$HOME/.cache"; do
