@@ -21,10 +21,13 @@ require("onedarkpro").setup({
       fg = "${red}",
     },
     -- lsp
-    LspInlayHint = { fg = "${comment}", italic = true }
+    LspInlayHint = { fg = "${gray}", italic = true },
   },
   options = {
     cursorline = true,
+    highlight_inactive_windows = true,
+    lualine_transparency = true,
+    terminal_colors = true,
     transparency = true,
   },
   plugins = {
@@ -47,4 +50,4 @@ require("onedarkpro").setup({
   },
 })
 
-vim.cmd("colorscheme onedark")
+vim.cmd.colorscheme("onedark")

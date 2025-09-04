@@ -15,19 +15,14 @@
   branches = branch -a
   remotes = remote -v
   # Amend the currently staged files to the latest commit
-  amend = commit --amend --reuse-message=HEAD
-  # Credit an author on the latest commit
-  credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+  amend = commit --amend --reuse-message=HEAD -S
   bd = branch -D
   # Interactive rebase with the given number of latest commits (preserves original commit date)
-  reb = "!r() { git rebase -i HEAD~$1 --committer-date-is-author-date; }; r"
+  reb = "!r() { git rebase -i HEAD~$1; }; r"
   # Rebase with origin main
-  rom = "!f() { git fetch origin main; git rebase origin/main; }; f"
+  rom = "!f() { MAIN_BRANCH="$(git main-branch)" && git fetch origin "$MAIN_BRANCH" && git rebase "origin/$MAIN_BRANCH" f"
   # Remove the old tag with this name and tag the latest commit with it.
   retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
-  # Remove branches that have already been merged with master
-  # a.k.a. 'delete merged'
-  dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
   # List contributors with number of commits
   contributors = shortlog --summary --numbered
   whoami = config user.email
@@ -87,7 +82,19 @@
   line-numbers = true
   navigate     = true
   side-by-side = true
-  syntax-theme = OneDark
+  # syntax-theme = OneDark
+  # tokyonight-storm theme
+  minus-style                   = syntax "#3f2d3d"
+  minus-non-emph-style          = syntax "#3f2d3d"
+  minus-emph-style              = syntax "#763842"
+  minus-empty-line-marker-style = syntax "#3f2d3d"
+  line-numbers-minus-style      = "#914c54"
+  plus-style                    = syntax "#283b4d"
+  plus-non-emph-style           = syntax "#283b4d"
+  plus-emph-style               = syntax "#316172"
+  plus-empty-line-marker-style  = syntax "#283b4d"
+  line-numbers-plus-style       = "#449dab"
+  line-numbers-zero-style       = "#3b4261"
 
 [filter "lfs"]
   required = true

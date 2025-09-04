@@ -33,3 +33,10 @@ vim.g.html_number_lines = 1
 -- Undo
 vim.opt.undodir = vim.fn.stdpath("data") .. "/undodir"
 vim.opt.undofile = true
+
+-- Fold
+vim.opt.foldenable = true
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevel = 9999
+vim.opt.foldcolumn = "1"

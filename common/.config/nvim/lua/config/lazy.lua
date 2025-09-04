@@ -90,11 +90,17 @@ require("lazy").setup({
   },
   {
     "filipdutescu/renamer.nvim",
+    config = function()
+      require("plugins.renamer")
+    end,
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
+  },
+  {
+    "wintermute-cell/gitignore.nvim",
     config = function()
-      require("plugins.renamer")
+      require("gitignore")
     end,
   },
   -- }}}
@@ -132,10 +138,16 @@ require("lazy").setup({
   { "mbbill/undotree" },
 
   -- Look & Feel
+  -- {
+  --   "olimorris/onedarkpro.nvim",
+  --   config = function()
+  --     require("plugins.onedarkpro")
+  --   end,
+  -- },
   {
-    "olimorris/onedarkpro.nvim",
+    "folke/tokyonight.nvim",
     config = function()
-      require("plugins.onedarkpro")
+      require("plugins.tokyonight")
     end,
   },
   { "kyazdani42/nvim-web-devicons" },

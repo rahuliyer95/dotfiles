@@ -27,16 +27,12 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
 # Don't clear the screen after quitting a manual page.
-if ! command -v batman > /dev/null; then
-  export MANPAGER="less -X"
-fi
+export MANPAGER="less -X"
 
-if command -v bat > /dev/null; then
-  # bat theme
-  export BAT_THEME="OneDark"
-  # bat style
-  export BAT_STYLE="full"
-fi
+# bat theme
+export BAT_THEME="TokyoNight"
+# bat style
+export BAT_STYLE="full"
 
 # Java
 [ -d "/Library/Java/Home" ] && export JAVA_HOME="/Library/Java/Home"
