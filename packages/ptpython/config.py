@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+from collections.abc import Mapping
+
 from prompt_toolkit.application.current import get_app  # type: ignore
 from prompt_toolkit.filters import Condition  # type: ignore
 from prompt_toolkit.keys import Keys  # type: ignore
@@ -18,7 +20,9 @@ from pygments.token import (  # type: ignore
     Punctuation,
     String,
     Text,
+    Token,
     Whitespace,
+    _TokenType,
 )
 
 __all__ = ("configure",)
@@ -129,18 +133,22 @@ def configure(repl) -> None:
     repl.install_code_colorscheme("dracula", style_from_pygments_dict(DRACULA_THEME))
     repl.install_code_colorscheme("one-dark", style_from_pygments_dict(ONE_DARK_THEME))
     repl.install_code_colorscheme("monokai-pro", style_from_pygments_dict(MONOKAI_PRO))
-    repl.use_code_colorscheme("one-dark")
+    repl.install_code_colorscheme(
+        "tokyonight-storm",
+        style_from_pygments_dict(TOKYO_NIGHT_STORM_THEME),
+    )
+    repl.use_code_colorscheme("tokyonight-storm")
 
     # Add custom key binding for PDB.
     @repl.add_key_binding(Keys.ControlB)
-    def _pdb(event):
+    def pdb(event) -> None:
         """Pressing Control-B will insert 'pdb.set_trace()'."""
         event.cli.current_buffer.insert_text("\nimport pdb; pdb.set_trace()\n")
 
     # Typing ControlE twice should also execute the current command.
     # (Alternative for Meta-Enter.)
     @repl.add_key_binding(Keys.ControlE, Keys.ControlE)
-    def _execute_current_cmd(event):
+    def execute_current_cmd(event) -> None:
         b = event.current_buffer
 
         if b.accept_action.is_returnable:
@@ -148,11 +156,11 @@ def configure(repl) -> None:
 
     # Auto complete current command with Ctrl+Space
     @repl.add_key_binding(Keys.ControlSpace, filter=suggestion_available)
-    def _accept_suggestion(event):
+    def accept_suggestion(event) -> None:
         event.current_buffer.insert_text(event.current_buffer.suggestion.text)
 
 
-DRACULA_THEME = {
+DRACULA_THEME: Mapping[_TokenType, str] = {
     Comment: "#6272a4",
     Comment.Hashbang: "#6272a4",
     Comment.Multiline: "#6272a4",
@@ -230,7 +238,7 @@ See: https://github.com/dracula/pygments/blob/9cf371f24908e2b138cfcf0a87d0d654b4
 """
 
 
-MONOKAI_PRO = {
+MONOKAI_PRO: Mapping[_TokenType, str] = {
     Generic.Emph: "italic",
     Generic.Strong: "bold",
     Generic.Inserted: "#bad761",
@@ -297,7 +305,7 @@ MONOKAI_PRO = {
 See: https://gist.github.com/i-like-robots/b9ab98b8c2cc99ceb9bc53cc7b907a79
 """
 
-ONE_DARK_THEME = {
+ONE_DARK_THEME: Mapping[_TokenType, str] = {
     Comment: "#5c6370 italic",  # mono-3
     Comment.Hashbang: "#5c6370 italic",  # mono-3
     Comment.Multiline: "#5c6370 italic",  # mono-3
@@ -392,4 +400,84 @@ ONE_DARK_THEME = {
 """Atom One Dark Theme
 
 See: https://github.com/mgyongyosi/OneDarkJekyll/blob/master/syntax.less
+"""
+
+TOKYO_NIGHT_STORM_THEME: Mapping[_TokenType, str] = {
+    Token: "#c0caf5",
+    Keyword: "#9d7cd8",
+    Keyword.Constant: "#ff9e64",
+    Keyword.Declaration: "#bb9af7",
+    Keyword.Namespace: "#7dcfff",
+    Keyword.Pseudo: "#bb9af7",
+    # Keyword.Reserved: "",
+    Keyword.Type: "#2ac3de",
+    Name.Attribute: "#73daca",
+    Name.Builtin: "#2ac3de",
+    Name.BuiltinPseudo: "#f7768e",
+    Name.Class: "#2ac3de",
+    Name.Constant: "#ff9e64",
+    Name.Decorator: "#2ac3de",
+    Name.Entity: "#2ac3de",
+    Name.Exception: "#bb9af7",
+    Name.Function: "#7aa2f7",
+    Name.Function.Magic: "#89ddff",
+    Name.Label: "#7aa2f7",
+    Name.Namespace: "#7aa2f7",
+    # Name.Other: "",
+    Name.Property: "#73daca",
+    Name.Tag: "#f7768e",
+    Name.Variable: "#c0caf5",
+    Name.Variable.Class: "#73daca",
+    Name.Variable.Global: "#f7768e",
+    Name.Variable.Instance: "#73daca",
+    Name.Variable.Magic: "#f7768e",
+    Literal: "#ff9e64",
+    String: "#9ece6a",
+    String.Affix: "#9d7cd8",
+    # String.Backtick: "",
+    # String.Char: "",
+    String.Delimiter: "#89ddff",
+    String.Doc: "#e0af68",
+    # String.Double: "",
+    String.Escape: "#bb9af7",
+    # String.Heredoc: "",
+    String.Interpol: "#2ac3de",
+    # String.Other: "",
+    String.Regex: "#b4f9f8",
+    # String.Single: "",
+    String.Symbol: "#ff9e64",
+    Number: "#ff9e64",
+    # Number.Bin: "",
+    # Number.Float: "",
+    # Number.Hex: "",
+    # Number.Integer: "",
+    # Number.Integer.Long: "",
+    # Number.Oct: "",
+    Operator: "#89ddff",
+    # Operator.Word: "",
+    Punctuation: "#a9b1d6",
+    Punctuation.Marker: "#89ddff",
+    Comment: "#565f89",
+    Comment.Hashbang: "#89ddff",
+    # Comment.Multiline: "",
+    Comment.Preproc: "#7dcfff",
+    Comment.PreprocFile: "#9ece6a",
+    # Comment.Single: "",
+    Comment.Special: "#2ac3de",
+    # Generic: "",
+    Generic.Deleted: "#914c54",
+    # Generic.Emph: "",
+    Generic.Error: "#f7768e",
+    Generic.Heading: "#7aa2f7",
+    Generic.Inserted: "#449dab",
+    Generic.Output: "#a9b1d6",
+    Generic.Prompt: "#2ac3de",
+    # Generic.Strong: "",
+    # Generic.EmphStrong: "",
+    Generic.Subheading: "#2ac3de",
+    Generic.Traceback: "#f7768e",
+}
+"""Tokyo Night theme (Storm variant)
+
+See: https://github.com/folke/tokyonight.nvim/pull/705
 """
