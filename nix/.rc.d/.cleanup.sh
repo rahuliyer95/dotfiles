@@ -118,6 +118,7 @@ declare -A CACHE_ALLOW_LIST=(
   [gitstatus]=1
   [gopls]=1
   [llama.cpp]=1
+  [ms-playwright]=1
   [pnpm]=1
   [prek]=1
   [uv]=1
