@@ -150,7 +150,7 @@ require("lazy").setup({
       require("plugins.tokyonight")
     end,
   },
-  { "kyazdani42/nvim-web-devicons" },
+  { "nvim-tree/nvim-web-devicons" },
   { "onsails/lspkind.nvim" },
   {
     "kyazdani42/nvim-tree.lua",
