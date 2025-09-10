@@ -20,7 +20,7 @@
   # Interactive rebase with the given number of latest commits (preserves original commit date)
   reb = "!r() { git rebase -i HEAD~$1; }; r"
   # Rebase with origin main
-  rom = "!f() { MAIN_BRANCH="$(git main-branch)" && git fetch origin "$MAIN_BRANCH" && git rebase "origin/$MAIN_BRANCH" f"
+  rom = "!f() { MAIN_BRANCH="$(git main-branch)" && git fetch origin "$MAIN_BRANCH" && git rebase "origin/$MAIN_BRANCH"; }; f"
   # Remove the old tag with this name and tag the latest commit with it.
   retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
   # List contributors with number of commits
