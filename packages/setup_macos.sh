@@ -293,7 +293,7 @@ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 ###############################################################################
 
 for app in "cfprefsd" "Dock" "Finder" "Google Chrome" "Mail" "Messages" \
-  "Photos" "Safari" "SystemUIServer" "Terminal"; do
+  "Photos" "Safari" "SystemUIServer"; do
   killall "${app}" &> /dev/null
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."

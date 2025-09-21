@@ -7,6 +7,9 @@ export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin
 # Snap
 [ -d "/snap/bin" ] && export PATH="$PATH:/snap/bin"
 
+# Omarchy
+[ -d "$OMARCHY_PATH" ] && export PATH="$PATH:$OMARCHY_PATH/bin"
+
 # Homebridge
 [ -d "/opt/homebridge/bin" ] && export PATH="$PATH:/opt/homebridge/bin"
 

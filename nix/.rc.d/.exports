@@ -65,4 +65,6 @@ if command -v brew > /dev/null; then
 elif [ -d "$HOME/.antidote" ]; then
   # shellcheck source=/dev/null
   source "$HOME/.antidote/antidote.zsh"
+elif [ -f "/usr/share/zsh-antidote/antidote.zsh" ]; then
+  source "/usr/share/zsh-antidote/antidote.zsh"
 fi
