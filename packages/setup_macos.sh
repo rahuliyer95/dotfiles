@@ -10,6 +10,35 @@ while true; do
   kill -0 "$$" || exit
 done 2> /dev/null &
 
+if command -v brew > /dev/null 2>&1; then
+  # Change default shell to zsh
+  zsh_bin="$(brew --prefix zsh)/bin/zsh"
+  if [ -x "$zsh_bin" ] && ! grep -o "$zsh_bin" /etc/shells > /dev/null; then
+    echo "Changing login shell to $zsh_bin"
+    echo "$zsh_bin" | sudo tee -a /etc/shells
+    chsh -s "$zsh_bin"
+  fi
+  unset zsh_bin
+  # Enable PAM authentication
+  echo "Enabling TouchID for sudo"
+  sudo tee /etc/pam.d/sudo_local << EOF
+auth sufficient pam_tid.so
+EOF
+  if [ -d "$(brew --prefix pam_watchid)" ]; then
+    echo "Enabling WatchID for sudo"
+    sudo tee -a /etc/pam.d/sudo_local << EOF
+auth sufficient $(brew --prefix pam_watchid)/lib/pam/pam_watchid.so
+EOF
+  fi
+  if [ -d "$(brew --prefix pam-reattach)" ]; then
+    echo "Enabling optional pam-reattach for sudo"
+    # Intentionally kept extra space to match the column layout in `/etc/pam.d/sudo_local`
+    sudo tee -a /etc/pam.d/sudo_local << EOF
+auth optional   $(brew --prefix pam-reattach)/lib/pam/pam_reattach.so
+EOF
+  fi
+fi
+
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
