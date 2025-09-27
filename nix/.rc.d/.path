@@ -1,8 +1,11 @@
 #!/usrbin/env bash
 # vi: foldmethod=marker:ft=sh
 
-# base path
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin"
+# Base path
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin"
+
+# Homebrew
+[ -d "/opt/homebrew" ] && export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 
 # Snap
 [ -d "/snap/bin" ] && export PATH="$PATH:/snap/bin"
@@ -17,6 +20,7 @@ if command -v brew > /dev/null; then
   for prefix in coreutils moreutils binutils; do
     PREFIX="$(brew --prefix $prefix 2> /dev/null)"
     [ -n "$PREFIX" ] && export PATH="$PREFIX/bin:$PATH"
+    unset PREFIX
   done
 fi
 
