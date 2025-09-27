@@ -167,7 +167,7 @@ never\:"Disables colored output"))' \
 '--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
 '-h[Display the concise help for this command]' \
 '--help[Display the concise help for this command]' \
-':service -- The service to log into:_default' \
+':service -- The domain or URL of the service to log into:_default' \
 && ret=0
 ;;
 (logout)
@@ -216,7 +216,7 @@ never\:"Disables colored output"))' \
 '--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
 '-h[Display the concise help for this command]' \
 '--help[Display the concise help for this command]' \
-':service -- The service to logout of:_default' \
+':service -- The domain or URL of the service to logout from:_default' \
 && ret=0
 ;;
 (token)
@@ -265,7 +265,7 @@ never\:"Disables colored output"))' \
 '--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
 '-h[Display the concise help for this command]' \
 '--help[Display the concise help for this command]' \
-':service -- The service to lookup:_default' \
+':service -- The domain or URL of the service to lookup:_default' \
 && ret=0
 ;;
 (dir)
@@ -310,7 +310,7 @@ never\:"Disables colored output"))' \
 '--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
 '-h[Display the concise help for this command]' \
 '--help[Display the concise help for this command]' \
-'::service -- The service to lookup:_default' \
+'::service -- The domain or URL of the service to lookup:_default' \
 && ret=0
 ;;
         esac
@@ -319,16 +319,16 @@ esac
 ;;
 (run)
 _arguments "${_arguments_options[@]}" : \
-'(--all-extras)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
+'(--all-extras --only-group)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:_default' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
 '*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
-'*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_files' \
+'*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_default' \
 '*-w+[Run with the given packages installed]:WITH:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
 '*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
-'*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
+'*--with-requirements=[Run with the packages listed in the given files]:WITH_REQUIREMENTS:_default' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -410,7 +410,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -427,7 +432,7 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
-'(--extra)--all-extras[Include all optional dependencies]' \
+'(--extra --only-group)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
 '--dev[Include the development dependency group]' \
 '--no-dev[Disable the development dependency group]' \
@@ -436,6 +441,7 @@ never\:"Disables colored output"))' \
 '(-s --script --gui-script)-m[Run a Python module]' \
 '(-s --script --gui-script)--module[Run a Python module]' \
 '(--group --all-groups --no-dev)--only-dev[Only include the development dependency group]' \
+'--editable[Install any non-editable dependencies, including the project and any workspace members, as editable]' \
 '--no-editable[Install any editable dependencies, including the project and any workspace members, as non-editable]' \
 '--inexact[Do not remove extraneous packages present in the environment]' \
 '--exact[Perform an exact sync, removing extraneous packages]' \
@@ -573,8 +579,8 @@ never\:"Disables colored output"))' \
 ;;
 (add)
 _arguments "${_arguments_options[@]}" : \
-'*-r+[Add all packages listed in the given \`requirements.txt\` files]:REQUIREMENTS:_files' \
-'*--requirements=[Add all packages listed in the given \`requirements.txt\` files]:REQUIREMENTS:_files' \
+'*-r+[Add the packages listed in the given files]:REQUIREMENTS:_files' \
+'*--requirements=[Add the packages listed in the given files]:REQUIREMENTS:_files' \
 '*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '-m+[Apply this marker to all added packages]:MARKER:_default' \
@@ -943,7 +949,7 @@ never\:"Disables colored output"))' \
 ;;
 (sync)
 _arguments "${_arguments_options[@]}" : \
-'(--all-extras)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
+'(--all-extras --only-group)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
 '--output-format=[Select the output format]:OUTPUT_FORMAT:((text\:"Display the result in a human-readable format"
 json\:"Display the result in JSON format"))' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:_default' \
@@ -1032,7 +1038,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -1049,13 +1060,14 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
-'(--extra)--all-extras[Include all optional dependencies]' \
+'(--extra --only-group)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
 '--dev[Include the development dependency group]' \
 '--no-dev[Disable the development dependency group]' \
 '(--group --all-groups --no-dev)--only-dev[Only include the development dependency group]' \
 '--no-default-groups[Ignore the default dependency groups]' \
 '(--only-group --only-dev)--all-groups[Include dependencies from all dependency groups]' \
+'--editable[Install any non-editable dependencies, including the project and any workspace members, as editable]' \
 '--no-editable[Install any editable dependencies, including the project and any workspace members, as non-editable]' \
 '--inexact[Do not remove extraneous packages present in the environment]' \
 '--exact[Perform an exact sync, removing extraneous packages]' \
@@ -1221,7 +1233,7 @@ _arguments "${_arguments_options[@]}" : \
 pylock.toml\:"Export in \`pylock.toml\` format"))' \
 '(--all-packages)--package=[Export the dependencies for a specific package in the workspace]:PACKAGE:_default' \
 '(--all-packages)*--prune=[Prune the given package from the dependency tree]:PACKAGE:_default' \
-'(--all-extras)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
+'(--all-extras --only-group)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:_default' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
 '*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
@@ -1286,7 +1298,7 @@ never\:"Disables colored output"))' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--package)--all-packages[Export the entire workspace]' \
-'(--extra)--all-extras[Include all optional dependencies]' \
+'(--extra --only-group)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
 '--dev[Include the development dependency group]' \
 '--no-dev[Disable the development dependency group]' \
@@ -1297,6 +1309,7 @@ never\:"Disables colored output"))' \
 '--annotate[]' \
 '--no-header[Exclude the comment header at the top of the generated output file]' \
 '--header[]' \
+'--editable[Export any non-editable dependencies, including the project and any workspace members, as editable]' \
 '--no-editable[Export any editable dependencies, including the project and any workspace members, as non-editable]' \
 '--hashes[Include hashes for all dependencies]' \
 '--no-hashes[Omit hashes in the generated output]' \
@@ -1431,7 +1444,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '-p+[The Python interpreter to use for locking and filtering.]:PYTHON:_default' \
 '--python=[The Python interpreter to use for locking and filtering.]:PYTHON:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
@@ -1521,6 +1539,7 @@ never\:"Disables colored output"))' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--check[Check if files are formatted without applying changes]' \
 '--diff[Show a diff of formatting changes without applying them]' \
+'--no-project[Avoid discovering a project or workspace]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
@@ -1606,7 +1625,7 @@ _arguments "${_arguments_options[@]}" : \
 '*-w+[Run with the given packages installed]:WITH:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
 '*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
-'*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
+'*--with-requirements=[Run with the packages listed in the given files]:WITH_REQUIREMENTS:_default' \
 '*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
@@ -1692,7 +1711,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--generate-shell-completion=[]:GENERATE_SHELL_COMPLETION:(bash elvish fish nushell powershell zsh)' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
@@ -1763,7 +1787,7 @@ _arguments "${_arguments_options[@]}" : \
 '*-w+[Run with the given packages installed]:WITH:_default' \
 '*--with=[Run with the given packages installed]:WITH:_default' \
 '*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_default' \
-'*--with-requirements=[Run with all packages listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
+'*--with-requirements=[Run with the packages listed in the given files]:WITH_REQUIREMENTS:_default' \
 '*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
 '*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_default' \
@@ -1849,7 +1873,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--generate-shell-completion=[]:GENERATE_SHELL_COMPLETION:(bash elvish fish nushell powershell zsh)' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
@@ -1921,7 +1950,7 @@ _arguments "${_arguments_options[@]}" : \
 '--from=[The package to install commands from]:FROM:_default' \
 '*-w+[Include the following additional requirements]:WITH:_default' \
 '*--with=[Include the following additional requirements]:WITH:_default' \
-'*--with-requirements=[Include all requirements listed in the given \`requirements.txt\` files]:WITH_REQUIREMENTS:_default' \
+'*--with-requirements=[Run with the packages listed in the given files]:WITH_REQUIREMENTS:_default' \
 '*--with-editable=[Include the given packages in editable mode]:WITH_EDITABLE:_default' \
 '*--with-executables-from=[Install executables from the following packages]:WITH_EXECUTABLES_FROM:_default' \
 '*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
@@ -2008,7 +2037,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -2116,7 +2150,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -3005,7 +3044,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '*--no-emit-package=[Specify a package to omit from the output resolution. Its dependencies will still be included in the resolution. Equivalent to pip-compile'\''s \`--unsafe-package\` option]:NO_EMIT_PACKAGE:_default' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
@@ -3145,7 +3189,7 @@ never\:"Disables colored output"))' \
 '--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories]' \
 '-h[Display the concise help for this command]' \
 '--help[Display the concise help for this command]' \
-'*::src_file -- Include all packages listed in the given `requirements.in` files:_files' \
+'*::src_file -- Include the packages listed in the given files:_files' \
 && ret=0
 ;;
 (sync)
@@ -3225,7 +3269,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
 cu129\:"Use the PyTorch index for CUDA 12.9"
@@ -3345,13 +3394,13 @@ never\:"Disables colored output"))' \
 '--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories]' \
 '-h[Display the concise help for this command]' \
 '--help[Display the concise help for this command]' \
-'*::src_file -- Include all packages listed in the given `requirements.txt` files:_files' \
+'*::src_file -- Include the packages listed in the given files:_files' \
 && ret=0
 ;;
 (install)
 _arguments "${_arguments_options[@]}" : \
-'*-r+[Install all packages listed in the given \`requirements.txt\` or \`pylock.toml\` files]:REQUIREMENTS:_files' \
-'*--requirements=[Install all packages listed in the given \`requirements.txt\` or \`pylock.toml\` files]:REQUIREMENTS:_files' \
+'*-r+[Install the packages listed in the given files]:REQUIREMENTS:_files' \
+'*--requirements=[Install the packages listed in the given files]:REQUIREMENTS:_files' \
 '*-e+[Install the editable package based on the provided local file path]:EDITABLE:_default' \
 '*--editable=[Install the editable package based on the provided local file path]:EDITABLE:_default' \
 '*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_default' \
@@ -3443,7 +3492,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
 cu129\:"Use the PyTorch index for CUDA 12.9"
@@ -3568,8 +3622,8 @@ never\:"Disables colored output"))' \
 ;;
 (uninstall)
 _arguments "${_arguments_options[@]}" : \
-'*-r+[Uninstall all packages listed in the given requirements files]:REQUIREMENTS:_files' \
-'*--requirements=[Uninstall all packages listed in the given requirements files]:REQUIREMENTS:_files' \
+'*-r+[Uninstall the packages listed in the given files]:REQUIREMENTS:_files' \
+'*--requirements=[Uninstall the packages listed in the given files]:REQUIREMENTS:_files' \
 '-p+[The Python interpreter from which packages should be uninstalled.]:PYTHON:_default' \
 '--python=[The Python interpreter from which packages should be uninstalled.]:PYTHON:_default' \
 '--keyring-provider=[Attempt to use \`keyring\` for authentication for remote requirements files]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
@@ -3924,7 +3978,12 @@ aarch64-manylinux_2_37\:"An ARM64 target for the \`manylinux_2_37\` platform"
 aarch64-manylinux_2_38\:"An ARM64 target for the \`manylinux_2_38\` platform"
 aarch64-manylinux_2_39\:"An ARM64 target for the \`manylinux_2_39\` platform"
 aarch64-manylinux_2_40\:"An ARM64 target for the \`manylinux_2_40\` platform"
-wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"))' \
+aarch64-linux-android\:"An ARM64 Android target"
+x86_64-linux-android\:"An \`x86_64\` Android target"
+wasm32-pyodide2024\:"A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12"
+arm64-apple-ios\:"An ARM64 target for iOS device"
+arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
+x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -4019,6 +4078,7 @@ never\:"Disables colored output"))' \
 '--seed[Install seed packages (one or more of\: \`pip\`, \`setuptools\`, and \`wheel\`) into the virtual environment]' \
 '-c[Remove any existing files or directories at the target path]' \
 '--clear[Remove any existing files or directories at the target path]' \
+'(--allow-existing)--no-clear[Fail without prompting if any existing files or directories are present at the target path]' \
 '--allow-existing[Preserve any existing files or directories at the target path]' \
 '--system-site-packages[Give the virtual environment access to the system site packages directory]' \
 '--relocatable[Make the virtual environment relocatable]' \
@@ -4179,7 +4239,7 @@ _arguments "${_arguments_options[@]}" : \
 '--password=[The password for the upload]:PASSWORD:_default' \
 '(-u --username -p --password)-t+[The token for the upload]:TOKEN:_default' \
 '(-u --username -p --password)--token=[The token for the upload]:TOKEN:_default' \
-'--trusted-publishing=[Configure using trusted publishing through GitHub Actions]:TRUSTED_PUBLISHING:((automatic\:"Try trusted publishing when we'\''re already in GitHub Actions, continue if that fails"
+'--trusted-publishing=[Configure trusted publishing]:TRUSTED_PUBLISHING:((automatic\:"Attempt trusted publishing when we'\''re in a supported environment, continue if that fails"
 always\:""
 never\:""))' \
 '--keyring-provider=[Attempt to use \`keyring\` for authentication for remote requirements files]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
@@ -4716,6 +4776,7 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'--force[Force removal of the cache, ignoring in-use checks]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
@@ -5004,6 +5065,7 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'--force[Force removal of the cache, ignoring in-use checks]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
