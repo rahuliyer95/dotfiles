@@ -89,7 +89,7 @@ window-colorspace  = display-p3
 # Shell Integration {{{
 
 shell-integration          = zsh
-shell-integration-features = no-cursor
+shell-integration-features = no-cursor,ssh-env,ssh-terminfo
 
 # }}}
 
