@@ -90,8 +90,8 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
-# fzf
-command -v fzf > /dev/null && source <(fzf --zsh 2> /dev/null)
+# zoxide
+command -v zoxide > /dev/null && eval "$(zoxide init zsh)"
 
 # fzf widgets
 bindkey -a "/" fzf-history-widget

@@ -54,9 +54,6 @@ fi
 # shellcheck source=/dev/null
 command -v fzf > /dev/null && source <(fzf "--$(basename "$SHELL")" 2> /dev/null)
 
-# zoxide
-command -v zoxide > /dev/null && eval "$(zoxide init "$(basename "$SHELL")")"
-
 # mason.nvim resources
 [ -d "${XDG_DATA_HOME:-$HOME}/.local/share/nvim/mason/bin" ] \
   && export PATH="$PATH:${XDG_DATA_HOME:-$HOME}/.local/share/nvim/mason/bin"
