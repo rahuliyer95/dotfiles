@@ -32,11 +32,6 @@ fi
 # golang
 [ -d "$HOME/go/bin" ] && export PATH="$PATH:$HOME/go/bin"
 
-# rbenv
-if command -v rbenv > /dev/null; then
-  eval "$(rbenv init -)"
-fi
-
 # direnv
 if command -v direnv > /dev/null && [ -n "$PS1" ]; then
   eval "$(direnv hook "$SHELL")"
