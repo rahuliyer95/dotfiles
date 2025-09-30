@@ -136,6 +136,7 @@ require("lazy").setup({
   },
   { "christoomey/vim-sort-motion" },
   { "mbbill/undotree" },
+  { "iamyoki/buffer-reopen.nvim" },
 
   -- Look & Feel
   -- {
