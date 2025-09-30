@@ -76,3 +76,7 @@ vim.keymap.set("v", "<M-k>", ":m'<-2<cr>`>my`<mzgv`yo`z", { desc = "Move selecti
 -- Tab & Shift+Tab in visual mode
 vim.keymap.set("v", "<Tab>", ">gv", { desc = "Indent selection" })
 vim.keymap.set("v", "<S-Tab>", "<gv", { desc = "Unindent selection" })
+
+-- vim-fugitive
+vim.keymap.set("n", "gh", ":diffget //2<CR>", { desc = "Get left diff" })
+vim.keymap.set("n", "gl", ":diffget //3<CR>", { desc = "Get right diff" })
