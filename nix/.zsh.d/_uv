@@ -4823,6 +4823,7 @@ never\:"Disables colored output"))' \
 '--project=[Run the command within the given project directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--ci[Optimize the cache for persistence in a continuous integration environment, like GitHub Actions]' \
+'--force[Force removal of the cache, ignoring in-use checks]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
