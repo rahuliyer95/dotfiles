@@ -81,7 +81,6 @@ require("lazy").setup({
   },
   { "tpope/vim-commentary" },
   { "darfink/vim-plist" },
-  { "apple/pkl-neovim" },
   {
     "folke/trouble.nvim",
     config = function()
@@ -201,6 +200,10 @@ require("lazy").setup({
       require("plugins.lightbulb")
     end,
   },
+  -- }}}
+
+  -- Local {{{
+  pcall(require, "config.lazy-local") and { import = "config.lazy-local" } or nil,
   -- }}}
 }, {
   checker = {
