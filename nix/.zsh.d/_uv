@@ -2274,6 +2274,7 @@ never\:"Disables colored output"))' \
 '--show-version-specifiers[Whether to display the version specifier(s) used to install each tool]' \
 '--show-with[Whether to display the additional requirements installed with each tool]' \
 '--show-extras[Whether to display the extra requirements installed with each tool]' \
+'--show-python[Whether to display the Python version associated with run each tool]' \
 '--no-python-downloads[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
