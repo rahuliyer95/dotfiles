@@ -79,7 +79,7 @@ macos-titlebar-style          = tabs
 
 # Window {{{
 
-background-opacity = 0.98
+background-opacity = 0.95
 window-height      = 28
 window-width       = 118
 window-colorspace  = display-p3
