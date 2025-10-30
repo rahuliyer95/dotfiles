@@ -96,6 +96,7 @@ shell-integration-features = no-cursor,ssh-env,ssh-terminfo
 # Miscellaneous {{{
 
 auto-update             = download
+custom-shader           = shaders/cursor_warp.glsl
 keybind                 = super+f=write_screen_file:open
 keybind                 = shift+enter=text:\n
 scrollback-limit        = 25_000_000
