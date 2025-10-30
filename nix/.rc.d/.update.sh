@@ -5,6 +5,10 @@ for file in $HOME/.rc.d/.{exports,path,aliases}; do
   # shellcheck source=/dev/null
   [ -f "$file" ] && source "$file"
 done
+for file in $HOME/.rc.d/.{local.pre.sh,local.post.sh}; do
+  # shellcheck source=/dev/null
+  [ -f "$file" ] && source "$file"
+done
 
 # Homebrew
 if command -v brew > /dev/null; then
