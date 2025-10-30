@@ -16,7 +16,7 @@ require("tokyonight").setup({
     hl["@keyword.function"] = { italic = true, fg = colors.purple }
     hl["@keyword.modifier"] = { italic = true, fg = colors.purple }
     hl["@keyword.type"] = { italic = true, fg = colors.purple }
-    -- barbar.nvim support (https://github.com/folke/tokyonight.nvim/pull/727)
+    -- barbar.nvim support for transparency
     hl.BufferAlternate = { bg = colors.none, fg = colors.fg }
     hl.BufferAlternateADDED = { bg = colors.none, fg = colors.git.add }
     hl.BufferAlternateCHANGED = { bg = colors.none, fg = colors.git.change }
@@ -81,8 +81,9 @@ require("tokyonight").setup({
     hl.DiagnosticVirtualTextWarn = { fg = colors.warning, italic = true }
     -- LSP inlay hints
     hl.LspInlayHint = { fg = colors.comment, italic = true }
-    -- Support transparent bufferline (https://github.com/folke/tokyonight.nvim/pull/677)
-    hl.TabLineFill = { bg = colors.none }
+    -- Status line
+    hl.StatusLine = { bg = colors.none }
+    hl.StatusLineNC = { bg = colors.none }
   end,
   plugins = {
     auto = true,

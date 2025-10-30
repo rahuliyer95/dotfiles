@@ -136,8 +136,14 @@ require("lazy").setup({
   { "christoomey/vim-sort-motion" },
   { "mbbill/undotree" },
   { "iamyoki/buffer-reopen.nvim" },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+  },
+  --- }}}
 
-  -- Look & Feel
+  -- Look & Feel {{{
   -- {
   --   "olimorris/onedarkpro.nvim",
   --   config = function()

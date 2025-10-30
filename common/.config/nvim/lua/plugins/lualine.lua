@@ -1,7 +1,8 @@
 require("lualine").setup({
   options = {
     icons_enabled = true,
-    theme = require("lualine.themes.onedark"),
+    -- theme = require("lualine.themes.onedark"),
+    theme = "tokyonight",
     section_separators = { left = '', right = '' },
     component_separators = { left = '', right = '' },
     always_divide_middle = true,
@@ -28,9 +29,4 @@ require("lualine").setup({
     lualine_y = {},
     lualine_z = { "location" }
   },
-})
-
-require("lualine").hide({
-  place = { "tabline" },
-  unhide = false,
 })

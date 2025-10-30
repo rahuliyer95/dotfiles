@@ -149,8 +149,6 @@ if exists("&fuopt")
 endif
 " Column at text end
 set colorcolumn=+1
-highlight ColorColumn ctermbg=grey guibg=grey
-" highlight Comment cterm=italic gui=italic
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf-8
