@@ -53,12 +53,6 @@ require("lazy").setup({
   {
     "massolari/lsp-auto-setup.nvim",
     dependencies = { "rahuliyer95/mason.nvim" },
-    config = true,
-    opts = {
-      stop_unused_server = {
-        enable = true,
-      },
-    },
   },
   {
     "saghen/blink.cmp",

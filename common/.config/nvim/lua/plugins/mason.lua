@@ -17,26 +17,28 @@ require("mason-lspconfig").setup({
   },
 })
 
--- Configure LSP servers
-require("mason-null-ls").setup({
-  ensure_installed = {
-    "stylua",
-  },
-  handlers = {},
-})
-
 -- null-ls
 local null_ls = require("null-ls")
 
 null_ls.setup({
   sources = {
-    null_ls.builtins.diagnostics.mypy,
+    null_ls.builtins.diagnostics.mypy.with({
+      prefer_local = ".venv/bin",
+    }),
+  },
+})
+
+require("mason-null-ls").setup({
+  ensure_installed = {
+    "stylua",
   },
 })
 
 -- Setup all available servers
 require("lsp-auto-setup").setup({
-  settings = {},
+  exclude = {
+    "tvm_ffi_navigator",
+  },
 })
 
 -- Show diagnostic information on the current line as virtual text
