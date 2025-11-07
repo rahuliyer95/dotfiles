@@ -10,7 +10,9 @@ case "$(uname -s)" in
 Darwin*)
   # Homebrew
   echo "🍺 Homebrew"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  if ! command -v brew >/dev/null 2>&1; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
   brew doctor
   brew update
   brew bundle --file "$SCRIPT_DIR/packages/Brewfile"
@@ -31,8 +33,7 @@ echo "Install node versions with 'pnpm env -g add <version>'"
 
 case "$(uname -s)" in
 Darwin*)
-  # macOS settings
-  "$SCRIPT_DIR/packages/setup_macos.sh"
+  echo "Restart your shell and then run $SCRIPT_DIR/packages/setup_macos.sh"
   ;;
 # Linux*)
 #   ;;
