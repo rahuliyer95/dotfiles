@@ -6,45 +6,16 @@
 adjust-cell-height = 20%
 font-size          = 16
 
-# 0xProto {{{
+# Commit Mono {{{
 
-# font-family             = 0xProto NL
-# font-family-bold-italic = false
-# font-feature            = calt, ss01
+# font-family  = CommitMono
+# font-feature = ss01, ss02, ss03, ss04, ss05, cv06, cv08
 
 # }}}
 
 # Google Sans Code {{{
 
 font-family = Google Sans Code
-
-# }}}
-
-# Maple Mono {{{
-
-# font-family  = Maple Mono NF
-# font-feature = calt, cv01, cv02, cv03, cv05, cv06, cv08, cv38, cv40, cv41, cv62, ss03, ss09, ss10, ss11
-
-# }}}
-
-# Monaspace {{{
-
-# font-family             = "MonaspiceAr Nerd Font"
-# font-family-italic      = "MonaspiceRn Nerd Font"
-# font-family-bold-italic = true
-# font-feature            = calt, liga, ss01, ss02, ss03, ss04, ss05, ss06, ss07, ss08, ss09, ss10
-# # 0
-# font-feature            = cv01=2
-# # 1
-# # font-feature            = cv10
-# # j, f, r, t
-# font-feature            = cv11
-# # *
-# font-feature            = cv31
-# # >=, <=
-# font-feature            = cv32
-# # @_
-# font-feature            = cv62
 
 # }}}
 
@@ -96,7 +67,6 @@ shell-integration-features = no-cursor,ssh-env,ssh-terminfo
 # Miscellaneous {{{
 
 auto-update             = download
-custom-shader           = shaders/cursor_warp.glsl
 keybind                 = super+f=write_screen_file:open
 keybind                 = shift+enter=text:\n
 scrollback-limit        = 25_000_000
