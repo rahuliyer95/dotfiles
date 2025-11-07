@@ -4,6 +4,7 @@
 
 tap "beeftornado/rmtree"
 tap "eth-p/software"
+tap "jorgelbg/tap"
 tap "rahuliyer95/personal"
 
 # endregion }}}
@@ -52,7 +53,7 @@ brew "jq"
 brew "lsd"
 brew "neovim"
 # brew "openjdk@17", link: true
-# brew "openjdk@21", link: true
+# brew "openjdk@25", link: true
 brew "pam-reattach"
 brew "pinentry-mac"
 brew "rahuliyer95/personal/pam_watchid"
@@ -64,7 +65,6 @@ brew "shfmt"
 brew "sponge"
 brew "watch"
 brew "wget"
-brew "xh"
 brew "yq"
 brew "zoxide"
 brew "zsh"
