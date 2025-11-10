@@ -51,7 +51,11 @@ export HOMEBREW_DOWNLOAD_CONCURRENCY="auto"
 export DOCKER_BUILD_KIT="1"
 
 # pnpm
-[ -d "$HOME/Library/pnpm" ] && export PNPM_HOME="$HOME/Library/pnpm"
+if [ -d "$HOME/Library/pnpm" ]; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+elif [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/pnpm" ]; then
+  export PNPM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/pnpm"
+fi
 
 # direnv disable logging to stdout
 export DIRENV_LOG_FORMAT=
