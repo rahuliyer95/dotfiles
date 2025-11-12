@@ -1,15 +1,15 @@
-# vi: ft=Brewfile:foldmethod=marker
+# vi: ft=ruby:foldmethod=marker
 
-# region Taps {{{
+# Taps {{{
 
 tap "beeftornado/rmtree"
 tap "eth-p/software"
 tap "jorgelbg/tap"
 tap "rahuliyer95/personal"
 
-# endregion }}}
+# }}}
 
-# region Formula {{{
+# Formula {{{
 
 brew "ansifilter"
 brew "antidote"
@@ -20,6 +20,7 @@ brew "bat"
 brew "beeftornado/rmtree/brew-rmtree"
 brew "blueutil"
 brew "brotli"
+brew "btop"
 brew "bzip2"
 brew "cmake"
 brew "coreutils"
@@ -70,9 +71,9 @@ brew "zoxide"
 brew "zsh"
 brew "zstd"
 
-# endregion }}}
+# }}}
 
-# region Cask {{{
+# Cask {{{
 
 cask "1password-cli"
 cask "1password@beta"
@@ -106,4 +107,4 @@ cask "whatsapp"
 cask "xquartz"
 cask "zoom"
 
-# endregion }}}
+# }}}

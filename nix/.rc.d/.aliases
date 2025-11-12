@@ -44,7 +44,7 @@ alias egrep="egrep --color=auto"
 
 # endregion }}}
 
-# Enable aliases to be sudo’ed
+# Enable aliases to be sudo'ed
 alias sudo="sudo "
 
 # region Networking {{{
@@ -68,7 +68,7 @@ command -v md5sum > /dev/null || alias md5sum="md5"
 # OS X has no `sha1sum`, so use `shasum` as a fallback
 command -v sha1sum > /dev/null || alias sha1sum="shasum"
 
-# PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+# PlistBuddy alias, because sometimes `defaults` just doesn't cut it
 alias plistbuddy="/usr/libexec/PlistBuddy"
 
 # Reload the shell (i.e. invoke as a login shell)
@@ -85,6 +85,9 @@ command -v batman > /dev/null && alias man="batman"
 
 # vim as nvim
 command -v nvim > /dev/null && alias vim="nvim"
+
+# btop over top
+command -v btop > /dev/null && alias top="btop"
 
 # vi
 alias vi="vi -u NONE"
