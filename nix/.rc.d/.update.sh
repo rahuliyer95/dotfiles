@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # Load profile
 for file in $HOME/.rc.d/.{exports,path,aliases}; do
@@ -94,31 +94,6 @@ fi
 #   gem update
 # fi
 
-# pip3
-# if command -v pip3 >/dev/null; then
-#   echo ""
-#   echo -ne "\e[33m"
-#   echo -e "╭─────────╮"
-#   echo -e "│   pip  │" # \uE73C
-#   echo -e "╰─────────╯"
-#   echo -ne "\e[0m"
-#   echo ""
-#   pip3 install --upgrade pip || sudo pip3 install --upgrade pip
-#   if command -v pip-autoremove >/dev/null; then
-#     echo ""
-#     echo -ne "\e[33m"
-#     echo -e "╭──────────────────╮"
-#     echo -e "│   pip packages  │" # \uE73C
-#     echo -e "╰──────────────────╯"
-#     echo -ne "\e[0m"
-#     echo ""
-#     pip-autoremove -L |
-#       awk '{ printf "%s ", $1 }' |
-#       sort |
-#       xargs pip3 install --upgrade
-#   fi
-# fi
-
 # uv
 if command -v uv > /dev/null; then
   echo ""
@@ -175,10 +150,6 @@ fi
 # 1Password
 if command -v op > /dev/null; then
   op completion zsh > "$(realpath "$HOME/.zsh.d/_op")"
-fi
-# xh
-if command -v xh > /dev/null; then
-  xh --generate complete-zsh > "$(realpath "$HOME/.zsh.d/_xh")"
 fi
 
 # cleanup
