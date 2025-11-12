@@ -17,7 +17,13 @@ require("mason-lspconfig").setup({
   },
 })
 
--- null-ls
+-- Setup all available servers
+require("lsp-auto-setup").setup({
+  exclude = {
+    "tvm_ffi_navigator",
+  },
+})
+
 local null_ls = require("null-ls")
 
 null_ls.setup({
@@ -32,13 +38,7 @@ require("mason-null-ls").setup({
   ensure_installed = {
     "stylua",
   },
-})
-
--- Setup all available servers
-require("lsp-auto-setup").setup({
-  exclude = {
-    "tvm_ffi_navigator",
-  },
+  handlers = {},
 })
 
 -- Show diagnostic information on the current line as virtual text
