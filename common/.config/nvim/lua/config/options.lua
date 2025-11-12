@@ -37,6 +37,7 @@ vim.opt.undofile = true
 -- Fold
 vim.opt.foldenable = true
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 9999
-vim.opt.foldcolumn = "1"
+vim.opt.foldcolumn = "0"
+vim.opt.foldtext = ""
