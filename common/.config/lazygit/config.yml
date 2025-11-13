@@ -1,3 +1,5 @@
+git:
+  overrideGpg: true
 # copied from https://github.com/folke/tokyonight.nvim/blob/5da1b76e64daf4c5d410f06bcb6b9cb640da7dfd/extras/lazygit/tokyonight_storm.yml
 gui:
   nerdFontsVersion: "3"
