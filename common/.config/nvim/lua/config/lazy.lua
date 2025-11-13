@@ -149,14 +149,22 @@ require("lazy").setup({
     config = function()
       require("plugins.tokyonight")
     end,
+    priority = 99,
   },
-  { "nvim-tree/nvim-web-devicons" },
+  {
+    "nvim-mini/mini.icons",
+    config = function()
+      require("plugins.mini-icons")
+    end,
+    dependencies = { "nvim-mini/mini.nvim" },
+  },
   { "onsails/lspkind.nvim" },
   {
     "kyazdani42/nvim-tree.lua",
     config = function()
       require("plugins.nvim-tree")
     end,
+    dependencies = { "nvim-mini/mini.icons" },
   },
   {
     "RRethy/vim-illuminate",
@@ -175,6 +183,7 @@ require("lazy").setup({
     config = function()
       require("plugins.barbar")
     end,
+    dependencies = { "nvim-mini/mini.icons" },
   },
   {
     "lukas-reineke/indent-blankline.nvim",
