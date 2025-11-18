@@ -79,6 +79,7 @@ if command -v pnpm > /dev/null; then
   echo -ne "\e[0m"
   echo ""
   pnpm self-update
+  pnpm up -LPg
   pnpm completion zsh > "$(realpath "$HOME/.zsh.d/_pnpm")"
 fi
 
