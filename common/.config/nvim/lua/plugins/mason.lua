@@ -20,7 +20,9 @@ require("mason-lspconfig").setup({
 -- Setup all available servers
 require("lsp-auto-setup").setup({
   exclude = {
+    "gitlab_duo",
     "tvm_ffi_navigator",
+    "vscoqtop",
   },
 })
 
