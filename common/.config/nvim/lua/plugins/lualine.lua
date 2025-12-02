@@ -1,14 +1,25 @@
+-- based off https://github.com/nvim-lualine/lualine.nvim/wiki/Component-snippets#mixed-indent
+local function indent_info()
+  local sw = vim.bo.shiftwidth
+  if sw == 0 then
+    sw = vim.bo.tabstop
+  end
+  local et = vim.bo.expandtab
+  local type = et and "spaces" or "tabs"
+  return string.format("%s:%d", type, sw)
+end
+
 require("lualine").setup({
   options = {
     icons_enabled = true,
     theme = "tokyonight",
-    section_separators = { left = '', right = '' },
-    component_separators = { left = '', right = '' },
+    section_separators = { left = "", right = "" },
+    component_separators = { left = "", right = "" },
     always_divide_middle = true,
     globalstatus = false,
     refresh = {
       statusline = 1000,
-    }
+    },
   },
   sections = {
     lualine_a = { "mode" },
@@ -21,11 +32,9 @@ require("lualine").setup({
         end,
         color = { fg = "white", gui = "bold" },
       },
-      "encoding",
-      "fileformat",
       "filetype",
     },
-    lualine_y = {},
-    lualine_z = { "location" }
+    lualine_y = { indent_info },
+    lualine_z = { "location" },
   },
 })
