@@ -29,7 +29,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -82,7 +82,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -141,7 +141,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -190,7 +190,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -239,7 +239,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -284,7 +284,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -312,6 +312,107 @@ never\:"Disables colored output"))' \
 '--help[Display the concise help for this command]' \
 '::service -- The domain or URL of the service to lookup:_default' \
 && ret=0
+;;
+(helper)
+_arguments "${_arguments_options[@]}" : \
+'--protocol=[The credential helper protocol to use]:PROTOCOL:((bazel\:"Bazel credential helper protocol as described in \[the spec\](https\://github.com/bazelbuild/proposals/blob/main/designs/2022-06-07-bazel-credential-helpers.md)"))' \
+'--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+managed\:"Prefer managed Python installations over system Python installations"
+system\:"Prefer system Python installations over managed Python installations"
+only-system\:"Only use system Python installations; never use managed Python installations"))' \
+'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+manual\:"Do not automatically download managed Python installations; require explicit installation"
+never\:"Do not ever allow Python downloads"))' \
+'(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
+always\:"Enables colored output regardless of the detected environment"
+never\:"Disables colored output"))' \
+'*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
+'*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
+'--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
+'--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
+'--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
+'--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
+'(-q --quiet)*-v[Use verbose output]' \
+'(-q --quiet)*--verbose[Use verbose output]' \
+'(--color)--no-color[Disable colors]' \
+'--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store]' \
+'--no-native-tls[]' \
+'--offline[Disable network access]' \
+'--no-offline[]' \
+'--preview[Whether to enable all experimental preview features]' \
+'--no-preview[]' \
+'--isolated[Avoid discovering a \`pyproject.toml\` or \`uv.toml\` file]' \
+'--show-settings[Show the resolved settings for the current command]' \
+'--no-progress[Hide all progress outputs]' \
+'--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories]' \
+'--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
+'-h[Display the concise help for this command]' \
+'--help[Display the concise help for this command]' \
+":: :_uv__auth__helper_commands" \
+"*::: :->helper" \
+&& ret=0
+
+    case $state in
+    (helper)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:uv-auth-helper-command-$line[1]:"
+        case $line[1] in
+            (get)
+_arguments "${_arguments_options[@]}" : \
+'--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+managed\:"Prefer managed Python installations over system Python installations"
+system\:"Prefer system Python installations over managed Python installations"
+only-system\:"Only use system Python installations; never use managed Python installations"))' \
+'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+manual\:"Do not automatically download managed Python installations; require explicit installation"
+never\:"Do not ever allow Python downloads"))' \
+'(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
+always\:"Enables colored output regardless of the detected environment"
+never\:"Disables colored output"))' \
+'*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
+'*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
+'--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
+'--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
+'--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
+'--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
+'(-q --quiet)*-v[Use verbose output]' \
+'(-q --quiet)*--verbose[Use verbose output]' \
+'(--color)--no-color[Disable colors]' \
+'--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store]' \
+'--no-native-tls[]' \
+'--offline[Disable network access]' \
+'--no-offline[]' \
+'--preview[Whether to enable all experimental preview features]' \
+'--no-preview[]' \
+'--isolated[Avoid discovering a \`pyproject.toml\` or \`uv.toml\` file]' \
+'--show-settings[Show the resolved settings for the current command]' \
+'--no-progress[Hide all progress outputs]' \
+'--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories]' \
+'--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
+'-h[Display the concise help for this command]' \
+'--help[Display the concise help for this command]' \
+&& ret=0
+;;
+        esac
+    ;;
+esac
 ;;
         esac
     ;;
@@ -430,7 +531,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--extra --only-group)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
@@ -535,7 +636,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--script)--bare[Only create a \`pyproject.toml\`]' \
 '(--package)--virtual[Create a virtual project, rather than a package]' \
@@ -653,12 +754,13 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--optional --group --script)--dev[Add the requirements to the development dependency group]' \
 '--editable[Add the requirements as editable]' \
 '--no-editable[]' \
 '(--editable --no-editable --rev --tag --branch)--raw[Add a dependency as provided]' \
+'--lfs[Whether to use Git LFS when adding a dependency from Git]' \
 '(--frozen)--no-sync[Avoid syncing the virtual environment]' \
 '(--frozen -U --upgrade)--locked[Assert that the \`uv.lock\` will remain unchanged]' \
 '(--locked -U --upgrade --no-sources)--frozen[Add dependencies without re-locking the project]' \
@@ -777,7 +879,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--optional --group)--dev[Remove the packages from the development dependency group]' \
 '(--frozen)--no-sync[Avoid syncing the virtual environment after re-locking the project]' \
@@ -898,7 +1000,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--dry-run[Don'\''t write a new version to the \`pyproject.toml\`]' \
 '--short[Only show the version]' \
@@ -1064,7 +1166,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--extra --only-group)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
@@ -1167,7 +1269,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 '*--config-settings-package=[Settings to pass to the PEP 517 build backend for a specific package, specified as \`PACKAGE\:KEY=VALUE\` pairs]:CONFIG_SETTINGS_PACKAGE:_default' \
 '*--no-build-isolation-package=[Disable isolation when building source distributions for a specific package]:NO_BUILD_ISOLATION_PACKAGE:_default' \
 '--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
-'*--exclude-newer-package=[Limit candidate packages for a specific package to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
+'*--exclude-newer-package=[Limit candidate packages for specific packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
 '--link-mode=[The method to use when installing packages from the global cache]:LINK_MODE:((clone\:"Clone (i.e., copy-on-write) packages from the wheel into the \`site-packages\` directory"
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
@@ -1191,7 +1293,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--check-exists -U --upgrade)--check[Check if the lockfile is up-to-date]' \
 '(--check-exists -U --upgrade)--locked[Check if the lockfile is up-to-date]' \
@@ -1282,7 +1384,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 '*--config-settings-package=[Settings to pass to the PEP 517 build backend for a specific package, specified as \`PACKAGE\:KEY=VALUE\` pairs]:CONFIG_SETTINGS_PACKAGE:_default' \
 '*--no-build-isolation-package=[Disable isolation when building source distributions for a specific package]:NO_BUILD_ISOLATION_PACKAGE:_default' \
 '--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
-'*--exclude-newer-package=[Limit candidate packages for a specific package to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
+'*--exclude-newer-package=[Limit candidate packages for specific packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
 '--link-mode=[The method to use when installing packages from the global cache]:LINK_MODE:((clone\:"Clone (i.e., copy-on-write) packages from the wheel into the \`site-packages\` directory"
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
@@ -1307,7 +1409,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--package)--all-packages[Export the entire workspace]' \
 '(--extra --only-group)--all-extras[Include all optional dependencies]' \
@@ -1413,7 +1515,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 '*--config-settings-package=[Settings to pass to the PEP 517 build backend for a specific package, specified as \`PACKAGE\:KEY=VALUE\` pairs]:CONFIG_SETTINGS_PACKAGE:_default' \
 '*--no-build-isolation-package=[Disable isolation when building source distributions for a specific package]:NO_BUILD_ISOLATION_PACKAGE:_default' \
 '--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
-'*--exclude-newer-package=[Limit candidate packages for a specific package to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
+'*--exclude-newer-package=[Limit candidate packages for specific packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
 '--link-mode=[The method to use when installing packages from the global cache]:LINK_MODE:((clone\:"Clone (i.e., copy-on-write) packages from the wheel into the \`site-packages\` directory"
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
@@ -1481,7 +1583,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--universal[Show a platform-independent dependency tree]' \
 '--no-dedupe[Do not de-duplicate repeated dependencies. Usually, when a package has already displayed its dependencies, further occurrences will not re-display its dependencies, and will include a (*) to indicate it has already been shown. This flag will cause those duplicates to be repeated]' \
@@ -1550,7 +1652,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--check[Check if files are formatted without applying changes]' \
 '--diff[Show a diff of formatting changes without applying them]' \
@@ -1598,7 +1700,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -1747,7 +1849,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--isolated[Run the tool in an isolated virtual environment, ignoring any already-installed tools]' \
 '--no-env-file[Avoid reading environment variables from a \`.env\` file]' \
@@ -1769,6 +1871,7 @@ never\:"Disables colored output"))' \
 '--binary[]' \
 '(--offline)--refresh[Refresh all cached data]' \
 '(--offline)--no-refresh[]' \
+'--lfs[Whether to use Git LFS when adding a dependency from Git]' \
 '--show-resolution[Whether to show resolver and installer output from any environment modifications]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -1909,7 +2012,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--isolated[Run the tool in an isolated virtual environment, ignoring any already-installed tools]' \
 '--no-env-file[Avoid reading environment variables from a \`.env\` file]' \
@@ -1931,6 +2034,7 @@ never\:"Disables colored output"))' \
 '--binary[]' \
 '(--offline)--refresh[Refresh all cached data]' \
 '(--offline)--no-refresh[]' \
+'--lfs[Whether to use Git LFS when adding a dependency from Git]' \
 '--show-resolution[Whether to show resolver and installer output from any environment modifications]' \
 '-V[Display the uvx version]' \
 '--version[Display the uvx version]' \
@@ -2073,7 +2177,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-e[Install the target package in editable mode, such that changes in the package'\''s source directory are reflected without reinstallation]' \
 '--editable[Install the target package in editable mode, such that changes in the package'\''s source directory are reflected without reinstallation]' \
@@ -2096,6 +2200,7 @@ never\:"Disables colored output"))' \
 '(--offline)--refresh[Refresh all cached data]' \
 '(--offline)--no-refresh[]' \
 '--force[Force installation of the tool]' \
+'--lfs[Whether to use Git LFS when adding a dependency from Git]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
@@ -2223,7 +2328,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '()--all[Upgrade all tools]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -2284,7 +2389,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--show-paths[Whether to display the path to each tool environment and installed executable]' \
 '--show-version-specifiers[Whether to display the version specifier(s) used to install each tool]' \
@@ -2333,7 +2438,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '()--all[Uninstall all tools]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -2379,7 +2484,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -2423,7 +2528,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--bin[Show the directory into which \`uv tool\` will install executables.]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -2472,7 +2577,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -2527,7 +2632,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--all-versions[List all Python versions, including old patch versions]' \
 '--all-platforms[List Python downloads for all platforms]' \
@@ -2583,7 +2688,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--bin[Install a Python executable into the \`bin\` directory]' \
 '(--default)--no-bin[Do not install a Python executable into the \`bin\` directory]' \
@@ -2644,7 +2749,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-r[Reinstall the latest Python patch, if it'\''s already installed]' \
 '--reinstall[Reinstall the latest Python patch, if it'\''s already installed]' \
@@ -2693,7 +2798,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--no-project[Avoid discovering a project or workspace]' \
 '--system[Only find system Python interpreters]' \
@@ -2742,7 +2847,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--resolved[Write the resolved Python interpreter path instead of the request]' \
 '--no-resolved[]' \
@@ -2792,7 +2897,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--bin[Show the directory into which \`uv python\` will install Python executables.]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -2839,7 +2944,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '()--all[Uninstall all managed Python versions]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -2885,7 +2990,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -2933,7 +3038,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -3008,7 +3113,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 '*--config-settings-package=[Settings to pass to the PEP 517 build backend for a specific package, specified as \`PACKAGE\:KEY=VALUE\` pairs]:CONFIG_SETTINGS_PACKAGE:_default' \
 '*--no-build-isolation-package=[Disable isolation when building source distributions for a specific package]:NO_BUILD_ISOLATION_PACKAGE:_default' \
 '--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
-'*--exclude-newer-package=[Limit candidate packages for a specific package to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
+'*--exclude-newer-package=[Limit candidate packages for specific packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
 '--link-mode=[The method to use when installing packages from the global cache]:LINK_MODE:((clone\:"Clone (i.e., copy-on-write) packages from the wheel into the \`site-packages\` directory"
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
@@ -3100,6 +3205,7 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
 rocm6.2\:"Use the PyTorch index for ROCm 6.2"
@@ -3137,7 +3243,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--extra)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
@@ -3325,6 +3431,7 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
 rocm6.2\:"Use the PyTorch index for ROCm 6.2"
@@ -3361,7 +3468,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--extra)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
@@ -3550,6 +3657,7 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
 rocm6.2\:"Use the PyTorch index for ROCm 6.2"
@@ -3581,7 +3689,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--extra)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
@@ -3669,7 +3777,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--system[Use the system Python to uninstall packages]' \
 '--no-system[]' \
@@ -3709,6 +3817,8 @@ _arguments "${_arguments_options[@]}" : \
 '-p+[The Python interpreter for which packages should be listed.]:PYTHON:_default' \
 '--python=[The Python interpreter for which packages should be listed.]:PYTHON:_default' \
 '*--path=[Restrict to the specified installation path for listing packages (can be used multiple times)]:PATHS:_files' \
+'(--prefix --path)--target=[List packages from the specified \`--target\` directory]:TARGET:_files' \
+'(--target --path)--prefix=[List packages from the specified \`--prefix\` directory]:PREFIX:_files' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -3723,7 +3833,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--exclude-editable[Exclude any editable packages from output]' \
 '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
@@ -3778,6 +3888,8 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 '--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
 '-p+[The Python interpreter for which packages should be listed.]:PYTHON:_default' \
 '--python=[The Python interpreter for which packages should be listed.]:PYTHON:_default' \
+'(--prefix)--target=[List packages from the specified \`--target\` directory]:TARGET:_files' \
+'(--target)--prefix=[List packages from the specified \`--prefix\` directory]:PREFIX:_files' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -3792,7 +3904,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-e[Only include editable projects]' \
 '--editable[Only include editable projects]' \
@@ -3835,6 +3947,8 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '-p+[The Python interpreter to find the package in.]:PYTHON:_default' \
 '--python=[The Python interpreter to find the package in.]:PYTHON:_default' \
+'(--prefix)--target=[Show a package from the specified \`--target\` directory]:TARGET:_files' \
+'(--target)--prefix=[Show a package from the specified \`--prefix\` directory]:PREFIX:_files' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -3849,7 +3963,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--strict[Validate the Python environment, to detect packages with missing dependencies and other issues]' \
 '--no-strict[]' \
@@ -3920,7 +4034,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--show-version-specifiers[Show the version constraint(s) imposed on each package]' \
 '--no-dedupe[Do not de-duplicate repeated dependencies. Usually, when a package has already displayed its dependencies, further occurrences will not re-display its dependencies, and will include a (*) to indicate it has already been shown. This flag will cause those duplicates to be repeated]' \
@@ -4023,10 +4137,58 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--system[Check packages in the system Python environment]' \
 '--no-system[]' \
+'-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
+'(--python-preference)--no-managed-python[Disable use of uv-managed Python versions]' \
+'--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
+'--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
+'(-q --quiet)*-v[Use verbose output]' \
+'(-q --quiet)*--verbose[Use verbose output]' \
+'(--color)--no-color[Disable colors]' \
+'--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store]' \
+'--no-native-tls[]' \
+'--offline[Disable network access]' \
+'--no-offline[]' \
+'--preview[Whether to enable all experimental preview features]' \
+'--no-preview[]' \
+'--isolated[Avoid discovering a \`pyproject.toml\` or \`uv.toml\` file]' \
+'--show-settings[Show the resolved settings for the current command]' \
+'--no-progress[Hide all progress outputs]' \
+'--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories]' \
+'--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
+'-h[Display the concise help for this command]' \
+'--help[Display the concise help for this command]' \
+&& ret=0
+;;
+(debug)
+_arguments "${_arguments_options[@]}" : \
+'--platform=[]:PLATFORM:_default' \
+'--python-version=[]:PYTHON_VERSION:_default' \
+'--implementation=[]:IMPLEMENTATION:_default' \
+'--abi=[]:ABI:_default' \
+'--cache-dir=[Path to the cache directory]:CACHE_DIR:_files' \
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+managed\:"Prefer managed Python installations over system Python installations"
+system\:"Prefer system Python installations over managed Python installations"
+only-system\:"Only use system Python installations; never use managed Python installations"))' \
+'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+manual\:"Do not automatically download managed Python installations; require explicit installation"
+never\:"Do not ever allow Python downloads"))' \
+'(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
+always\:"Enables colored output regardless of the detected environment"
+never\:"Disables colored output"))' \
+'*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
+'*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
+'--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
+'--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '(--python-preference)--managed-python[Require use of uv-managed Python versions]' \
@@ -4095,7 +4257,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--system[Ignore virtual environments when searching for the Python interpreter]' \
 '--no-system[This flag is included for compatibility only, it has no effect]' \
@@ -4179,7 +4341,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 '*--config-settings-package=[Settings to pass to the PEP 517 build backend for a specific package, specified as \`PACKAGE\:KEY=VALUE\` pairs]:CONFIG_SETTINGS_PACKAGE:_default' \
 '*--no-build-isolation-package=[Disable isolation when building source distributions for a specific package]:NO_BUILD_ISOLATION_PACKAGE:_default' \
 '--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
-'*--exclude-newer-package=[Limit candidate packages for a specific package to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
+'*--exclude-newer-package=[Limit candidate packages for specific packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER_PACKAGE:_default' \
 '--link-mode=[The method to use when installing packages from the global cache]:LINK_MODE:((clone\:"Clone (i.e., copy-on-write) packages from the wheel into the \`site-packages\` directory"
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
@@ -4201,7 +4363,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '(--package)--all-packages[Builds all packages in the workspace]' \
 '--sdist[Build a source distribution ("sdist") from the given directory]' \
@@ -4288,7 +4450,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--skip-existing[]' \
 '--dry-run[Perform a dry run without uploading files]' \
@@ -4336,7 +4498,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4388,7 +4550,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4433,7 +4595,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4477,7 +4639,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--paths[Show paths instead of names]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4526,7 +4688,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4578,7 +4740,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4624,7 +4786,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4670,7 +4832,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4715,7 +4877,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4759,7 +4921,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4803,7 +4965,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4848,7 +5010,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4892,7 +5054,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4941,7 +5103,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -4993,7 +5155,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--force[Force removal of the cache, ignoring in-use checks]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -5039,7 +5201,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--ci[Optimize the cache for persistence in a continuous integration environment, like GitHub Actions]' \
 '--force[Force removal of the cache, ignoring in-use checks]' \
@@ -5085,7 +5247,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -5129,7 +5291,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-H[Display the cache size in human-readable format (e.g., \`1.2 GiB\` instead of raw bytes)]' \
 '--human[Display the cache size in human-readable format (e.g., \`1.2 GiB\` instead of raw bytes)]' \
@@ -5179,7 +5341,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -5232,7 +5394,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--dry-run[Run without performing the update]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -5280,7 +5442,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--short[Only print the version]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -5329,7 +5491,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--force[Force removal of the cache, ignoring in-use checks]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -5376,7 +5538,7 @@ never\:"Do not ever allow Python downloads"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '-n[]' \
 '--no-cache[]' \
 '--no-python-downloads[]' \
@@ -5422,7 +5584,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--no-pager[Disable pager when printing help]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -5499,6 +5661,7 @@ _uv__auth_commands() {
 'logout:Logout of a service' \
 'token:Show the authentication token for a service' \
 'dir:Show the path to the uv credentials directory' \
+'helper:Act as a credential helper for external tools' \
     )
     _describe -t commands 'uv auth commands' commands "$@"
 }
@@ -5506,6 +5669,18 @@ _uv__auth_commands() {
 _uv__auth__dir_commands() {
     local commands; commands=()
     _describe -t commands 'uv auth dir commands' commands "$@"
+}
+(( $+functions[_uv__auth__helper_commands] )) ||
+_uv__auth__helper_commands() {
+    local commands; commands=(
+'get:Retrieve credentials for a URI' \
+    )
+    _describe -t commands 'uv auth helper commands' commands "$@"
+}
+(( $+functions[_uv__auth__helper__get_commands] )) ||
+_uv__auth__helper__get_commands() {
+    local commands; commands=()
+    _describe -t commands 'uv auth helper get commands' commands "$@"
 }
 (( $+functions[_uv__auth__login_commands] )) ||
 _uv__auth__login_commands() {
@@ -5658,6 +5833,7 @@ _uv__pip_commands() {
 'show:Show information about one or more installed packages' \
 'tree:Display the dependency tree for an environment' \
 'check:Verify installed packages have compatible dependencies' \
+'debug:Display debug information (unsupported)' \
     )
     _describe -t commands 'uv pip commands' commands "$@"
 }
@@ -5670,6 +5846,11 @@ _uv__pip__check_commands() {
 _uv__pip__compile_commands() {
     local commands; commands=()
     _describe -t commands 'uv pip compile commands' commands "$@"
+}
+(( $+functions[_uv__pip__debug_commands] )) ||
+_uv__pip__debug_commands() {
+    local commands; commands=()
+    _describe -t commands 'uv pip debug commands' commands "$@"
 }
 (( $+functions[_uv__pip__freeze_commands] )) ||
 _uv__pip__freeze_commands() {

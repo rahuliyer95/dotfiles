@@ -126,7 +126,7 @@ never\:"Disables colored output"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_default' \
 '*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files' \
-'--project=[Run the command within the given project directory]:PROJECT:_files' \
+'--project=[Discover a project in the given directory]:PROJECT:_files' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--isolated[Run the tool in an isolated virtual environment, ignoring any already-installed tools]' \
 '--no-env-file[Avoid reading environment variables from a \`.env\` file]' \
@@ -148,6 +148,7 @@ never\:"Disables colored output"))' \
 '--binary[]' \
 '(--offline)--refresh[Refresh all cached data]' \
 '(--offline)--no-refresh[]' \
+'--lfs[Whether to use Git LFS when adding a dependency from Git]' \
 '--show-resolution[Whether to show resolver and installer output from any environment modifications]' \
 '-V[Display the uvx version]' \
 '--version[Display the uvx version]' \
