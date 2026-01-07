@@ -42,7 +42,11 @@ require("mason-null-ls").setup({
   ensure_installed = {
     "stylua",
   },
-  handlers = {},
+  handlers = {
+    -- We use bashls to format. Since bashls requires shfmt binary to be installed separately (which
+    -- we manage using Mason) we need to disable this so that null-ls doesn't register shfmt.
+    shfmt = function() end,
+  },
 })
 
 -- Show diagnostic information on the current line as virtual text
