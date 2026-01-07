@@ -203,12 +203,6 @@ require("lazy").setup({
       require("plugins.fidget")
     end,
   },
-  {
-    "kosayoda/nvim-lightbulb",
-    config = function()
-      require("plugins.lightbulb")
-    end,
-  },
   -- }}}
 
   -- Local {{{
