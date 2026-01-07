@@ -21,6 +21,8 @@ require("mason-lspconfig").setup({
 require("lsp-auto-setup").setup({
   exclude = {
     "gitlab_duo",
+    "rls",
+    "systemd_ls",
     "tvm_ffi_navigator",
     "vscoqtop",
   },
