@@ -154,5 +154,6 @@ if command -v op > /dev/null; then
 fi
 
 # cleanup
-[ -x "$HOME/.rc.d/.cleanup.sh" ] \
-  && "$HOME/.rc.d/.cleanup.sh"
+if command -v mole > /dev/null; then
+  mole clean
+fi

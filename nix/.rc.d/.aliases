@@ -77,9 +77,6 @@ alias reload="exec \$SHELL -l"
 # Update
 alias update="\$HOME/.rc.d/.update.sh"
 
-# Cleanup
-alias cleanup="\$HOME/.rc.d/.cleanup.sh"
-
 # bat
 command -v batman > /dev/null && alias man="batman"
 
