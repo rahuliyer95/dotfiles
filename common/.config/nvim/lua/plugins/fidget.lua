@@ -1,15 +1,16 @@
 local fidget = require("fidget")
 
 fidget.setup({
+  window = {
+    blend = 0,
+  },
   notification = {
+    override_vim_notify = true,
     window = {
-      avoid = {
-        "NvimTree",
-      },
+      align = "avoid_cursor",
+      avoid = {},
       border = "rounded",
       winblend = 0,
     },
   },
 })
-
-vim.notify = fidget.notify
