@@ -61,6 +61,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -139,6 +140,8 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm7.1\:"Use the PyTorch index for ROCm 7.1"
+rocm7.0\:"Use the PyTorch index for ROCm 7.0"
 rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"

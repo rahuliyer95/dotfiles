@@ -465,6 +465,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -731,6 +732,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -858,6 +860,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -980,6 +983,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -1100,6 +1104,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -1274,6 +1279,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -1389,6 +1395,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -1520,6 +1527,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '--script=[Show the dependency tree the specified PEP 723 Python script, rather than the current project]:SCRIPT:_files' \
 '(--universal)--python-version=[The Python version to use when filtering the tree]:PYTHON_VERSION:_default' \
 '(--universal)--python-platform=[The platform to use when filtering the tree]:PYTHON_PLATFORM:((windows\:"An alias for \`x86_64-pc-windows-msvc\`, the default target for Windows"
@@ -1784,6 +1792,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -1862,6 +1871,8 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm7.1\:"Use the PyTorch index for ROCm 7.1"
+rocm7.0\:"Use the PyTorch index for ROCm 7.0"
 rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
@@ -1993,6 +2004,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -2071,6 +2083,8 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm7.1\:"Use the PyTorch index for ROCm 7.1"
+rocm7.0\:"Use the PyTorch index for ROCm 7.0"
 rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
@@ -2205,6 +2219,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
@@ -2283,6 +2298,8 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm7.1\:"Use the PyTorch index for ROCm 7.1"
+rocm7.0\:"Use the PyTorch index for ROCm 7.0"
 rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
@@ -2450,6 +2467,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
@@ -3260,6 +3278,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-o+[Write the compiled requirements to the given \`requirements.txt\` or \`pylock.toml\` file]:OUTPUT_FILE:_files' \
 '--output-file=[Write the compiled requirements to the given \`requirements.txt\` or \`pylock.toml\` file]:OUTPUT_FILE:_files' \
@@ -3347,6 +3366,8 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm7.1\:"Use the PyTorch index for ROCm 7.1"
+rocm7.0\:"Use the PyTorch index for ROCm 7.0"
 rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
@@ -3492,11 +3513,13 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-p+[The Python interpreter into which packages should be installed.]:PYTHON:' \
 '--python=[The Python interpreter into which packages should be installed.]:PYTHON:' \
+'(--prefix)-t+[Install packages into the specified directory, rather than into the virtual or system Python environment. The packages will be installed at the top-level of the directory]:TARGET:_files -/' \
 '(--prefix)--target=[Install packages into the specified directory, rather than into the virtual or system Python environment. The packages will be installed at the top-level of the directory]:TARGET:_files -/' \
-'(--target)--prefix=[Install packages into \`lib\`, \`bin\`, and other top-level folders under the specified directory, as if a virtual environment were present at that location]:PREFIX:_files -/' \
+'(-t --target)--prefix=[Install packages into \`lib\`, \`bin\`, and other top-level folders under the specified directory, as if a virtual environment were present at that location]:PREFIX:_files -/' \
 '(--no-build)*--no-binary=[Don'\''t install pre-built wheels]:NO_BINARY:_default' \
 '(--no-build)*--only-binary=[Only use pre-built wheels; don'\''t build source distributions]:ONLY_BINARY:_default' \
 '--python-version=[The minimum Python version that should be supported by the requirements (e.g., \`3.7\` or \`3.7.9\`)]:PYTHON_VERSION:_default' \
@@ -3573,6 +3596,8 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm7.1\:"Use the PyTorch index for ROCm 7.1"
+rocm7.0\:"Use the PyTorch index for ROCm 7.0"
 rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
@@ -3718,11 +3743,13 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-p+[The Python interpreter into which packages should be installed.]:PYTHON:' \
 '--python=[The Python interpreter into which packages should be installed.]:PYTHON:' \
+'(--prefix)-t+[Install packages into the specified directory, rather than into the virtual or system Python environment. The packages will be installed at the top-level of the directory]:TARGET:_files -/' \
 '(--prefix)--target=[Install packages into the specified directory, rather than into the virtual or system Python environment. The packages will be installed at the top-level of the directory]:TARGET:_files -/' \
-'(--target)--prefix=[Install packages into \`lib\`, \`bin\`, and other top-level folders under the specified directory, as if a virtual environment were present at that location]:PREFIX:_files -/' \
+'(-t --target)--prefix=[Install packages into \`lib\`, \`bin\`, and other top-level folders under the specified directory, as if a virtual environment were present at that location]:PREFIX:_files -/' \
 '(--no-build)*--no-binary=[Don'\''t install pre-built wheels]:NO_BINARY:_default' \
 '(--no-build)*--only-binary=[Only use pre-built wheels; don'\''t build source distributions]:ONLY_BINARY:_default' \
 '--python-version=[The minimum Python version that should be supported by the requirements (e.g., \`3.7\` or \`3.7.9\`)]:PYTHON_VERSION:_default' \
@@ -3799,6 +3826,8 @@ cu92\:"Use the PyTorch index for CUDA 9.2"
 cu91\:"Use the PyTorch index for CUDA 9.1"
 cu90\:"Use the PyTorch index for CUDA 9.0"
 cu80\:"Use the PyTorch index for CUDA 8.0"
+rocm7.1\:"Use the PyTorch index for ROCm 7.1"
+rocm7.0\:"Use the PyTorch index for ROCm 7.0"
 rocm6.4\:"Use the PyTorch index for ROCm 6.4"
 rocm6.3\:"Use the PyTorch index for ROCm 6.3"
 rocm6.2.4\:"Use the PyTorch index for ROCm 6.2.4"
@@ -3903,8 +3932,9 @@ _arguments "${_arguments_options[@]}" : \
 '--python=[The Python interpreter from which packages should be uninstalled.]:PYTHON:' \
 '--keyring-provider=[Attempt to use \`keyring\` for authentication for remote requirements files]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
 subprocess\:"Use the \`keyring\` command for credential lookup"))' \
+'(--prefix)-t+[Uninstall packages from the specified \`--target\` directory]:TARGET:_files -/' \
 '(--prefix)--target=[Uninstall packages from the specified \`--target\` directory]:TARGET:_files -/' \
-'(--target)--prefix=[Uninstall packages from the specified \`--prefix\` directory]:PREFIX:_files -/' \
+'(-t --target)--prefix=[Uninstall packages from the specified \`--prefix\` directory]:PREFIX:_files -/' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -3956,11 +3986,13 @@ never\:"Disables colored output"))' \
 ;;
 (freeze)
 _arguments "${_arguments_options[@]}" : \
+'*--exclude=[Exclude the specified package(s) from the output]:EXCLUDE:_default' \
 '-p+[The Python interpreter for which packages should be listed.]:PYTHON:' \
 '--python=[The Python interpreter for which packages should be listed.]:PYTHON:' \
 '*--path=[Restrict to the specified installation path for listing packages (can be used multiple times)]:PATHS:_files -/' \
+'(--prefix --path)-t+[List packages from the specified \`--target\` directory]:TARGET:_files -/' \
 '(--prefix --path)--target=[List packages from the specified \`--target\` directory]:TARGET:_files -/' \
-'(--target --path)--prefix=[List packages from the specified \`--prefix\` directory]:PREFIX:_files -/' \
+'(-t --target --path)--prefix=[List packages from the specified \`--prefix\` directory]:PREFIX:_files -/' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -4030,8 +4062,9 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 '--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
 '-p+[The Python interpreter for which packages should be listed.]:PYTHON:' \
 '--python=[The Python interpreter for which packages should be listed.]:PYTHON:' \
+'(--prefix)-t+[List packages from the specified \`--target\` directory]:TARGET:_files -/' \
 '(--prefix)--target=[List packages from the specified \`--target\` directory]:TARGET:_files -/' \
-'(--target)--prefix=[List packages from the specified \`--prefix\` directory]:PREFIX:_files -/' \
+'(-t --target)--prefix=[List packages from the specified \`--prefix\` directory]:PREFIX:_files -/' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -4089,8 +4122,9 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '-p+[The Python interpreter to find the package in.]:PYTHON:' \
 '--python=[The Python interpreter to find the package in.]:PYTHON:' \
+'(--prefix)-t+[Show a package from the specified \`--target\` directory]:TARGET:_files -/' \
 '(--prefix)--target=[Show a package from the specified \`--target\` directory]:TARGET:_files -/' \
-'(--target)--prefix=[Show a package from the specified \`--prefix\` directory]:PREFIX:_files -/' \
+'(-t --target)--prefix=[Show a package from the specified \`--prefix\` directory]:PREFIX:_files -/' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -4488,6 +4522,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the wheel into the \`site-packages\` directory"
 hardlink\:"Hard link packages from the wheel into the \`site-packages\` directory"
 symlink\:"Symbolically link packages from the wheel into the \`site-packages\` directory"))' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
