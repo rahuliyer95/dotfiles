@@ -82,13 +82,10 @@ require("lazy").setup({
     end,
   },
   {
-    "filipdutescu/renamer.nvim",
+    "saecki/live-rename.nvim",
     config = function()
-      require("plugins.renamer")
+      require("plugins.live-rename")
     end,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
   },
   {
     "wintermute-cell/gitignore.nvim",

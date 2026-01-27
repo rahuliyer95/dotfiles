@@ -43,10 +43,10 @@ vim.keymap.set("n", "<F12>", vim.lsp.buf.definition, { desc = "Jump to definitio
 vim.keymap.set("i", "<F12>", vim.lsp.buf.definition, { desc = "Jump to definition" })
 -- Rename
 vim.keymap.set("n", "<F2>", function()
-  require("renamer").rename()
+  require("live-rename").rename({ curpos = -1, insert = true })
 end, { desc = "Rename" })
 vim.keymap.set("i", "<F2>", function()
-  require("renamer").rename()
+  require("live-rename").rename({ curpos = -1, insert = true })
 end, { desc = "Rename" })
 -- Show callers
 vim.keymap.set("n", "<leader>fr", function()
