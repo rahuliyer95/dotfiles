@@ -60,7 +60,6 @@ shell-integration-features = no-cursor,ssh-env,ssh-terminfo
 # Miscellaneous {{{
 
 auto-update             = download
-keybind                 = super+f=write_screen_file:open
 keybind                 = shift+enter=text:\n
 scrollback-limit        = 25_000_000
 unfocused-split-opacity = 0.7
