@@ -53,7 +53,14 @@ vim.keymap.set("n", "<leader>fr", function()
   require("telescope.builtin").lsp_references()
 end, { desc = "Show callers" })
 -- Code Actions
-vim.keymap.set("n", "<D-.>", vim.lsp.buf.code_action, { desc = "Show code actions" })
+vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, { desc = "Show code actions" })
+-- Diagnostics
+vim.keymap.set("n", "]d", function()
+  vim.diagnostic.jump({ count = 1 })
+end, { desc = "Next diagnostic" })
+vim.keymap.set("n", "]d", function()
+  vim.diagnostic.jump({ count = -1 })
+end, { desc = "Previous diagnostic" })
 
 -- nvim-tree
 vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>", { desc = "Toggle file tree" })
