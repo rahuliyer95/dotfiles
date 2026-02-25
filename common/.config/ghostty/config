@@ -16,7 +16,8 @@ font-family = Google Sans Code
 
 # Theme {{{
 
-theme = TokyoNight Storm
+theme            = TokyoNight Storm
+palette-generate = false
 
 # }}}
 
