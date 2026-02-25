@@ -55,7 +55,7 @@ end, { desc = "Show callers" })
 -- Code Actions
 vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, { desc = "Show code actions" })
 -- Diagnostics
-vim.keymap.set("n", "]d", function()
+vim.keymap.set("n", "[d", function()
   vim.diagnostic.jump({ count = 1 })
 end, { desc = "Next diagnostic" })
 vim.keymap.set("n", "]d", function()
