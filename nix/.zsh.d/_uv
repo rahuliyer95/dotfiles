@@ -1646,6 +1646,7 @@ never\:"Disables colored output"))' \
 (format)
 _arguments "${_arguments_options[@]}" : \
 '--version=[The version of Ruff to use for formatting]:VERSION:' \
+'--exclude-newer=[Limit candidate Ruff versions to those released prior to the given date]:EXCLUDE_NEWER:_default' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -1665,6 +1666,7 @@ never\:"Disables colored output"))' \
 '--check[Check if files are formatted without applying changes]' \
 '--diff[Show a diff of formatting changes without applying them]' \
 '--no-project[Avoid discovering a project or workspace]' \
+'--show-version[Display the version of Ruff that will be used for formatting]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--managed-python[Require use of uv-managed Python versions \[env\: UV_MANAGED_PYTHON=\]]' \
@@ -2964,6 +2966,7 @@ never\:"Disables colored output"))' \
 '--system[Only find system Python interpreters]' \
 '--no-system[]' \
 '--show-version[Show the Python version that would be used instead of the path to the interpreter]' \
+'--resolve-links[Resolve symlinks in the output path]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--managed-python[Require use of uv-managed Python versions \[env\: UV_MANAGED_PYTHON=\]]' \
@@ -4445,6 +4448,7 @@ never\:"Disables colored output"))' \
 '--allow-existing[Preserve any existing files or directories at the target path]' \
 '--system-site-packages[Give the virtual environment access to the system site packages directory]' \
 '--relocatable[Make the virtual environment relocatable]' \
+'--no-relocatable[Don'\''t make the virtual environment relocatable]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
