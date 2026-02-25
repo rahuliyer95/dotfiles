@@ -34,6 +34,9 @@ null_ls.setup({
   sources = {
     null_ls.builtins.diagnostics.mypy.with({
       prefer_local = ".venv/bin",
+      runtime_condition = function(params)
+        return not params.bufname:find("%.venv")
+      end,
     }),
   },
 })
