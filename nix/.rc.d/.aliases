@@ -44,9 +44,6 @@ alias egrep="egrep --color=auto"
 
 # endregion }}}
 
-# Enable aliases to be sudo'ed
-alias sudo="sudo "
-
 # region Networking {{{
 
 alias mip="dig +short myip.opendns.com @resolver1.opendns.com"
