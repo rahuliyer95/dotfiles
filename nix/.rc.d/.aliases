@@ -25,10 +25,9 @@ alias ll="l"
 # List all files colorized in long format, including dot files
 alias la="ls -lAhF"
 
-# List only directories
-alias lsd="ls -lhF | grep --color=never '^d'"
-
-alias ls="command lsd"
+if command -v lsd &> /dev/null; then
+  alias ls="command lsd"
+fi
 
 # endregion }}}
 
