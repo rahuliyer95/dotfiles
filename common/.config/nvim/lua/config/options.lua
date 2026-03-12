@@ -41,3 +41,11 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 9999
 vim.opt.foldcolumn = "0"
 vim.opt.foldtext = ""
+
+-- Prevent auto-wrapping text at textwidth
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.opt_local.formatoptions:remove({ "t" })
+  end,
+})
