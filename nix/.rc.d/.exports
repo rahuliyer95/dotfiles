@@ -13,6 +13,8 @@ fi
 
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING="UTF-8"
+# Make Python stdio unbuffered.
+export PYTHONUNBUFFERED=1
 
 # Increase shell history size. Allow 32³ entries; the default is 500.
 export HISTSIZE="32768"
