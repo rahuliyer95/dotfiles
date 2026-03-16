@@ -30,7 +30,7 @@ export LC_ALL="en_US.UTF-8"
 export MANPAGER="less -X"
 
 # bat theme
-export BAT_THEME="TokyoNight"
+export BAT_THEME="tokyonight_storm"
 # bat style
 export BAT_STYLE="full"
 
