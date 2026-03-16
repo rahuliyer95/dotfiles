@@ -63,14 +63,14 @@ fi
 export DIRENV_LOG_FORMAT=
 
 # antidote
-if command -v brew > /dev/null; then
-  PREFIX="$(brew --prefix antidote)/share/antidote/antidote.zsh"
+if command -v brew &> /dev/null && [ -f "$(brew --prefix antidote)/share/antidote/antidote.zsh" ]; then
   # shellcheck source=/dev/null
-  [ -f "$PREFIX" ] && source "$PREFIX"
+  source "$(brew --prefix antidote)/share/antidote/antidote.zsh"
   unset PREFIX
 elif [ -d "$HOME/.antidote" ]; then
   # shellcheck source=/dev/null
   source "$HOME/.antidote/antidote.zsh"
 elif [ -f "/usr/share/zsh-antidote/antidote.zsh" ]; then
+  # shellcheck source=/dev/null
   source "/usr/share/zsh-antidote/antidote.zsh"
 fi
