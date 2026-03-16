@@ -97,9 +97,12 @@ bindkey "^X^E" edit-command-line
 bindkey -a "/" fzf-history-widget
 bindkey -a "?" fzf-history-widget
 
-# fzf-tab
-zstyle -d ':completion:*' format
-zstyle ':completion:*:descriptions' format '-- %d --'
+# compstyle
+zstyle ':completion:*' format $'\e[34m-- %d --\e[0m'
+zstyle ':completion:*:corrections' format $'\e[31m-- %d (errors: %e) --\e[0m'
+zstyle ':completion:*:descriptions' format $'\e[35m-- %d --\e[0m'
+zstyle ':completion:*:messages' format $'\e[32m-- %d --\e[0m'
+zstyle ':completion:*:warnings' format $'\e[33m-- no matches found --\e[0m'
 zstyle ':completion:*:git-checkout:*' sort false
 
 # zoxide
