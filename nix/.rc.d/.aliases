@@ -92,3 +92,5 @@ alias urldecode="python3 -c 'import sys, urllib.parse as parse; s = open(sys.arg
 alias b64encode="python3 -m base64 -e"
 
 alias b64decode="python3 -m base64 -d"
+
+alias clear='printf "\033[H\033[2J"'
