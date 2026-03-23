@@ -5,6 +5,7 @@ vim.keymap.set("n", "<S-Tab>", vim.cmd.BufferPrevious, { desc = "Previous buffer
 -- telescope.nvim
 vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 vim.keymap.set("n", "<C-g>", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
+vim.keymap.set("n", "<C-S-p>", "<cmd>Telescope commands<cr>", { desc = "Command palette" })
 
 -- vim-anzu search progress
 vim.keymap.set("n", "n", "<Plug>(anzu-n-with-echo)", { desc = "Next search result" })
