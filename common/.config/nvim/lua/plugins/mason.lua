@@ -30,6 +30,34 @@ require("lsp-auto-setup").setup({
 
 local null_ls = require("null-ls")
 
+-- Sort all keys in a JSON document using jq
+local sort_json_keys = {
+  name = "sort_json_keys",
+  method = null_ls.methods.CODE_ACTION,
+  filetypes = { "json" },
+  generator = {
+    fn = function(params)
+      return {
+        {
+          title = "Sort JSON keys",
+          action = function()
+            local bufnr = params.bufnr
+            local content = table.concat(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false), "\n")
+            local result = vim.fn.system("jq -S .", content)
+            if vim.v.shell_error == 0 then
+              local lines = vim.split(result, "\n")
+              if lines[#lines] == "" then
+                table.remove(lines)
+              end
+              vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+            end
+          end,
+        },
+      }
+    end,
+  },
+}
+
 null_ls.setup({
   sources = {
     null_ls.builtins.diagnostics.mypy.with({
@@ -38,6 +66,7 @@ null_ls.setup({
         return not params.bufname:find("%.venv")
       end,
     }),
+    sort_json_keys,
   },
 })
 
