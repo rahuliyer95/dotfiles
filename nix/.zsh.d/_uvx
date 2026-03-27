@@ -212,8 +212,10 @@ never\:"Disables colored output"))' \
 '(-q --quiet)*-v[Use verbose output]' \
 '(-q --quiet)*--verbose[Use verbose output]' \
 '(--color)--no-color[Disable colors]' \
-'--native-tls[Whether to load TLS certificates from the platform'\''s native store \[env\: UV_NATIVE_TLS=\]]' \
+'--native-tls[Whether to load TLS certificates from the platform'\''s native certificate store \[env\: UV_NATIVE_TLS=\]]' \
 '--no-native-tls[]' \
+'--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env\: UV_SYSTEM_CERTS=\]]' \
+'--no-system-certs[]' \
 '--offline[Disable network access \[env\: UV_OFFLINE=\]]' \
 '--no-offline[]' \
 '--preview[Whether to enable all experimental preview features \[env\: UV_PREVIEW=\]]' \
