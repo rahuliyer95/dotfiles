@@ -7,15 +7,15 @@
     "*": "allow",
     "bash": {
       "*": "allow",
+      "* > *": "ask",
+      "* >> *": "ask",
       "dd *": "ask",
       "gh api *": "ask",
       "gh pr create *": "ask",
       "git checkout *": "ask",
       "git push *": "ask",
       "rm *": "ask",
-      "sed *": "ask",
-      "* > *": "ask",
-      "* >> *": "ask"
+      "sed *": "ask"
     },
     "edit": "ask",
     "read": {
