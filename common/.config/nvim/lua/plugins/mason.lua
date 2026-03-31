@@ -111,4 +111,4 @@ vim.diagnostic.config({
 
 -- Enable inlay hints
 vim.lsp.inlay_hint.enable(true)
-vim.lsp.set_log_level("off")
+vim.lsp.log.set_level("off")
