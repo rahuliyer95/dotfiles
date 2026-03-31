@@ -24,6 +24,7 @@ require("lazy").setup({
   -- { "tpope/vim-sensible" },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     build = ":TSUpdate",
     config = function()
       require("plugins.treesitter")
