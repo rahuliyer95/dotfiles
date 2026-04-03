@@ -36,8 +36,8 @@ vim.opt.undofile = true
 
 -- Fold
 vim.opt.foldenable = true
-vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldmethod = "expr"
 vim.opt.foldlevel = 9999
 vim.opt.foldcolumn = "0"
 vim.opt.foldtext = ""
@@ -47,5 +47,13 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
   callback = function()
     vim.opt_local.formatoptions:remove({ "t" })
+    local availableParsers = require("nvim-treesitter.config").get_installed()
+    local fileLanguage = vim.treesitter.language.get_lang(vim.bo.filetype)
+    if fileLanguage and vim.tbl_contains(availableParsers, fileLanguage) then
+      vim.treesitter.start()
+    end
   end,
 })
+
+-- Experimental
+vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"

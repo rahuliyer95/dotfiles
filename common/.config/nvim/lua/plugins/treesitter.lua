@@ -1,24 +1,16 @@
-local hasConfigs, configs = pcall(require, "nvim-treesitter.configs")
-if hasConfigs then
-  configs.setup({
-    auto_install = true,
-    ensure_installed = {
-      "json",
-      "lua",
-      "markdown",
-      "python",
-      "vim",
-      "vimdoc",
-      "yaml",
-    },
-    ignore_install = {},
-    indent = {
-      enable = true,
-    },
-    highlight = {
-      enable = true,
-    },
-    modules = {},
-    sync_install = true,
-  })
-end
+local ensureInstalled = {
+  "json",
+  "lua",
+  "markdown",
+  "python",
+  "vim",
+  "vimdoc",
+  "yaml",
+}
+local alreadyInstalled = require("nvim-treesitter.config").get_installed()
+require("nvim-treesitter").install(vim
+  .iter(ensureInstalled)
+  :filter(function(parser)
+    return not vim.tbl_contains(alreadyInstalled, parser)
+  end)
+  :totable())
