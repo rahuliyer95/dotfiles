@@ -68,12 +68,6 @@ require("lazy").setup({
   -- }}}
 
   -- Other code plugins {{{
-  {
-    "ray-x/lsp_signature.nvim",
-    config = function()
-      require("plugins.lsp-signature")
-    end,
-  },
   { "tpope/vim-commentary" },
   { "darfink/vim-plist" },
   {
@@ -196,9 +190,20 @@ require("lazy").setup({
     end,
   },
   {
-    "j-hui/fidget.nvim",
+    "rcarriga/nvim-notify",
     config = function()
-      require("plugins.fidget")
+      require("plugins.nvim-notify")
+    end,
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    config = function()
+      require("plugins.noice")
     end,
   },
   -- }}}
