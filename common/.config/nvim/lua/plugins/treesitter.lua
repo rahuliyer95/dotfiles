@@ -3,6 +3,7 @@ local ensureInstalled = {
   "lua",
   "markdown",
   "python",
+  "regex",
   "vim",
   "vimdoc",
   "yaml",
