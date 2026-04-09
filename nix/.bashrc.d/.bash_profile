@@ -17,10 +17,6 @@ done
 
 unset file
 
-# fzf goodness
-# shellcheck source=/dev/null
-[ -f "$HOME/.fzf.bash" ] && . "$HOME/.fzf.bash"
-
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
@@ -52,6 +48,7 @@ if [ -n "$(command -v brew 2> /dev/null)" ]; then
     . "$(brew --prefix)/opt/mcfly/mcfly.bash"
   fi
 elif [ -d "/usr/local/etc/bash_completion.d/" ]; then
+  # shellcheck source=/dev/null
   [ -f "/usr/local/etc/bash_completion.d/.bash_completion" ] && . "/usr/local/etc/bash_completion.d/.bash_completion"
   for file in "/usr/local/etc/bash_completion.d/"*; do
     # shellcheck source=/dev/null
@@ -59,6 +56,7 @@ elif [ -d "/usr/local/etc/bash_completion.d/" ]; then
   done
 fi
 if [ -f "/etc/bash_completion" ]; then
+  # shellcheck source=/dev/null
   . "/etc/bash_completion" 2> /dev/null
 fi
 

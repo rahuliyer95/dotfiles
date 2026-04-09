@@ -1,128 +1,280 @@
 #!/usr/bin/env bash
+# Bash prompt matching zsh Powerlevel10k lean style (2-line, nerd font)
+#
+# Layout:
+#   <blank line>
+#   [user@host] ~/path on branch +1 !2 ?3           took 5s  venv
+#   ❯ _
+#
+# Vi-mode indicator (❯/❮) managed by readline show-mode-in-prompt
+# Prompt char: green on success, red on error (dynamically updated)
+#
+# Dependencies:
+#   - Nerd Font v3 (icons)
+#   - gitstatus (optional, https://github.com/romkatv/gitstatus)
 
+# Prevent virtualenv activate from modifying PS1 (we handle it)
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+# --- Precomputed ANSI escapes (no subshells in prompt rendering) ---
+_c_os=$'\033[38;5;175m'     # os icon
+_c_dir=$'\033[38;5;31m'     # directory (p10k DIR_FOREGROUND)
+_c_clean=$'\033[38;5;76m'   # git clean/branch (green)
+_c_mod=$'\033[38;5;178m'    # git staged/unstaged (yellow)
+_c_untrk=$'\033[38;5;39m'   # git untracked (blue)
+_c_conf=$'\033[38;5;196m'   # git conflicted/action (red)
+_c_meta=$'\033[38;5;244m'   # meta text "on", "took" (grey)
+_c_ctx=$'\033[38;5;141m'    # SSH context
+_c_venv=$'\033[38;5;37m'    # virtualenv
+_c_exec=$'\033[38;5;101m'   # execution time
+_c_rst=$'\033[0m'
+
+# Color numbers for dynamic bind
+_P_OK=76
+_P_ERR=196
+
+# --- OS icon (nerd font, cached) ---
+case "$(uname)" in
+  Darwin*) _OS_ICON=$'\uF179' ;;
+  Linux*)  _OS_ICON=$'\uF17C' ;;
+  *)       _OS_ICON=$'\uF108' ;;
+esac
+
+# Cached hostname (avoid subshell per prompt)
+_PROMPT_HOST="$(hostname -s)"
+
+# --- gitstatus ---
+# Search known locations: manual install, env var, p10k via antidote, homebrew
+_gitstatus_plugin=""
+for _gsd in \
+  "$HOME/.gitstatus" \
+  "${GITSTATUS_DIR-}" \
+  "$HOME/Library/Caches/antidote/"*powerlevel10k/gitstatus \
+  "$(brew --prefix 2>/dev/null)/opt/gitstatus/share/gitstatus"; do
+  [[ -f "$_gsd/gitstatus.plugin.sh" ]] && { _gitstatus_plugin="$_gsd/gitstatus.plugin.sh"; break; }
+done
 # shellcheck source=/dev/null
-[ -f "$HOME/.gitstatus/gitstatus.plugin.sh" ] && . "$HOME/.gitstatus/gitstatus.plugin.sh"
-
-if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color > /dev/null 2>&1; then
-  export TERM='gnome-256color'
-elif infocmp xterm-256color > /dev/null 2>&1; then
-  export TERM='xterm-256color'
+if [[ -n "$_gitstatus_plugin" ]]; then
+  . "$_gitstatus_plugin"
+  gitstatus_stop 2>/dev/null
+  gitstatus_start -s -1 -u -1 -c -1 -d -1 2>/dev/null
 fi
+unset _gitstatus_plugin _gsd
 
-BRANCH=''
-COG='⚙'
+# --- Readline vi-mode setup ---
+bind 'set show-mode-in-prompt on'
 
-ECHO="gecho"
-WC="gwc"
+# --- Command execution timer ---
+_prompt_preexec() {
+  [[ -n ${_prompt_rendering-} ]] && return
+  _prompt_timer=${_prompt_timer:-$SECONDS}
+}
+trap '_prompt_preexec' DEBUG
 
-color() {
-  case "$1" in
-    gray) "$ECHO" -ne '246' ;;
-    black) "$ECHO" -ne '235' ;;
-    red) "$ECHO" -ne '196' ;;
-    green) "$ECHO" -ne '40' ;;
-    yellow) "$ECHO" -ne '226' ;;
-    blue) "$ECHO" -ne '39' ;;
-    cyan) "$ECHO" -ne '45' ;;
-    violet) "$ECHO" -ne '93' ;;
-    white) "$ECHO" -ne '255' ;;
-    orange) "$ECHO" -ne '214' ;;
-    pink) "$ECHO" -ne '175' ;;
-    reset) "$ECHO" -ne '0' ;;
-  esac
+_format_duration() {
+  local total=$1 d h m s
+  _dur=""
+  d=$(( total / 86400 ))
+  h=$(( (total % 86400) / 3600 ))
+  m=$(( (total % 3600) / 60 ))
+  s=$(( total % 60 ))
+  (( d > 0 )) && _dur+="${d}d "
+  (( h > 0 )) && _dur+="${h}h "
+  (( m > 0 )) && _dur+="${m}m "
+  _dur+="${s}s"
 }
 
-fg_color() {
-  "$ECHO" -ne "\\033[38;5;$1m"
-}
+# --- Git status builder (sets _git_s and _git_w) ---
+_prompt_git() {
+  _git_s="" _git_w=0
 
-bg_color() {
-  "$ECHO" -ne "\\033[48;5;$1m"
-}
+  # Skip home directory (p10k: VCS_DISABLED_WORKDIR_PATTERN='~')
+  [[ "$PWD" == "$HOME" ]] && return
 
-__prompt_separator() {
-  "$ECHO" -ne " "
-}
+  type gitstatus_query &>/dev/null || return
+  gitstatus_query 2>/dev/null || return
+  [[ $VCS_STATUS_RESULT == ok-sync ]] || return
 
-__prompt_pre() {
-  # __prompt_jobs
-  __prompt_venv
-}
+  local s="" w=0
+  local bi=$'\uF126'
 
-__prompt_user() {
-  local -a user host
-  user="$USER"
-  host="$(hostname -s)"
-  [ -z "$user" ] && user="$(whoami)"
-  "$ECHO" -ne "$(fg_color "$(color gray)")$user@$host"
-}
+  # "on" prefix (matches p10k VCS_PREFIX)
+  s+=" ${_c_meta}on${_c_rst} "
+  (( w += 4 ))
 
-__prompt_pwd() {
-  "$ECHO" -ne "$(fg_color "$(color blue)") $(dirs +0)"
-}
-
-__prompt_jobs() {
-  local n
-  n="$(jobs -l | $WC -l)"
-  if [ "$n" -gt 0 ]; then
-    [ "$n" -gt 1 ] && "$ECHO" -ne " $n "
-    "$ECHO" -ne "$COG "
+  # Branch / tag / commit
+  if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
+    local b="$VCS_STATUS_LOCAL_BRANCH"
+    (( ${#b} > 32 )) && b="${b:0:12}…${b: -12}"
+    s+="${_c_clean}${bi} ${b}"
+    (( w += 2 + ${#b} ))
+  elif [[ -n ${VCS_STATUS_TAG-} ]]; then
+    local t="$VCS_STATUS_TAG"
+    (( ${#t} > 32 )) && t="${t:0:12}…${t: -12}"
+    s+="${_c_meta}#${_c_clean}${t}"
+    (( w += 1 + ${#t} ))
+  else
+    s+="${_c_meta}@${_c_clean}${VCS_STATUS_COMMIT:0:8}"
+    (( w += 9 ))
   fi
-}
 
-__prompt_venv() {
-  if [ ! -z "$VIRTUAL_ENV" ]; then
-    "$ECHO" -ne "$(fg_color "$(color green)")[$(basename "$VIRTUAL_ENV")]"
-    __prompt_separator
+  # Tracking branch if different from local
+  if [[ -n ${VCS_STATUS_REMOTE_BRANCH-} && "$VCS_STATUS_REMOTE_BRANCH" != "${VCS_STATUS_LOCAL_BRANCH-}" ]]; then
+    s+="${_c_meta}:${_c_clean}${VCS_STATUS_REMOTE_BRANCH}"
+    (( w += 1 + ${#VCS_STATUS_REMOTE_BRANCH} ))
   fi
+
+  # Behind/ahead remote
+  (( VCS_STATUS_COMMITS_BEHIND )) && {
+    s+=" ${_c_clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
+    (( w += 2 + ${#VCS_STATUS_COMMITS_BEHIND} ))
+  }
+  if (( VCS_STATUS_COMMITS_AHEAD )); then
+    (( ! VCS_STATUS_COMMITS_BEHIND )) && { s+=" "; (( w++ )); }
+    s+="${_c_clean}⇡${VCS_STATUS_COMMITS_AHEAD}"
+    (( w += 1 + ${#VCS_STATUS_COMMITS_AHEAD} ))
+  fi
+
+  # Push remote behind/ahead
+  (( VCS_STATUS_PUSH_COMMITS_BEHIND )) && {
+    s+=" ${_c_clean}⇠${VCS_STATUS_PUSH_COMMITS_BEHIND}"
+    (( w += 2 + ${#VCS_STATUS_PUSH_COMMITS_BEHIND} ))
+  }
+  if (( VCS_STATUS_PUSH_COMMITS_AHEAD )); then
+    (( ! VCS_STATUS_PUSH_COMMITS_BEHIND )) && { s+=" "; (( w++ )); }
+    s+="${_c_clean}⇢${VCS_STATUS_PUSH_COMMITS_AHEAD}"
+    (( w += 1 + ${#VCS_STATUS_PUSH_COMMITS_AHEAD} ))
+  fi
+
+  # Stashes
+  (( VCS_STATUS_STASHES )) && {
+    s+=" ${_c_clean}*${VCS_STATUS_STASHES}"
+    (( w += 2 + ${#VCS_STATUS_STASHES} ))
+  }
+
+  # Action (merge, rebase, cherry-pick)
+  [[ -n ${VCS_STATUS_ACTION-} ]] && {
+    s+=" ${_c_conf}${VCS_STATUS_ACTION}"
+    (( w += 1 + ${#VCS_STATUS_ACTION} ))
+  }
+
+  # ~N conflicts
+  (( VCS_STATUS_NUM_CONFLICTED )) && {
+    s+=" ${_c_conf}~${VCS_STATUS_NUM_CONFLICTED}"
+    (( w += 2 + ${#VCS_STATUS_NUM_CONFLICTED} ))
+  }
+
+  # +N staged
+  (( VCS_STATUS_NUM_STAGED )) && {
+    s+=" ${_c_mod}+${VCS_STATUS_NUM_STAGED}"
+    (( w += 2 + ${#VCS_STATUS_NUM_STAGED} ))
+  }
+
+  # !N unstaged
+  (( VCS_STATUS_NUM_UNSTAGED )) && {
+    s+=" ${_c_mod}!${VCS_STATUS_NUM_UNSTAGED}"
+    (( w += 2 + ${#VCS_STATUS_NUM_UNSTAGED} ))
+  }
+
+  # ?N untracked
+  (( VCS_STATUS_NUM_UNTRACKED )) && {
+    s+=" ${_c_untrk}?${VCS_STATUS_NUM_UNTRACKED}"
+    (( w += 2 + ${#VCS_STATUS_NUM_UNTRACKED} ))
+  }
+
+  # Unknown dirty state
+  (( VCS_STATUS_HAS_UNSTAGED == -1 )) && {
+    s+=" ${_c_mod}─"
+    (( w += 2 ))
+  }
+
+  s+="${_c_rst}"
+  _git_s="$s"
+  _git_w=$w
 }
 
-__prompt_reset() {
-  "$ECHO" -e '\[\033[0m\]'
-}
+# --- Main prompt ---
+_prompt_command() {
+  local exit_code=$?
+  _prompt_rendering=1
 
-__prompt_git() {
-  if gitstatus_query && [[ $VCS_STATUS_RESULT == ok-sync ]]; then
-    "$ECHO" -ne " $(fg_color "$(color green)")$BRANCH"
-    if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
-      "$ECHO" -ne " ${VCS_STATUS_LOCAL_BRANCH//\\/\\\\} "
+  # Execution time
+  local exec_time=0
+  if [[ -n ${_prompt_timer-} ]]; then
+    exec_time=$(( SECONDS - _prompt_timer ))
+    unset _prompt_timer
+  fi
+
+  local cols=${COLUMNS:-80}
+
+  # === Left side (line 1) ===
+  local left="" lw=0
+
+  # OS icon
+  left+="${_c_os}${_OS_ICON}${_c_rst} "
+  (( lw += 2 ))
+
+  # Context: user@host (SSH only, matching p10k)
+  if [[ -n ${SSH_CONNECTION-}${SSH_TTY-}${SSH_CLIENT-} ]]; then
+    local ctx="${USER}@${_PROMPT_HOST}"
+    left+="${_c_ctx}${ctx}${_c_rst} "
+    (( lw += ${#ctx} + 1 ))
+  fi
+
+  # Directory (~ substitution)
+  local dir="${PWD/#"$HOME"/\~}"
+  left+="${_c_dir}${dir}${_c_rst}"
+  (( lw += ${#dir} ))
+
+  # Git
+  _prompt_git
+  if [[ -n $_git_s ]]; then
+    left+="$_git_s"
+    (( lw += _git_w ))
+  fi
+
+  # === Right side (line 1) ===
+  local right="" rw=0
+
+  # Execution time (>3s threshold, matching p10k)
+  if (( exec_time >= 3 )); then
+    _format_duration "$exec_time"
+    right+="${_c_meta}took ${_c_exec}${_dur}${_c_rst}"
+    (( rw += 5 + ${#_dur} ))
+  fi
+
+  # Virtualenv
+  if [[ -n ${VIRTUAL_ENV-} ]]; then
+    (( rw > 0 )) && { right+="  "; (( rw += 2 )); }
+    local vn="${VIRTUAL_ENV##*/}" vi=$'\uE73C'
+    right+="${_c_venv}${vi} ${vn}${_c_rst}"
+    (( rw += 2 + ${#vn} ))
+  fi
+
+  # === Render ===
+  # Blank line before prompt (p10k PROMPT_ADD_NEWLINE)
+  printf '\n'
+
+  # Line 1: left + padding + right
+  if (( rw > 0 )); then
+    local pad=$(( cols - lw - rw ))
+    if (( pad > 0 )); then
+      printf '%s%*s%s\n' "$left" "$pad" "" "$right"
     else
-      "$ECHO" -ne " @${VCS_STATUS_COMMIT//\\/\\\\} "
+      printf '%s %s\n' "$left" "$right"
     fi
-    [[ $VCS_STATUS_HAS_STAGED == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")+"
-    [[ $VCS_STATUS_HAS_UNSTAGED == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")!"
-    [[ $VCS_STATUS_HAS_UNTRACKED == 1 ]] && "$ECHO" -ne "$(fg_color "$(color blue)")?"
+  else
+    printf '%s\n' "$left"
   fi
+
+  # Line 2: vi-mode string provides the prompt char (❯/❮), PS1 provides the space
+  # Mode strings are dynamically colored: green on success, red on error
+  local c=$(( exit_code == 0 ? _P_OK : _P_ERR ))
+  bind "set vi-ins-mode-string \"\1\033[38;5;${c}m\2❯\1\033[0m\2\""
+  bind "set vi-cmd-mode-string \"\1\033[38;5;${c}m\2❮\1\033[0m\2\""
+
+  PS1=" "
+  unset _prompt_rendering
 }
 
-__prompt_os() {
-  local -a os
-  os="$(uname)"
-  case "$os" in
-    *Darwin*)
-      "$ECHO" -ne "$(fg_color "$(color pink)")"
-      ;;
-    *Linux*)
-      "$ECHO" -ne "$(fg_color "$(color pink)")"
-      ;;
-  esac
-}
-
-prompt_command() {
-  # local -a EXIT_CODE="$?"
-
-  "$ECHO" -e '\033[0m'
-  __prompt_pre
-  __prompt_os
-  __prompt_separator
-  __prompt_user
-  __prompt_separator
-  __prompt_pwd
-  # __prompt_git
-  "$ECHO" -e '\033[0m'
-  PS1="$(__prompt_reset) "
-}
-
-gitstatus_stop && gitstatus_start
-
-PROMPT_COMMAND=prompt_command
+PROMPT_COMMAND=_prompt_command
