@@ -68,7 +68,7 @@ command -v sha1sum > /dev/null || alias sha1sum="shasum"
 alias plistbuddy="/usr/libexec/PlistBuddy"
 
 # Reload the shell (i.e. invoke as a login shell)
-alias reload="exec \$SHELL -l"
+alias reload="rm -f -- \"\${XDG_CACHE_HOME:-\$HOME/.cache}/p10k-instant-prompt-\$USER.zsh\" && exec \$SHELL -l"
 
 # Update
 alias update="\$HOME/.rc.d/.update.sh"
