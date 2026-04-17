@@ -63,7 +63,7 @@ fi
 export DIRENV_LOG_FORMAT=
 
 # antidote
-if [ "$(basname "$SHELL")" = "zsh" ]; then
+if [ "$(basename "$SHELL")" = "zsh" ]; then
   if command -v brew &> /dev/null && [ -f "$(brew --prefix antidote)/share/antidote/antidote.zsh" ]; then
     # shellcheck source=/dev/null
     source "$(brew --prefix antidote)/share/antidote/antidote.zsh"
