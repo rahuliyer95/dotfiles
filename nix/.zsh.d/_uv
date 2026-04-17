@@ -455,6 +455,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
@@ -726,6 +727,7 @@ exact\:"Pin the exact version, e.g., \`==1.2.3\`"))' \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
@@ -856,6 +858,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
@@ -981,6 +984,7 @@ json\:"Display the version as JSON"))' \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
@@ -1104,6 +1108,7 @@ json\:"Display the result in JSON format"))' \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
@@ -1282,6 +1287,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
 unsafe-best-match\:"Search for every package name across all indexes, preferring the "best" version found. If a package version is in multiple indexes, only look at the entry for the first index"))' \
@@ -1400,6 +1406,7 @@ cyclonedx1.5\:"Export in \`CycloneDX\` v1.5 JSON format"))' \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
 unsafe-best-match\:"Search for every package name across all indexes, preferring the "best" version found. If a package version is in multiple indexes, only look at the entry for the first index"))' \
@@ -1534,6 +1541,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
 unsafe-best-match\:"Search for every package name across all indexes, preferring the "best" version found. If a package version is in multiple indexes, only look at the entry for the first index"))' \
@@ -1746,6 +1754,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
 unsafe-best-match\:"Search for every package name across all indexes, preferring the "best" version found. If a package version is in multiple indexes, only look at the entry for the first index"))' \
@@ -1960,6 +1969,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
@@ -2175,6 +2185,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
@@ -2393,6 +2404,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
@@ -2637,6 +2649,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -2736,6 +2749,7 @@ never\:"Disables colored output"))' \
 ;;
 (list)
 _arguments "${_arguments_options[@]}" : \
+'--exclude-newer=[Limit candidate packages to those that were uploaded prior to the given date]:EXCLUDE_NEWER:_default' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
@@ -3489,6 +3503,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
 unsafe-best-match\:"Search for every package name across all indexes, preferring the "best" version found. If a package version is in multiple indexes, only look at the entry for the first index"))' \
@@ -3959,6 +3974,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '*--reinstall-package=[Reinstall a specific package, regardless of whether it'\''s already installed. Implies \`--refresh-package\`]:REINSTALL_PACKAGE:' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
@@ -4759,6 +4775,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
 unsafe-best-match\:"Search for every package name across all indexes, preferring the "best" version found. If a package version is in multiple indexes, only look at the entry for the first index"))' \
@@ -4991,6 +5008,7 @@ _arguments "${_arguments_options[@]}" : \
 '*--find-links=[Locations to search for candidate distributions, in addition to those found in the registry indexes]:FIND_LINKS:_default' \
 '*-P+[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
 '*--upgrade-package=[Allow upgrades for a specific package, ignoring pinned versions in any existing output file. Implies \`--refresh-package\`]:UPGRADE_PACKAGE:_default' \
+'*--upgrade-group=[Allow upgrades for all packages in a dependency group, ignoring pinned versions in any existing output file]:UPGRADE_GROUP:_default' \
 '--index-strategy=[The strategy to use when resolving against multiple index URLs]:INDEX_STRATEGY:((first-index\:"Only use results from the first index that returns a match for a given package name"
 unsafe-first-match\:"Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next"
 unsafe-best-match\:"Search for every package name across all indexes, preferring the "best" version found. If a package version is in multiple indexes, only look at the entry for the first index"))' \
