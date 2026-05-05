@@ -3,6 +3,10 @@
   "autoshare": false,
   "autoupdate": false,
   "lsp": false,
+  "plugin" : [
+    "@mohak34/opencode-notifier@v0.2.4",
+    "@franlol/opencode-md-table-formatter@v0.0.6"
+  ],
   "permission": {
     "*": "allow",
     "bash": {
