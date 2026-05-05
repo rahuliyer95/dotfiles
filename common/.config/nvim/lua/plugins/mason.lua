@@ -78,6 +78,12 @@ require("mason-null-ls").setup({
     -- We use bashls to format. Since bashls requires shfmt binary to be installed separately (which
     -- we manage using Mason) we need to disable this so that null-ls doesn't register shfmt.
     shfmt = function() end,
+    -- Use ~/.markdownlint-cli2.yml as the base config so project-local configs can override it.
+    markdownlint_cli2 = function()
+      null_ls.register(null_ls.builtins.diagnostics.markdownlint_cli2.with({
+        extra_args = { "--config", vim.env.HOME .. "/.markdownlint-cli2.yml" },
+      }))
+    end,
   },
 })
 
