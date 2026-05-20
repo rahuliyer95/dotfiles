@@ -49,7 +49,7 @@ fi
 [ -d "$BUN_INSTALL" ] && export PATH="$BUN_INSTALL/bin:$PATH"
 
 # pnpm
-[ -d "$PNPM_HOME" ] && export PATH="$PATH:$PNPM_HOME"
+[ -d "$PNPM_HOME" ] && export PATH="$PATH:$PNPM_HOME/bin"
 
 # toolgit
 [ -d "$HOME/Documents/ahmetsait/toolgit" ] && export PATH="$PATH:$HOME/Documents/ahmetsait/toolgit"
