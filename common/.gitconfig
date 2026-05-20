@@ -17,6 +17,7 @@
   # Amend the currently staged files to the latest commit
   amend = commit --amend --reuse-message=HEAD -S
   bd = branch -D
+  bdr = "!f() { git branch -D "$1" && git push origin --delete "$1"; }; f"
   # Interactive rebase with the given number of latest commits (preserves original commit date)
   reb = "!r() { git rebase -i HEAD~$1; }; r"
   # Rebase with origin main
