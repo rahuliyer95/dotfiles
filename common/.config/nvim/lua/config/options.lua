@@ -57,3 +57,5 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Experimental
 vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+
+vim.opt.lazyredraw = false
