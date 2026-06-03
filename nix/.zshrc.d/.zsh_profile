@@ -31,6 +31,9 @@ fi
 # Custom completions
 [ -d "$HOME/.zsh.d" ] && fpath=("$HOME/.zsh.d" $fpath)
 
+# bun completions
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
+
 for option in appendhistory autocd autopushd interactivecomments vi; do
   set -o "$option" 2> /dev/null
 done

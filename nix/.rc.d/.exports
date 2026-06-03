@@ -76,3 +76,6 @@ if [ "$(basename "$SHELL")" = "zsh" ]; then
     source "/usr/share/zsh-antidote/antidote.zsh"
   fi
 fi
+
+# bun
+[ -d "$HOME/.bun" ] && export BUN_INSTALL="$HOME/.bun"
