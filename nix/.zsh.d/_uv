@@ -439,7 +439,7 @@ _arguments "${_arguments_options[@]}" : \
 '(--all-extras --only-group)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:' \
-'*--no-group=[Disable the specified dependency group]:NO_GROUP:' \
+'*--no-group=[Disable the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:' \
 '*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_files' \
 '*-w+[Run with the given packages installed]:WITH:' \
@@ -482,9 +482,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '(--all-packages)--package=[Run the command in a specific package in the workspace]:PACKAGE:' \
 '-p+[The Python interpreter to use for the run environment.]:PYTHON:' \
@@ -754,9 +754,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '(--isolated)--package=[Add the dependency to a specific package in the workspace]:PACKAGE:' \
 '(--dev --optional --package --workspace)--script=[Add the dependency to the specified Python script, rather than to a project]:SCRIPT:_files' \
@@ -885,9 +885,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '(--isolated)--package=[Remove the dependencies from a specific package in the workspace]:PACKAGE:' \
 '--script=[Remove the dependency from the specified Python script, rather than from a project]:SCRIPT:_files' \
@@ -1011,9 +1011,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '(--isolated)--package=[Update the version of a specific package in the workspace]:PACKAGE:' \
 '-p+[The Python interpreter to use for resolving and syncing.]:PYTHON:' \
@@ -1095,7 +1095,7 @@ _arguments "${_arguments_options[@]}" : \
 json\:"Display the result in JSON format"))' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:' \
-'*--no-group=[Disable the specified dependency group]:NO_GROUP:' \
+'*--no-group=[Disable the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:' \
 '(--only-install-package)*--no-install-package=[Do not install the given package(s)]:NO_INSTALL_PACKAGE:' \
 '(--no-install-package)*--only-install-package=[Only install the given package(s)]:ONLY_INSTALL_PACKAGE:' \
@@ -1135,9 +1135,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '(--all-packages)*--package=[Sync for specific packages in the workspace]:PACKAGE:' \
 '(--all-packages --package --no-install-project --no-install-workspace --no-install-local --extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups)--script=[Sync the environment for a Python script, rather than the current project]:SCRIPT:_files' \
@@ -1313,9 +1313,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-p+[The Python interpreter to use during resolution.]:PYTHON:' \
 '--python=[The Python interpreter to use during resolution.]:PYTHON:' \
@@ -1391,7 +1391,7 @@ cyclonedx1.5\:"Export in \`CycloneDX\` v1.5 JSON format"))' \
 '(--all-extras --only-group)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:_default' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
-'*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
+'*--no-group=[Disable the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:_default' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
 '-o+[Write the exported requirements to the given file]:OUTPUT_FILE:_files' \
 '--output-file=[Write the exported requirements to the given file]:OUTPUT_FILE:_files' \
@@ -1432,9 +1432,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '(--all-packages --package --no-emit-project --no-emit-workspace)--script=[Export the dependencies for the specified PEP 723 Python script, rather than the current project]:SCRIPT:_files' \
 '-p+[The Python interpreter to use during resolution.]:PYTHON:' \
@@ -1528,10 +1528,10 @@ _arguments "${_arguments_options[@]}" : \
 '*--prune=[Prune the given package from the display of the dependency tree]:PRUNE:' \
 '*--package=[Display only the specified packages]:PACKAGE:' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
-'*--no-group=[Disable the specified dependency group]:NO_GROUP:_default' \
+'*--no-group=[Disable the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:_default' \
 '(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -1567,7 +1567,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
 '--script=[Show the dependency tree the specified PEP 723 Python script, rather than the current project]:SCRIPT:_files' \
 '(--universal)--python-version=[The Python version to use when filtering the tree]:PYTHON_VERSION:_default' \
 '(--universal)--python-platform=[The platform to use when filtering the tree]:PYTHON_PLATFORM:((windows\:"An alias for \`x86_64-pc-windows-msvc\`, the default target for Windows"
@@ -1741,12 +1741,12 @@ never\:"Disables colored output"))' \
 (audit)
 _arguments "${_arguments_options[@]}" : \
 '*--no-extra=[Don'\''t audit the specified optional dependencies]:NO_EXTRA:' \
-'*--no-group=[Don'\''t audit the specified dependency group]:NO_GROUP:' \
+'*--no-group=[Don'\''t audit the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:' \
 '*--only-group=[Only audit dependencies from the specified dependency group]:ONLY_GROUP:' \
 '--output-format=[Select the output format]:OUTPUT_FORMAT:((text\:"Display the result in a human-readable format"
 json\:"Display the result in JSON format"))' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -1782,7 +1782,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
 '--script=[Audit the specified PEP 723 Python script, rather than the current project]:SCRIPT:_files' \
 '--python-version=[The Python version to use when auditing]:PYTHON_VERSION:_default' \
 '--python-platform=[The platform to use when auditing]:PYTHON_PLATFORM:((windows\:"An alias for \`x86_64-pc-windows-msvc\`, the default target for Windows"
@@ -1998,9 +1998,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-p+[The Python interpreter to use to build the run environment.]:PYTHON:' \
 '--python=[The Python interpreter to use to build the run environment.]:PYTHON:' \
@@ -2214,9 +2214,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-p+[The Python interpreter to use to build the run environment.]:PYTHON:' \
 '--python=[The Python interpreter to use to build the run environment.]:PYTHON:' \
@@ -2433,9 +2433,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-p+[The Python interpreter to use to build the tool environment.]:PYTHON:' \
 '--python=[The Python interpreter to use to build the tool environment.]:PYTHON:' \
@@ -2685,9 +2685,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
@@ -3532,7 +3532,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-o+[Write the compiled requirements to the given \`requirements.txt\` or \`pylock.toml\` file]:OUTPUT_FILE:_files' \
 '--output-file=[Write the compiled requirements to the given \`requirements.txt\` or \`pylock.toml\` file]:OUTPUT_FILE:_files' \
@@ -3770,7 +3770,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-p+[The Python interpreter into which packages should be installed.]:PYTHON:' \
 '--python=[The Python interpreter into which packages should be installed.]:PYTHON:' \
@@ -4004,7 +4004,7 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-p+[The Python interpreter into which packages should be installed.]:PYTHON:' \
 '--python=[The Python interpreter into which packages should be installed.]:PYTHON:' \
@@ -4807,9 +4807,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
@@ -5040,9 +5040,9 @@ requires-python\:"Optimize for selecting latest supported version of each packag
 copy\:"Copy packages from the source into the destination"
 hardlink\:"Hard link packages from the source into the destination"
 symlink\:"Symbolically link packages from the source into the destination"))' \
-'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages]:NO_SOURCES_PACKAGE:_default' \
-'*--no-build-package=[Don'\''t build source distributions for a specific package]:NO_BUILD_PACKAGE:' \
-'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package]:NO_BINARY_PACKAGE:' \
+'*--no-sources-package=[Don'\''t use sources from the \`tool.uv.sources\` table for the specified packages \[env\: \`UV_NO_SOURCES_PACKAGE\`=\]]:NO_SOURCES_PACKAGE:_default' \
+'*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
+'*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--refresh-package=[Refresh cached data for a specific package]:REFRESH_PACKAGE:' \
 '-p+[The Python interpreter to use during resolution.]:PYTHON:' \
 '--python=[The Python interpreter to use during resolution.]:PYTHON:' \
