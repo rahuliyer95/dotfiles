@@ -1,0 +1,25 @@
+# Mole Whitelist - Protected paths won't be deleted
+# Default protections: Playwright browsers, HuggingFace models, Maven repo, Ollama models, Surge Mac, R renv, Finder metadata
+# Add one pattern per line to keep items safe.
+
+~/.cache/bat/*
+~/.cache/bazel/*
+~/.cache/cargo/*
+~/.cache/gitstatus/*
+~/.cache/huggingface/*
+~/.cache/mypy/*
+~/.cache/omlx/*
+~/.cache/pre-commit/*
+~/.cache/prek/*
+~/.cache/ruff/*
+~/.cache/uv/*
+~/.cargo/registry/cache/*
+~/.gradle/caches/*
+~/.m2/repository/*
+~/.pnpm-store/*
+~/.rustup/downloads/*
+~/.rustup/toolchains/*/share/doc/*
+~/Library/Caches/antidote/*
+~/Library/Caches/ms-playwright*
+~/Library/Caches/pnpm/*
+~/Library/pnpm/store/*
