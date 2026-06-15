@@ -50,6 +50,9 @@ export HOMEBREW_NO_AUTO_UPDATE="1"
 # Enable concurrent downloads
 export HOMEBREW_DOWNLOAD_CONCURRENCY="auto"
 
+# Disable updating casks that can update on their own
+export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS="1"
+
 export DOCKER_BUILD_KIT="1"
 
 # pnpm
