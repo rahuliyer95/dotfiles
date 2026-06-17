@@ -1,4 +1,5 @@
 require("mason").setup({
+  log_level = vim.log.levels.OFF,
   npm = {
     use_pnpm = true,
   },
