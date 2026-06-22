@@ -1798,6 +1798,7 @@ never\:"Disables colored output"))' \
 ;;
 (check)
 _arguments "${_arguments_options[@]}" : \
+'(--extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups --no-project)--script=[Run checks for the specified PEP 723 Python script, rather than the current project]:SCRIPT:_files' \
 '(--all-extras --only-group)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:' \
@@ -1873,6 +1874,7 @@ never\:"Disables colored output"))' \
 '(--locked -U --upgrade --no-sources)--frozen[Sync without updating the \`uv.lock\` file \[env\: UV_FROZEN=\]]' \
 '--no-sync[Avoid syncing the virtual environment \[env\: UV_NO_SYNC=\]]' \
 '--isolated[Run checks without mutating project state \[env\: UV_ISOLATED=\]]' \
+'--show-version[Display the version of ty that will be used for type checking]' \
 '--no-project[Avoid discovering a project or workspace]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -1925,7 +1927,8 @@ _arguments "${_arguments_options[@]}" : \
 '*--no-group=[Don'\''t audit the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:' \
 '*--only-group=[Only audit dependencies from the specified dependency group]:ONLY_GROUP:' \
 '--output-format=[Select the output format]:OUTPUT_FORMAT:((text\:"Display the result in a human-readable format"
-json\:"Display the result in JSON format"))' \
+json\:"Display the result in JSON format"
+sarif\:"Display the result in SARIF format"))' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -5197,6 +5200,7 @@ never\:"Disables colored output"))' \
         case $line[1] in
             (metadata)
 _arguments "${_arguments_options[@]}" : \
+'--script=[View metadata for the specified PEP 723 Python script, rather than the current workspace]:SCRIPT:_files' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
