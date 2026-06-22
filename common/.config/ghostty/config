@@ -3,14 +3,9 @@
 
 # Font {{{
 
-adjust-cell-height = 20%
-font-size          = 16
-
-# Google Sans Code {{{
-
-font-family = Google Sans Code
-
-# }}}
+adjust-cell-height = 25%
+font-size          = 18
+font-family        = Google Sans Code
 
 # }}}
 
