@@ -147,6 +147,18 @@ if command -v rustup > /dev/null; then
   rustup completions zsh > "$(realpath "$HOME/.zsh.d/_rustup")"
 fi
 
+# gcloud
+if command -v gcloud > /dev/null; then
+  echo ""
+  echo -ne "\e[34m"
+  echo -e "╭────────────╮"
+  echo -e "│  󱇶 gCloud  │" # \uF11F6
+  echo -e "╰────────────╯"
+  echo -ne "\e[0m"
+  echo ""
+  gcloud components update
+fi
+
 # Regenerate completion scripts
 # 1Password
 if command -v op > /dev/null; then
