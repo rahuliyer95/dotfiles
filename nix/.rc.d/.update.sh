@@ -153,7 +153,3 @@ if command -v op > /dev/null; then
   op completion zsh > "$(realpath "$HOME/.zsh.d/_op")"
 fi
 
-# cleanup
-if command -v mole > /dev/null; then
-  mole clean
-fi
