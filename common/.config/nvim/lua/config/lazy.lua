@@ -37,8 +37,7 @@ require("lazy").setup({
   -- LSP and Completion {{{
   { "neovim/nvim-lspconfig" },
   {
-    "rahuliyer95/mason.nvim",
-    branch = "feats",
+    "mason-org/mason.nvim",
     build = ":MasonUpdate",
     config = function()
       require("plugins.mason")
