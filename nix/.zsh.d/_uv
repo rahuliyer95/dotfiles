@@ -5370,6 +5370,7 @@ never\:"Disables colored output"))' \
 '--project=[Discover a project in the given directory]:PROJECT:_files -/' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--paths[Show paths instead of names]' \
+'--scripts[List all standalone scripts with inline metadata in the workspace]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--managed-python[Require use of uv-managed Python versions \[env\: UV_MANAGED_PYTHON=\]]' \
@@ -6538,7 +6539,7 @@ _uv__build-backend__prepare-metadata-for-build-wheel_commands() {
 _uv__cache_commands() {
     local commands; commands=(
 'clean:Clear the cache, removing all entries or those linked to specific packages' \
-'prune:Prune all unreachable objects from the cache' \
+'prune:Prune dangling cache entries and cached environments' \
 'dir:Show the cache directory' \
 'size:Show the cache size' \
     )
