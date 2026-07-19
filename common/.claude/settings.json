@@ -1,7 +1,6 @@
 {
   "env": {
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "haiku",
-    "ANTHROPIC_MODEL": "default",
     "BASH_DEFAULT_TIMEOUT_MS": "900000",
     "BASH_MAX_TIMEOUT_MS": "900000",
     "CLAUDE_CODE_DISABLE_FAST_MODE": "1",
