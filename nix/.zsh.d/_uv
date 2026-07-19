@@ -912,7 +912,7 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files -/' \
 '--project=[Discover a project in the given directory]:PROJECT:_files -/' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
-'(--optional --group)--dev[Remove the packages from the development dependency group \[env\: UV_DEV=\]]' \
+'(--optional --group --script)--dev[Remove the packages from the development dependency group \[env\: UV_DEV=\]]' \
 '--no-sync[Avoid syncing the virtual environment after re-locking the project \[env\: UV_NO_SYNC=\]]' \
 '--active[Prefer the active virtual environment over the project'\''s virtual environment]' \
 '--no-active[Prefer project'\''s virtual environment over an active environment]' \
@@ -1580,6 +1580,8 @@ never\:"Disables colored output"))' \
 ;;
 (tree)
 _arguments "${_arguments_options[@]}" : \
+'--format=[The format in which to display the dependency graph]:FORMAT:((text\:"Display the dependency graph as a human-readable tree"
+json\:"Display the dependency graph as JSON"))' \
 '-d+[Maximum display depth of the dependency tree]:DEPTH:_default' \
 '--depth=[Maximum display depth of the dependency tree]:DEPTH:_default' \
 '*--prune=[Prune the given package from the display of the dependency tree]:PRUNE:' \
@@ -2237,6 +2239,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -2454,6 +2457,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -2674,6 +2678,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -3784,6 +3789,7 @@ x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '*--no-emit-package=[Specify a package to omit from the output resolution. Its dependencies will still be included in the resolution. Equivalent to pip-compile'\''s \`--unsafe-package\` option]:NO_EMIT_PACKAGE:' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -4018,6 +4024,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -4254,6 +4261,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
