@@ -1,0 +1,40 @@
+{
+  "env": {
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "haiku",
+    "ANTHROPIC_MODEL": "opus",
+    "BASH_DEFAULT_TIMEOUT_MS": "900000",
+    "BASH_MAX_TIMEOUT_MS": "900000",
+    "CLAUDE_CODE_DISABLE_FAST_MODE": "1",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_DISABLE_SANDBOX": "1",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "0",
+    "DISABLE_TELEMETRY": "1"
+  },
+  "permissions": {
+    "allow": ["Agent", "Bash(*)", "Edit", "Glob", "Grep", "NotebookEdit", "Read", "WebFetch"],
+    "ask": [
+      "Bash(dd *)",
+      "Bash(gh api *)",
+      "Bash(gh pr close*)",
+      "Bash(gh pr create*)",
+      "Bash(gh pr edit*)",
+      "Bash(gh pr merge*)",
+      "Bash(git checkout*)",
+      "Bash(git clean*)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(git rebase*)",
+      "Bash(git reset*)",
+      "Bash(kill *)",
+      "Bash(killall *)",
+      "Bash(pkill *)",
+      "Bash(rm *)",
+      "Bash(sed -i*)",
+      "Bash(sudo *)"
+    ]
+  },
+  "skipWebFetchPreflight": true
+}
+
