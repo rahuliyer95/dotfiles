@@ -1,19 +1,27 @@
 {
   "env": {
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "haiku",
-    "ANTHROPIC_MODEL": "opus",
+    "ANTHROPIC_MODEL": "default",
     "BASH_DEFAULT_TIMEOUT_MS": "900000",
     "BASH_MAX_TIMEOUT_MS": "900000",
     "CLAUDE_CODE_DISABLE_FAST_MODE": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_DISABLE_SANDBOX": "1",
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
     "DISABLE_ERROR_REPORTING": "1",
     "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "0",
     "DISABLE_TELEMETRY": "1"
   },
   "permissions": {
-    "allow": ["Agent", "Bash(*)", "Edit", "Glob", "Grep", "NotebookEdit", "Read", "WebFetch"],
+    "allow": [
+      "Agent",
+      "Bash(*)",
+      "Edit",
+      "Glob",
+      "Grep",
+      "NotebookEdit",
+      "Read",
+      "WebFetch"
+    ],
     "ask": [
       "Bash(dd *)",
       "Bash(gh api *)",
@@ -35,6 +43,24 @@
       "Bash(sudo *)"
     ]
   },
-  "skipWebFetchPreflight": true
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  },
+  "skipWebFetchPreflight": true,
+  "effortLevel": "high",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh",
+    "padding": 0
+  }
 }
-
