@@ -2,12 +2,11 @@
 
 # Taps {{{
 
-tap "beeftornado/rmtree"
-tap "eth-p/software"
-tap "fcoury/tap"
-tap "jorgelbg/tap"
-tap "productdevbook/tap"
-tap "rahuliyer95/personal"
+tap "beeftornado/rmtree", trusted: true
+tap "eth-p/software", trusted: true
+tap "jorgelbg/tap", trusted: true
+tap "productdevbook/tap", trusted: true
+tap "rahuliyer95/personal", trusted: true
 
 # }}}
 
@@ -20,7 +19,6 @@ brew "bash"
 brew "bash-completion"
 brew "bat"
 brew "beeftornado/rmtree/brew-rmtree"
-brew "blueutil"
 brew "brotli"
 brew "btop"
 brew "bzip2"
@@ -40,15 +38,13 @@ brew "eth-p/software/bat-extras-batman"
 brew "eth-p/software/bat-extras-batpipe"
 brew "eth-p/software/bat-extras-batwatch"
 brew "eth-p/software/bat-extras-prettybat"
-brew "fcoury/tap/tsql"
 brew "fd"
 # brew "findutils"
 brew "fzf"
-brew "gawk"
+brew "gh"
 brew "git"
 brew "git-delta"
 brew "git-lfs"
-brew "gnu-sed"
 brew "gnupg"
 brew "go"
 brew "jless"
@@ -59,7 +55,7 @@ brew "lsd"
 brew "mole"
 brew "neovim"
 # brew "openjdk@17", link: true
-# brew "openjdk@25", link: true
+brew "openjdk@25", link: true
 brew "pam-reattach"
 brew "pinentry-mac"
 brew "rahuliyer95/personal/pam_watchid"
@@ -69,6 +65,7 @@ brew "shellcheck"
 brew "sponge"
 brew "uutils-coreutils"
 brew "uutils-findutils"
+brew "tree-sitter-cli"
 brew "watch"
 brew "wget"
 brew "yq"
@@ -85,12 +82,12 @@ cask "1password@beta"
 cask "android-file-transfer"
 cask "betterdisplay"
 cask "betterzip"
+cask "claude-code"
 cask "dropbox"
 cask "font-google-sans-code"
 cask "font-new-york"
 cask "font-sf-pro"
 cask "ghostty"
-cask "jordanbaird-ice"
 cask "kap"
 cask "karabiner-elements"
 cask "keka"
