@@ -17,8 +17,8 @@ if command -v brew > /dev/null; then
   echo "│ 🍺 Homebrew  │"
   echo "╰──────────────╯"
   echo ""
-  brew update \
-    && brew upgrade --no-ask
+  brew update
+  brew upgrade --no-ask
 fi
 
 # Aptitude
@@ -156,7 +156,7 @@ if command -v gcloud > /dev/null; then
   echo -e "╰────────────╯"
   echo -ne "\e[0m"
   echo ""
-  gcloud components update
+  echo "yes" | gcloud components update
 fi
 
 # Regenerate completion scripts
