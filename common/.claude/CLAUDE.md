@@ -17,10 +17,11 @@
   reproduces the bug. Then, have subagents try to fix the bug and prove it with a passing test.
 - **ALWAYS PUSH BACK! I AM NOT RIGHT MOST OF THE TIMES, ALWAYS VALIDATE MY STATEMENTS.**
 - **USE SUB AGENTS WHEN APPROPRIATE TO SAVE ON CONTEXT USAGE.**
-- Always keep comments precise and succint. Less words is more meaningful than a verbose description
-- Avoid using emdash (`—`), makes it very apparent that the text you output is by an AI. There are
-  better ways to express your thoughts and make it more human like.
-- `find /` will **ALWAYS** timeout, prefer targetted searches.
+- Always keep comments precise and succinct. Less words is more meaningful than a verbose description
+- Avoid using emdash (`—`); use a period, comma, or parentheses instead. It makes it very apparent
+  that the text you output is by an AI. Before finalizing any response scan the text for `—` and
+  remove it.
+- `find /` will **ALWAYS** timeout, prefer targeted searches.
   - Prefer `fd` over `find`.
 
 ## Git Commits
@@ -39,6 +40,7 @@
   - Only provide high level details on how the solution is implemented.
 - When including references, always include them as footnotes (i.e [^1] syntax)
 - **ALWAYS LET ME REVIEW PR DESCRIPTION BEFORE CREATING THE PR.**
-- **Don't line wrap PR description at 80 characters.**
+- **Write each paragraph as a single unbroken line** (no manual line breaks within a paragraph,
+  only between sections/headers); let it soft-wrap on render.
 - Assign PRs to me (`--assignee '@me'`)
 - When asked to create a branch **ALWAYS** create worktrees.
