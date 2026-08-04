@@ -42,6 +42,12 @@ vim.opt.foldlevel = 9999
 vim.opt.foldcolumn = "0"
 vim.opt.foldtext = ""
 
+-- Diff
+-- 0.12 already defaults to internal,filler,closeoff,indent-heuristic,inline:char,linematch:40
+-- histogram produces smaller hunks than myers; vertical affects :diffthis and :Gdiffsplit
+vim.opt.diffopt:append({ "algorithm:histogram", "vertical" })
+vim.opt.fillchars:append({ diff = "╱" })
+
 -- Prevent auto-wrapping text at textwidth
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",

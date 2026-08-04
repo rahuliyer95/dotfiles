@@ -91,6 +91,16 @@ vim.keymap.set("v", "<M-k>", ":m'<-2<cr>`>my`<mzgv`yo`z", { desc = "Move selecti
 vim.keymap.set("v", "<Tab>", ">gv", { desc = "Indent selection" })
 vim.keymap.set("v", "<S-Tab>", "<gv", { desc = "Unindent selection" })
 
+-- diffview.nvim
+-- Opening during a conflict automatically lands in the merge tool layout
+vim.keymap.set("n", "<leader>gd", function()
+  if next(require("diffview.lib").views) == nil then
+    vim.cmd.DiffviewOpen()
+  else
+    vim.cmd.DiffviewClose()
+  end
+end, { desc = "Toggle diff view" })
+
 -- vim-fugitive
 vim.keymap.set("n", "gh", ":diffget //2<CR>", { desc = "Get left diff" })
 vim.keymap.set("n", "gl", ":diffget //3<CR>", { desc = "Get right diff" })

@@ -31,7 +31,21 @@ require("lazy").setup({
     end,
   },
   { "tpope/vim-fugitive" },
-  { "sindrets/diffview.nvim" },
+  {
+    "sindrets/diffview.nvim",
+    cmd = {
+      "DiffviewClose",
+      "DiffviewFileHistory",
+      "DiffviewFocusFiles",
+      "DiffviewOpen",
+      "DiffviewRefresh",
+      "DiffviewToggleFiles",
+    },
+    config = function()
+      require("plugins.diffview")
+    end,
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
   -- endregion }}}
 
   -- LSP and Completion {{{
