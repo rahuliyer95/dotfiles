@@ -23,6 +23,8 @@
   remove it.
 - `find /` will **ALWAYS** timeout, prefer targeted searches.
   - Prefer `fd` over `find`.
+- Line length is 100 characters unless specified otherwise. Use this to determine how to wrap long
+  lines when you end up wrapping them.
 
 ## Git Commits
 
@@ -30,6 +32,8 @@
 - Never add description to commits.
 - Commits should be single line and concise.
 - Never commit without explicitly asking for consent.
+- Before committing, use the question tool to ask me to review the code, with yes/no options for
+  whether to continue with the commit. Only commit on yes.
 
 ## Pull Requests
 
@@ -40,6 +44,8 @@
   - Only provide high level details on how the solution is implemented.
 - When including references, always include them as footnotes (i.e [^1] syntax)
 - **ALWAYS LET ME REVIEW PR DESCRIPTION BEFORE CREATING THE PR.**
+  - Show the title and description, then use the question tool to get a yes/no on the PR details.
+    Only create the PR on yes.
 - **Write each paragraph as a single unbroken line** (no manual line breaks within a paragraph,
   only between sections/headers); let it soft-wrap on render.
 - Assign PRs to me (`--assignee '@me'`)
