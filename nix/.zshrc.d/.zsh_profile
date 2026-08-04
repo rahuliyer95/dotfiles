@@ -8,7 +8,7 @@ done
 for file in $HOME/.rc.d/.{aliases,extras,functions}; do
   [ -f "$file" ] && . "$file" 2> /dev/null
 done
-for file in $HOME/.zshrc.d/.{plugins.bundle,local.pre.sh,zsh_prompt}; do
+for file in $HOME/.zshrc.d/.{plugins.bundle,local.pre.sh,zsh_prompt,splitcmd}; do
   [ -f "$file" ] && . "$file" 2> /dev/null
 done
 unset file

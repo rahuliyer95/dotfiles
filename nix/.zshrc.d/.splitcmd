@@ -1,0 +1,308 @@
+#!/usr/bin/env zsh
+
+# Control operators, which already imply a line continuation.
+function _splitcmd_is_ctrl {
+  case $1 in
+    ('|'|'||'|'&&'|'&'|'|&'|';'|';;') return 0 ;;
+  esac
+  return 1
+}
+
+# Reserved words and compound syntax, which are left untouched.
+function _splitcmd_is_reserved {
+  case $1 in
+    (for|while|until|select|if|then|elif|else|fi) return 0 ;;
+    (case|esac|do|done|in|function|coproc) return 0 ;;
+    ('{'|'}'|'('*|')'|'!') return 0 ;;
+  esac
+  return 1
+}
+
+# Commands that merely prefix another command.
+function _splitcmd_is_wrapper {
+  case $1 in
+    (sudo|doas|env|command|builtin|exec|nohup|nice|ionice) return 0 ;;
+    (time|timeout|watch|stdbuf|xargs) return 0 ;;
+  esac
+  return 1
+}
+
+# Redirections, with or without an attached target: `2>&1`, `>out.log`, `<<<x`.
+function _splitcmd_is_redir {
+  case ${1#[0-9]} in
+    ('>'*|'<'*|'&>'*) return 0 ;;
+  esac
+  return 1
+}
+
+# An option, but not `-` (stdin), `--` (end of options) or a negative number.
+function _splitcmd_is_opt {
+  case $1 in
+    (--|-|-[0-9]*|-.[0-9]*) return 1 ;;
+    (-?*) return 0 ;;
+  esac
+  return 1
+}
+
+# Environment assignment prefixing a command: `FOO=bar cmd`.
+function _splitcmd_is_assign {
+  [[ $1 == *=* ]] || return 1
+  local name=${1%%=*}
+  [[ $name == [A-Za-z_]* && $name != *[!A-Za-z0-9_]* ]]
+}
+
+# A bare word, used to keep sub-commands on the first line: `git commit`.
+function _splitcmd_is_bare {
+  [[ $1 == [A-Za-z]* && $1 != *[!A-Za-z0-9_-]* ]]
+}
+
+# A plain word: not an operator, redirection, option or end-of-options marker.
+function _splitcmd_is_word {
+  [[ -n $1 && $1 != '--' ]] || return 1
+  _splitcmd_is_ctrl "$1" && return 1
+  _splitcmd_is_redir "$1" && return 1
+  _splitcmd_is_opt "$1" && return 1
+  return 0
+}
+
+# Whether option $2 of command $1 consumes $3 as its value. Real option specs are per-command
+# knowledge, so this guesses, deferring to the user's tables:
+#   SPLITCMD_ARG_OPTS=('--exclude' 1 'docker -v' 1)
+#   SPLITCMD_BOOL_OPTS=('rsync --delete' 1)
+typeset -gA SPLITCMD_ARG_OPTS SPLITCMD_BOOL_OPTS
+function _splitcmd_takes_value {
+  local cmd=$1 opt=$2 next=$3 key
+  [[ $opt == *=* ]] && return 1
+  for key in "$cmd $opt" "$opt"; do
+    [[ -n ${SPLITCMD_BOOL_OPTS[$key]} ]] && return 1
+    [[ -n ${SPLITCMD_ARG_OPTS[$key]} ]] && return 0
+  done
+  case $opt in
+    (--no-*|--without-*) return 1 ;;
+    # long options that are boolean in practically every tool
+    (--all|--archive|--compress|--debug|--delete|--dry-run) return 1 ;;
+    (--force|--global|--help|--interactive|--progress|--quiet) return 1 ;;
+    (--recursive|--rm|--silent|--tty|--verbose|--version|--yes) return 1 ;;
+    (--*) return 0 ;;
+    (-?|-?:*) return 0 ;; # `-X POST`, `-m msg`, `ffmpeg -c:v libx264`
+    # single-dash long options: `ffmpeg -preset slow`, `find -iname '*.c'`
+    (-[A-Za-z]*) (( ${#opt} >= 6 )) && return 0 ;;
+  esac
+  # a cluster only takes a value if it looks like one: `-xzf archive.tgz` does, `-it ubuntu` doesn't
+  case $next in
+    (*[/.:@=]*) return 0 ;;
+  esac
+  [[ -n $next && -z ${next//[0-9]/} ]]
+}
+
+# The three helpers below read and write `splitcmd` locals via dynamic scoping:
+# cmd, conts, i, line, lines, n, tokens and wrapped.
+
+function _splitcmd_flush {
+  if [[ -n $line ]]; then
+    lines+=("$line")
+    conts+=(0)
+  fi
+  line=''
+}
+
+function _splitcmd_append {
+  line="${line:+$line }$1"
+}
+
+# Command name plus any bare sub-commands: `git commit`, `kubectl get pods`.
+function _splitcmd_head {
+  while (( i <= n )) && _splitcmd_is_assign "${tokens[i]}"; do
+    _splitcmd_append "${tokens[i]}"
+    (( i++ ))
+  done
+  _splitcmd_is_word "${tokens[i]}" || return 0
+  cmd=${tokens[i]:t}
+  _splitcmd_append "${tokens[i]}"
+  (( i++ ))
+  # a wrapper's argument is itself a command, so recurse into its head
+  if _splitcmd_is_wrapper "$cmd"; then
+    wrapped=1
+    _splitcmd_head
+    return 0
+  fi
+  wrapped=0
+  while (( i <= n )) && _splitcmd_is_bare "${tokens[i]}"; do
+    (( ${#line} + ${#tokens[i]} + 1 > pack )) && break
+    _splitcmd_append "${tokens[i]}"
+    (( i++ ))
+  done
+}
+
+# Append one pipeline segment to `out`. It stays on a single line when it fits
+# the budget, or when wrapping it still would not fit; otherwise each option
+# goes on its own line and continuation lines are indented.
+function _splitcmd_emit {
+  local joined="${seg[*]}" probe
+  local -i m longest=0
+  if (( width > 0 )); then
+    if (( ${#joined} <= width )); then
+      out+=$joined$nl
+      return 0
+    fi
+    for (( m = 1; m <= ${#seg}; m++ )); do
+      probe=${seg[m]}
+      (( m > 1 )) && probe=$indent$probe
+      (( m < ${#seg} )) && probe+=' \'
+      (( ${#probe} > longest )) && longest=${#probe}
+    done
+    # wrapping cannot make this fit, so splitting it only adds noise
+    if (( longest > width )); then
+      out+=$joined$nl
+      return 0
+    fi
+  fi
+  for (( m = 1; m <= ${#seg}; m++ )); do
+    (( m > 1 )) && out+=$indent
+    out+=${seg[m]}
+    (( m < ${#seg} )) && out+=' \'
+    out+=$nl
+  done
+}
+
+# Walk the built lines, handing one operator-delimited segment at a time to
+# `_splitcmd_emit`. A segment ends on the line carrying the operator, so the
+# next command always starts at column 0.
+function _splitcmd_render {
+  local -a seg=()
+  local -i k
+  for (( k = 1; k <= ${#lines}; k++ )); do
+    seg+=("${lines[k]}")
+    if (( conts[k] || k == ${#lines} )); then
+      _splitcmd_emit
+      seg=()
+    fi
+  done
+}
+
+# Split the command into its multi-line equivalent representation.
+# e.g:
+#   `curl -X POST -d '{"hello": "world"}' "https://example.com/test"`
+# will become
+#   ```
+#   curl \
+#     -X POST \
+#     -d '{"hello": "world"}' \
+#     "https://example.com/test"
+#   ```
+# Pipeline stages start at column 0. A stage is kept whole while it fits
+# SPLITCMD_WIDTH (default $COLUMNS), otherwise each of its options goes on its own line; wrapping is
+# skipped when it cannot make the lines fit anyway. A command that needs no wrapping is exploded, so
+# the widget always does something. Splitting an already split command is a no-op.
+# SPLITCMD_INDENT sets the continuation indent.
+function splitcmd {
+  emulate -L zsh
+  # string subscripts need these to stay associative
+  typeset -gA SPLITCMD_ARG_OPTS SPLITCMD_BOOL_OPTS
+  local indent=${SPLITCMD_INDENT-$'\t'}
+  # wrap budget; 0 explodes every option regardless of line length
+  local -i width=${SPLITCMD_WIDTH-${COLUMNS:-100}}
+  # fold a previous split back into one line so re-splitting is stable, but leave genuine multi-line
+  # input (loops, heredocs, quoted newlines) alone.
+  local input="$*" nl=$'\n' cont='\'
+  input=${input//$cont$nl/ }
+  if [[ $input == *$nl* ]]; then
+    print -r -- "$*"
+    return 0
+  fi
+
+  local -a tokens=("${(@z)input}")
+  [[ -n ${tokens[1]} ]] || return 0
+
+  local -a lines=() conts=()
+  local -i pack=$(( width > 0 ? width - ${#indent} - 2 : 99999 ))
+  local line='' cmd='' t next
+  local -i i=1 n=${#tokens} wrapped=0
+
+  # compound syntax is too structural to reflow token by token
+  for t in "${tokens[@]}"; do
+    if _splitcmd_is_reserved "$t"; then
+      print -r -- "$input"
+      return 0
+    fi
+  done
+
+  while (( i <= n )); do
+    _splitcmd_head
+    _splitcmd_flush
+
+    while (( i <= n )); do
+      t=${tokens[i]}
+      next=${tokens[i+1]}
+      (( i++ ))
+
+      if _splitcmd_is_ctrl "$t"; then
+        # the operator ends the line and already continues the command
+        if (( ${#lines} )); then
+          # `;` hugs the previous word, but must never double into `;;`
+          [[ $t == ';' && ${lines[-1]} != *';' ]] && lines[-1]+=$t || lines[-1]+=" $t"
+          conts[-1]=1
+        else
+          lines+=("$t")
+          conts+=(1)
+        fi
+        break
+      elif _splitcmd_is_redir "$t"; then
+        line=$t
+        if [[ $t == *'&' ]]; then
+          case $next in
+            ([0-9]|-) line+=$next; (( i++ )) ;; # `2>&1`, `>&-`
+          esac
+        elif _splitcmd_is_word "$next"; then
+          _splitcmd_append "$next"
+          (( i++ ))
+        fi
+        _splitcmd_flush
+      elif [[ $t == '--' ]]; then
+        line='--'
+        _splitcmd_flush
+      elif _splitcmd_is_opt "$t"; then
+        line=$t
+        if _splitcmd_is_word "$next" && _splitcmd_takes_value "$cmd" "$t" "$next"; then
+          _splitcmd_append "$next"
+          (( i++ ))
+        fi
+        _splitcmd_flush
+      elif (( wrapped )); then
+        # `sudo -E env FOO=bar cmd ...`: the wrapped command starts a new head,
+        # so rewind and let the head parser read this token
+        (( i-- ))
+        _splitcmd_head
+        _splitcmd_flush
+      else
+        # consecutive positionals share a line: `cp src dst`
+        line=$t
+        while (( i <= n )) && _splitcmd_is_word "${tokens[i]}"; do
+          (( ${#line} + ${#tokens[i]} + 1 > pack )) && break
+          _splitcmd_append "${tokens[i]}"
+          (( i++ ))
+        done
+        _splitcmd_flush
+      fi
+    done
+  done
+
+  local out=''
+  _splitcmd_render
+  # nothing wrapped, so there is nothing to read: explode every option instead
+  if [[ ${out%$nl} != *$nl* ]]; then
+    width=0
+    out=''
+    _splitcmd_render
+  fi
+  print -rn -- "$out"
+}
+
+# zsh widget to load and run the `splitcmd` function
+function splitcmd_widget {
+  local split=$(splitcmd "$BUFFER")
+  # never clobber the line with nothing to show for it
+  [[ -n $split ]] || return 0
+  BUFFER=$split
+  CURSOR=${#BUFFER}
+}
