@@ -101,6 +101,45 @@ vim.keymap.set("n", "<leader>gd", function()
   end
 end, { desc = "Toggle diff view" })
 
--- vim-fugitive
-vim.keymap.set("n", "gh", ":diffget //2<CR>", { desc = "Get left diff" })
-vim.keymap.set("n", "gl", ":diffget //3<CR>", { desc = "Get right diff" })
+-- vim-fugitive conflict resolution
+local diffget_maps = {
+  gb = { "//1", "base" },
+  gh = { "//2", "ours" },
+  gl = { "//3", "theirs" },
+}
+
+--- @param enable boolean
+local function set_diffget_maps(enable)
+  for lhs, spec in pairs(diffget_maps) do
+    if enable then
+      vim.keymap.set("n", lhs, "<cmd>diffget " .. spec[1] .. "<cr><cmd>diffupdate<cr>", {
+        buffer = 0,
+        desc = "Get " .. spec[2] .. " diff",
+      })
+    else
+      pcall(vim.keymap.del, "n", lhs, { buffer = 0 })
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd("OptionSet", {
+  pattern = "diff",
+  callback = function()
+    set_diffget_maps(vim.v.option_new)
+  end,
+  desc = "Conflict resolution maps while in diff mode",
+})
+
+-- OptionSet is suppressed during startup, so `nvim -d` and `git mergetool` need their own pass
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.wo[win].diff then
+        vim.api.nvim_win_call(win, function()
+          set_diffget_maps(true)
+        end)
+      end
+    end
+  end,
+  desc = "Conflict resolution maps when starting in diff mode",
+})
