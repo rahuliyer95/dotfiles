@@ -2,10 +2,16 @@
 vim.keymap.set("n", "<Tab>", vim.cmd.BufferNext, { desc = "Next buffer" })
 vim.keymap.set("n", "<S-Tab>", vim.cmd.BufferPrevious, { desc = "Previous buffer" })
 
--- telescope.nvim
-vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
-vim.keymap.set("n", "<C-g>", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
-vim.keymap.set("n", "<C-S-p>", "<cmd>Telescope commands<cr>", { desc = "Command palette" })
+-- snacks.nvim picker
+vim.keymap.set("n", "<C-p>", function()
+  Snacks.picker.files()
+end, { desc = "Find files" })
+vim.keymap.set("n", "<C-g>", function()
+  Snacks.picker.grep()
+end, { desc = "Live grep" })
+vim.keymap.set("n", "<C-S-p>", function()
+  Snacks.picker.commands()
+end, { desc = "Command palette" })
 
 -- vim-anzu search progress
 vim.keymap.set("n", "n", "<Plug>(anzu-n-with-echo)", { desc = "Next search result" })
@@ -51,7 +57,7 @@ vim.keymap.set("i", "<F2>", function()
 end, { desc = "Rename" })
 -- Show callers
 vim.keymap.set("n", "<leader>fr", function()
-  require("telescope.builtin").lsp_references()
+  Snacks.picker.lsp_references()
 end, { desc = "Show callers" })
 -- Code Actions
 vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, { desc = "Show code actions" })

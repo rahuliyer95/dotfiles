@@ -103,14 +103,11 @@ require("lazy").setup({
   { "dstein64/vim-startuptime" },
   { "osyo-manga/vim-anzu" },
   {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-telescope/telescope-ui-select.nvim",
-      "nvim-lua/plenary.nvim",
-    },
+    "folke/snacks.nvim",
     config = function()
-      require("plugins.telescope")
+      require("plugins.snacks")
     end,
+    priority = 1000,
   },
   {
     "lewis6991/gitsigns.nvim",
@@ -189,17 +186,10 @@ require("lazy").setup({
     end,
   },
   {
-    "rcarriga/nvim-notify",
-    config = function()
-      require("plugins.nvim-notify")
-    end,
-  },
-  {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
     },
     config = function()
       require("plugins.noice")
