@@ -1,5 +1,13 @@
 git:
   overrideGpg: true
+customCommands:
+  # rebase resets committer dates to now, and GitHub renders the committer date
+  - key: "D"
+    context: "commits"
+    description: "Sync committer dates to author dates (selected commit and newer)"
+    command: "git rebase --committer-date-is-author-date {{.SelectedCommit.Hash}}^"
+    loadingText: "Restoring committer dates"
+    output: log
 # copied from https://github.com/folke/tokyonight.nvim/blob/5da1b76e64daf4c5d410f06bcb6b9cb640da7dfd/extras/lazygit/tokyonight_storm.yml
 gui:
   nerdFontsVersion: "3"
