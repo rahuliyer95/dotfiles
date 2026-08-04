@@ -69,6 +69,8 @@
   gpgsign = true
 
 [diff]
+  # Produces smaller, more readable hunks than the default myers
+  algorithm  = histogram
   colorMoved = default
   # Detect copies as well as renames
   renames    = true
@@ -114,7 +116,7 @@
   postBuffer = 524288000
 
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
 
 [pull]
   rebase = true
@@ -124,6 +126,10 @@
 
 [rebase]
   autoStash = true
+
+[rerere]
+  autoUpdate = true
+  enabled    = true
 
 [url "git@github.com:"]
   insteadOf = https://github.com/
