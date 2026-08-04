@@ -19,7 +19,6 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
   -- Core plugins {{{
-  { "junegunn/fzf.vim" },
   { "raimondi/delimitmate" },
   -- { "tpope/vim-sensible" },
   {
@@ -115,7 +114,6 @@ require("lazy").setup({
   },
   { "gisphm/vim-gitignore" },
   { "dstein64/vim-startuptime" },
-  { "osyo-manga/vim-anzu" },
   {
     "folke/snacks.nvim",
     config = function()

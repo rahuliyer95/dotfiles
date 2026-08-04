@@ -20,9 +20,6 @@ vim.opt.background = "dark"
 vim.opt.laststatus = 2
 vim.opt.showmode = false
 
--- FZF integration
-vim.opt.runtimepath:append("~/.fzf")
-
 -- vim-polyglot markdown settings
 vim.g.vim_markdown_folding_disabled = 1
 vim.g.vim_markdown_conceal = 0

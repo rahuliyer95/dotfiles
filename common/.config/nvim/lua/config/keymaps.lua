@@ -13,22 +13,23 @@ vim.keymap.set("n", "<C-S-p>", function()
   Snacks.picker.commands()
 end, { desc = "Command palette" })
 
--- vim-anzu search progress
-vim.keymap.set("n", "n", "<Plug>(anzu-n-with-echo)", { desc = "Next search result" })
-vim.keymap.set("n", "N", "<Plug>(anzu-N-with-echo)", { desc = "Previous search result" })
-vim.keymap.set("n", "*", "<Plug>(anzu-star-with-echo)", { desc = "Search word under cursor" })
-vim.keymap.set(
-  "n",
-  "#",
-  "<Plug>(anzu-sharp-with-echo)",
-  { desc = "Search word under cursor backwards" }
-)
-vim.keymap.set(
-  "n",
-  "<Esc><Esc>",
-  "<Plug>(anzu-clear-search-status)",
-  { desc = "Clear search status" }
-)
+-- Set the search pattern without jumping. Search count comes from the native message.
+vim.keymap.set("n", "*", function()
+  vim.fn.setreg("/", "\\<" .. vim.fn.expand("<cword>") .. "\\>")
+  vim.fn.histadd("search", vim.fn.getreg("/"))
+  vim.o.hlsearch = true
+end, { desc = "Search word under cursor" })
+vim.keymap.set("n", "<Esc><Esc>", vim.cmd.nohlsearch, { desc = "Clear search highlight" })
+-- Native `n` repeats the last search in its original direction, so `?` and `#` invert it.
+-- Pin `n` to forward and `N` to backward instead.
+vim.keymap.set({ "n", "x", "o" }, "n", "'Nn'[v:searchforward]", {
+  expr = true,
+  desc = "Next search result",
+})
+vim.keymap.set({ "n", "x", "o" }, "N", "'nN'[v:searchforward]", {
+  expr = true,
+  desc = "Previous search result",
+})
 
 -- undotree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
