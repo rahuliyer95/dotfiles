@@ -1,0 +1,83 @@
+line-length = 100
+target-version = "py312"
+
+[format]
+docstring-code-format = true
+skip-magic-trailing-comma = false
+
+[lint]
+ignore = [
+  "S4", # Suspicious-import family; usage rules (S301, S602-S607) cover the real risk
+  "assert", # `assert` is the standard mypy narrowing idiom
+  "magic-value-comparison",
+  "missing-type-args",
+  "missing-type-kwargs",
+  "module-import-not-at-top-of-file",
+  "noqa-comments", # `noqa` is more portable than the ruff-only `ruff: ignore`
+  "raise-vanilla-args",
+  "single-line-implicit-string-concatenation", # Conflicts with the formatter
+  # Complexity thresholds are too opinionated to enforce globally
+  "too-many-arguments",
+  "too-many-boolean-expressions",
+  "too-many-branches",
+  "too-many-locals",
+  "too-many-positional-arguments",
+  "too-many-public-methods",
+  "too-many-return-statements",
+  "too-many-statements",
+  "try-consider-else", # Only fires on risk-free returns; B012 covers the real `finally` clobber
+]
+preview = true
+select = [
+  "A", # flake8-builtins
+  "ANN", # flake8-annotations
+  "ASYNC", # flake8-async
+  "B", # flake8-bugbear
+  "BLE", # flake8-blind-except
+  "C4", # flake8-comprehensions
+  "DTZ", # flake8-datetimez
+  "E", # pycodestyle
+  "EXE", # flake8-executable
+  "F", # pyflakes
+  "FBT", # flake8-boolean-trap
+  "FLY", # flynt
+  "FURB", # refurb
+  "G", # flake8-logging-format
+  "I", # isort
+  "ICN", # flake8-import-conventions
+  "INP", # flake8-no-pep420
+  "INT", # flake8-gettext
+  "ISC", # flake8-implicit-str-concat
+  "LOG", # flake8-logging
+  "N", # pep8-naming
+  "NPY", # numpy
+  "PD", # pandas-vet
+  "PERF", # perflint
+  "PGH", # pygrep-hooks
+  "PIE", # flake8-pie
+  "PL", # pylint
+  "PT", # flake8-pytest
+  "PTH", # flake8-use-pathlib
+  "PYI", # flake8-pyi
+  "Q", # flake8-quotes
+  "RET", # flake8-return
+  "RSE", # flake8-raise
+  "RUF", # ruff
+  "S", # flake8-bandit
+  "SIM", # flake8-simplify
+  "SLF", # flake8-self
+  "SLOT", # flake8-slots
+  "T10", # flake8-debugger
+  "T20", # flake8-print
+  "TC", # flake8-type-checking
+  "TID", # flake8-tidy-imports
+  "TRY", # tryceratops
+  "UP", # pyupgrade
+  "W", # pycodestyle
+  "YTT", # flake8-2020
+]
+
+[lint.per-file-ignores]
+"**/conftest.py" = ["ANN", "private-member-access"]
+"**/test_*.py" = ["ANN", "private-member-access"]
+"**/tests/**" = ["ANN", "private-member-access"]
