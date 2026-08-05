@@ -182,3 +182,21 @@ vim.diagnostic.config({
 -- Enable inlay hints
 vim.lsp.inlay_hint.enable(true)
 vim.lsp.log.set_level("off")
+
+-- MasonUpgrade
+vim.api.nvim_create_user_command("MasonUpgrade", function()
+  local registry = require("mason-registry")
+  local outdated = {}
+  for _, pkg in ipairs(registry.get_installed_packages()) do
+    -- `get_latest_version` throws on a malformed purl, skip those instead of aborting.
+    local ok, latest = pcall(pkg.get_latest_version, pkg)
+    if ok and latest ~= pkg:get_installed_version() then
+      outdated[#outdated + 1] = pkg.name
+    end
+  end
+  if #outdated == 0 then
+    print("All packages are up to date")
+    return
+  end
+  vim.cmd("MasonInstall " .. table.concat(outdated, " "))
+end, { desc = "Upgrade all outdated Mason packages." })

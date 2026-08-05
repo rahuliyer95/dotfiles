@@ -130,8 +130,7 @@ if command -v nvim > /dev/null; then
   echo ""
   nvim --headless "+Lazy! sync" +qall \
     && nvim --headless "+Lazy! update" +qall \
-    && nvim --headless +MasonUpdate +qall \
-    && nvim --headless +TSUpdate +qall
+    && nvim --headless +MasonUpdate +MasonUpgrade +TSUpdate +qall
 fi
 
 # rustup
@@ -164,4 +163,3 @@ fi
 if command -v op > /dev/null; then
   op completion zsh > "$(realpath "$HOME/.zsh.d/_op")"
 fi
-
