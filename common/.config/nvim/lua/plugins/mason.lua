@@ -92,6 +92,7 @@ require("lsp-auto-setup").setup({
 })
 
 local null_ls = require("null-ls")
+local venv = require("utils.venv")
 
 -- Sort all keys in a JSON document using jq
 local sort_json_keys = {
@@ -125,6 +126,11 @@ null_ls.setup({
   sources = {
     null_ls.builtins.diagnostics.mypy.with({
       prefer_local = ".venv/bin",
+      -- Point Mason's mypy at the project interpreter for when no venv-local mypy exists.
+      extra_args = function(params)
+        local python = venv.bin("python3", params.bufname)
+        return python and { "--python-executable", python } or {}
+      end,
       runtime_condition = function(params)
         return not params.bufname:find("%.venv")
       end,
