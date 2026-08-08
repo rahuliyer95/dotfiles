@@ -43,6 +43,9 @@
   - The solution should not be very descriptive.
   - Only provide high level details on how the solution is implemented.
 - When including references, always include them as footnotes (i.e [^1] syntax)
+  - Exception: for references to code, don't footnote. Inline a GitHub permalink on its own line
+    so GitHub renders a code preview. Pin to a commit SHA (not a branch) and include the line
+    range, e.g. `.../blob/<sha>/path/to/file.ts#L10-L20`.
 - **ALWAYS LET ME REVIEW PR DESCRIPTION BEFORE CREATING THE PR.**
   - Show the title and description, then use the question tool to get a yes/no on the PR details.
     Only create the PR on yes.
