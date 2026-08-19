@@ -4,7 +4,7 @@
 # Font {{{
 
 adjust-cell-height = 25%
-font-size          = 18
+font-size          = 14
 font-family        = Google Sans Code
 
 # }}}
