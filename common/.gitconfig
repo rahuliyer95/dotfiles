@@ -127,6 +127,9 @@
 [rebase]
   autoStash = true
 
+[remote "origin"]
+  tagOpt = --no-tags
+
 [rerere]
   autoUpdate = true
   enabled    = true
