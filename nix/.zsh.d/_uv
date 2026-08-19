@@ -1888,8 +1888,10 @@ never\:"Disables colored output"))' \
 '(--frozen -U --upgrade)--locked[Assert that the \`uv.lock\` will remain unchanged \[env\: UV_LOCKED=\]]' \
 '(--locked -U --upgrade --no-sources)--frozen[Sync without updating the \`uv.lock\` file \[env\: UV_FROZEN=\]]' \
 '--no-sync[Avoid syncing the virtual environment \[env\: UV_NO_SYNC=\]]' \
+'(--no-sync --script --no-project)--no-install-project[Do not install the current project \[env\: UV_NO_INSTALL_PROJECT=\]]' \
 '--isolated[Run checks without mutating project state \[env\: UV_ISOLATED=\]]' \
 '--show-version[Display the version of ty that will be used for type checking]' \
+'--show-command[Display the ty command that will be used for type checking]' \
 '--no-project[Avoid discovering a project or workspace]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
