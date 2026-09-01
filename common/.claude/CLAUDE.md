@@ -90,6 +90,7 @@ Applies to documents, PRs, and reports, not chat replies.
   - Prefer `fd` over `find`.
 - Line length is 100 characters unless specified otherwise. Use this to determine how to wrap long
   lines when you end up wrapping them.
+- Create a worktree before making any change unless you are already in a worktree.
 
 ## Git Commits
 
@@ -123,4 +124,3 @@ Applies to documents, PRs, and reports, not chat replies.
 - **Write each paragraph as a single unbroken line** (no manual line breaks within a paragraph,
   only between sections/headers); let it soft-wrap on render.
 - Assign PRs to me (`--assignee '@me'`)
-- When asked to create a branch **ALWAYS** create worktrees.
