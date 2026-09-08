@@ -80,6 +80,7 @@ if command -v pnpm > /dev/null; then
   pnpm self-update
   pnpm up -LPgy
   pnpm completion zsh > "$(realpath "$HOME/.zsh.d/_pnpm")"
+  pnpm dlx skills@latest update -g -y
 fi
 
 # ruby
