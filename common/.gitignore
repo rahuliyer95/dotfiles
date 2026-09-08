@@ -13,4 +13,5 @@ Thumbs.db
 # direnv
 .envrc
 
+# Claude Code
 **/.claude/settings.local.json
