@@ -38,10 +38,15 @@ macos-titlebar-style          = tabs
 
 # Window {{{
 
-background-opacity = 0.95
-window-height      = 28
-window-width       = 118
-window-colorspace  = display-p3
+background-blur-radius  = 24
+background-opacity      = 0.95
+mouse-hide-while-typing = true
+window-colorspace       = display-p3
+window-decoration       = true
+window-padding-x        = 8
+window-padding-y        = 8
+window-height           = 28
+window-width            = 118
 
 # }}}
 
