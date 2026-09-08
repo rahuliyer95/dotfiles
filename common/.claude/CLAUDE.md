@@ -108,7 +108,7 @@ Applies to documents, PRs, and reports, not chat replies.
   - All sections should be concise.
   - The solution should not be very descriptive.
   - Only provide high level details on how the solution is implemented.
-  - Don't enumerate what the PR does *not* do; keep it to the change at hand.
+  - Don't enumerate what the PR does _not_ do; keep it to the change at hand.
 - When including references, always include them as footnotes (i.e [^1] syntax)
   - Exception: for references to code, don't footnote. Inline a GitHub permalink on its own line
     so GitHub renders a code preview. Pin to the **full 40-character commit SHA** (not a branch,
@@ -124,3 +124,22 @@ Applies to documents, PRs, and reports, not chat replies.
 - **Write each paragraph as a single unbroken line** (no manual line breaks within a paragraph,
   only between sections/headers); let it soft-wrap on render.
 - Assign PRs to me (`--assignee '@me'`)
+
+## Sub-agents — hard triggers, not judgment calls
+
+Delegate, don't decide. If any of these are true, launch sub-agents:
+
+- The task has 2+ independent workstreams. One sub-agent per workstream, all launched in a SINGLE
+  message so they run in parallel.
+- A workstream's output will be written to a file rather than reasoned over in-context. Collection
+  is delegated; assembly and verification stay with me.
+- A mechanical loop will exceed ~2 minutes or ~50 tool calls (bulk API pulls, per-item fetches,
+  xargs fan-out). Use `background=true` and keep working.
+- I'm about to run a 4th sequential tool call on one workstream while another named workstream still
+  has zero calls against it.
+
+Anti-pattern I actually commit: starting with "one quick probe" in the parent, then staying in the
+parent for 20 more calls because I'm already there. The probe is the trigger to delegate, not a
+reason to continue. Sub-agent prompt must specify: exact scope, verbatim-vs-summary, the output file
+path to write, "return ONLY the file path plus counts", and "write NOT AVAILABLE rather than
+guessing". Never let a sub-agent return bulk content into my context.
