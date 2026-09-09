@@ -10,3 +10,8 @@ ds_store-cleanup() {
   fi
 }
 
+# Update
+update() {
+  "$HOME/.rc.d/.update.sh"
+}
+
