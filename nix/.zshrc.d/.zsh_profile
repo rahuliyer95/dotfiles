@@ -15,7 +15,7 @@ unset file
 
 # Kitty 0.24+/Ghostty
 if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
-  source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
+  source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
 fi
 typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION=true
 
@@ -88,8 +88,20 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 bindkey 'TAB' autosuggest-fetch
 bindkey '^@' autosuggest-accept
 
-# zsh-syntax-highlighting
-export ZSH_HIGHLIGHT_STYLES[comment]='fg=245'
+# zsh-syntax-highlighting (tokyonight storm palette)
+export ZSH_HIGHLIGHT_STYLES[comment]='fg=#565f89'
+export ZSH_HIGHLIGHT_STYLES[alias]='fg=#9ece6a'
+export ZSH_HIGHLIGHT_STYLES[builtin]='fg=#9ece6a'
+export ZSH_HIGHLIGHT_STYLES[function]='fg=#9ece6a'
+export ZSH_HIGHLIGHT_STYLES[command]='fg=#9ece6a'
+export ZSH_HIGHLIGHT_STYLES[path]='fg=#bb9af7'
+export ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#e0af68'
+export ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#e0af68'
+export ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=#e0af68'
+export ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#f7768e,bold'
+export ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=#bb9af7'
+export ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#7dcfff'
+export ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#7dcfff'
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern regexp cursor root line)
 
 autoload edit-command-line
