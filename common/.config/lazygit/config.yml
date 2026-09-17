@@ -8,6 +8,19 @@ customCommands:
     command: "git rebase --committer-date-is-author-date {{.SelectedCommit.Hash}}^"
     loadingText: "Restoring committer dates"
     output: log
+  - key: "v"
+    context: "localBranches"
+    description: "Review PR in hunk"
+    command: "$HOME/.config/hunk/extensions/installed/hunk-gh-review/scripts/hpr {{.SelectedLocalBranch.Name | quote}}"
+    output: terminal
+  - key: "V"
+    context: "localBranches"
+    description: "Review local branch diff (incl. uncommitted) in hunk"
+    command: >-
+      branch={{.SelectedLocalBranch.Name | quote}};
+      base=$(git merge-base origin/HEAD "$branch" 2>/dev/null || echo origin/HEAD);
+      if [ "$branch" = "$(git branch --show-current)" ]; then hunk diff "$base"; else hunk diff "$base" "$branch"; fi
+    output: terminal
 # copied from https://github.com/folke/tokyonight.nvim/blob/5da1b76e64daf4c5d410f06bcb6b9cb640da7dfd/extras/lazygit/tokyonight_storm.yml
 gui:
   nerdFontsVersion: "3"
