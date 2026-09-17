@@ -159,6 +159,33 @@ if command -v gcloud > /dev/null; then
   echo "yes" | gcloud components update
 fi
 
+# herdr
+if command -v herdr > /dev/null; then
+  echo ""
+  echo -ne "\e[35m"
+  echo -e "╭─────────╮"
+  echo -e "│  herdr  │"
+  echo -e "╰─────────╯"
+  echo -ne "\e[0m"
+  echo ""
+  herdr plugin list --json |
+    jq -r '.result.plugins[] | .source.owner + "/" + .source.repo' |
+    xargs -I'{}' herdr plugin install '{}' --yes;
+fi
+
+# hunk
+if command -v hunk > /dev/null; then
+  echo ""
+  echo -ne "\e[32m"
+  echo -e "╭────────╮"
+  echo -e "│  hunk  │"
+  echo -e "╰────────╯"
+  echo -ne "\e[0m"
+  echo ""
+  hunk extension update
+fi
+
+
 # Regenerate completion scripts
 # 1Password
 if command -v op > /dev/null; then
