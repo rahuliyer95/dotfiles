@@ -15,3 +15,7 @@ require("nvim-treesitter").install(vim
     return not vim.tbl_contains(alreadyInstalled, parser)
   end)
   :totable())
+
+vim.api.nvim_create_user_command("TSUpdateSync", function()
+  require("nvim-treesitter.install").update(nil, { summary = true }):wait()
+end, { desc = "Blocking version of `:TSUpdate`." })
