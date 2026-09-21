@@ -56,6 +56,9 @@ local pnpm_npm = setmetatable({
       package_json.devEngines = nil
       package_json = try(mason_result.pcall(vim.json.encode, package_json, {}))
       ctx.fs:write_file("package.json", package_json)
+      -- pnpm blocks dependency build scripts by default (ERR_PNPM_IGNORED_BUILDS). Allow them per
+      -- install dir, matching what npm already does.
+      ctx.fs:write_file("pnpm-workspace.yaml", "dangerouslyAllowAllBuilds: true\n")
       ctx.stdio_sink:stdout(
         ("Installing npm package %s@%s with pnpm\n"):format(source.package, source.version)
       )
