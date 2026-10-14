@@ -5,7 +5,6 @@
 tap "beeftornado/rmtree", trusted: true
 tap "eth-p/software", trusted: true
 tap "jorgelbg/tap", trusted: true
-tap "productdevbook/tap", trusted: true
 tap "rahuliyer95/personal", trusted: true
 
 # }}}
@@ -19,6 +18,7 @@ brew "bash"
 brew "bash-completion"
 brew "bat"
 brew "beeftornado/rmtree/brew-rmtree"
+brew "blueutil"
 brew "brotli"
 brew "btop"
 brew "bzip2"
@@ -26,7 +26,7 @@ brew "cmake"
 # brew "coreutils"
 brew "direnv"
 brew "dive"
-brew "docker", link: false
+brew "docker"
 brew "docker-buildx"
 brew "docker-compose"
 brew "docker-credential-helper"
@@ -47,12 +47,16 @@ brew "git-delta"
 brew "git-lfs"
 brew "gnupg"
 brew "go"
+brew "herdr"
+brew "hunk"
 brew "hyperfine"
 brew "jless"
 brew "jorgelbg/tap/pinentry-touchid"
 brew "jq"
 brew "lazygit"
+brew "lnav"
 brew "lsd"
+brew "mas"
 brew "mole"
 brew "neovim"
 # brew "openjdk@17", link: true
@@ -64,9 +68,8 @@ brew "pnpm"
 brew "rahuliyer95/personal/pam_watchid"
 brew "ripgrep"
 brew "rlwrap"
-brew "rtk"
-brew "shellcheck"
 brew "sponge"
+brew "terminal-notifier"
 brew "tree-sitter"
 brew "tree-sitter-cli"
 brew "uutils-coreutils"
@@ -91,6 +94,7 @@ cask "claude-code"
 cask "dropbox"
 # cask "finetune"
 cask "font-google-sans-code"
+cask "font-montserrat"
 cask "font-new-york"
 cask "font-sf-pro"
 cask "ghostty"
@@ -101,7 +105,6 @@ cask "keyboardcleantool"
 cask "microsoft-edge"
 cask "neohtop"
 cask "nordvpn"
-cask "notion"
 cask "qlmarkdown"
 cask "raycast"
 cask "scroll-reverser"
@@ -109,16 +112,8 @@ cask "spotify"
 cask "suspicious-package"
 cask "syntax-highlight"
 cask "vlc"
-cask "whatsapp"
 cask "xquartz"
 cask "zoom"
-
-# }}}
-
-# uv {{{
-
-uv "prek"
-uv "ptpython"
 
 # }}}
 
@@ -128,5 +123,14 @@ mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704
 mas "DaisyDisk", id: 411643860
 mas "Magnet", id: 441258766
+mas "Tampermonkey", id: 6738342400
+mas "uBlock Origin Lite", id: 6745342698
+
+# }}}
+
+# uv {{{
+
+uv "prek"
+uv "ptpython"
 
 # }}}
