@@ -30,9 +30,11 @@ focus-follows-mouse = true
 
 # macOS {{{
 
+copy-on-select                = clipboard
 macos-option-as-alt           = true
 macos-secure-input-indication = false
 macos-titlebar-style          = tabs
+selection-clear-on-copy       = false
 
 # }}}
 
