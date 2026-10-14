@@ -18,7 +18,7 @@ if command -v brew > /dev/null; then
   echo "╰──────────────╯"
   echo ""
   brew update
-  brew upgrade --no-ask
+  brew upgrade --no-ask --yes
 fi
 
 # Aptitude
