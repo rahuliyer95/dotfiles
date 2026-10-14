@@ -3,7 +3,7 @@
 # Cleanup .DS_Store
 ds_store-cleanup() {
   local dir="${1:-.}"
-  if command -v fd >/dev/null; then
+  if command -v fd &> /dev/null; then
     fd -H -I '\.DS_Store' "${dir}" --exec rm
   else
     find "${dir}" -name '.DS_Store' -print -delete
@@ -15,3 +15,20 @@ update() {
   "$HOME/.rc.d/.update.sh"
 }
 
+# Cleanup
+cleanup() {
+  case "$(uname -s)" in
+    Darwin*)
+      if ! command -v mole &> /dev/null; then
+        echo "Please install Mole (brew install mole)" >&2
+        exit 1
+      fi
+      mo clean
+      mo purge --yes
+      ;;
+    *)
+      echo "Unsupported platform" >&2
+      exit 1
+      ;;
+  esac
+}
