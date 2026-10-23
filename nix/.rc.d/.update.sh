@@ -168,9 +168,7 @@ if command -v herdr > /dev/null; then
   echo -e "╰─────────╯"
   echo -ne "\e[0m"
   echo ""
-  herdr plugin list --json |
-    jq -r '.result.plugins[] | .source.owner + "/" + .source.repo' |
-    xargs -I'{}' herdr plugin install '{}' --yes;
+  herdr plugin update --yes
 fi
 
 # hunk
