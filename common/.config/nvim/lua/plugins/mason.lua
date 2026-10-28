@@ -207,5 +207,5 @@ vim.api.nvim_create_user_command("MasonUpgrade", function()
     print("All packages are up to date")
     return
   end
-  vim.cmd("MasonInstall " .. table.concat(outdated, " "))
+  require("mason.api.command").MasonInstall(outdated)
 end, { desc = "Upgrade all outdated Mason packages." })
