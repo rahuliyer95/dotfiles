@@ -4,6 +4,7 @@
 
 tap "beeftornado/rmtree", trusted: true
 tap "eth-p/software", trusted: true
+tap "fcoury/tap", trusted: true
 tap "jorgelbg/tap", trusted: true
 tap "rahuliyer95/personal", trusted: true
 
@@ -23,7 +24,6 @@ brew "brotli"
 brew "btop"
 brew "bzip2"
 brew "cmake"
-# brew "coreutils"
 brew "direnv"
 brew "dive"
 brew "docker"
@@ -39,7 +39,6 @@ brew "eth-p/software/bat-extras-batpipe"
 brew "eth-p/software/bat-extras-batwatch"
 brew "eth-p/software/bat-extras-prettybat"
 brew "fd"
-# brew "findutils"
 brew "fzf"
 brew "gh"
 brew "git"
@@ -63,8 +62,11 @@ brew "neovim"
 brew "openjdk@25", link: true
 brew "node@26"
 brew "pam-reattach"
+brew "pam-u2f"
 brew "pinentry-mac"
 brew "pnpm"
+brew "python@3.12"
+brew "python@3.15"
 brew "rahuliyer95/personal/pam_watchid"
 brew "ripgrep"
 brew "rlwrap"
@@ -93,6 +95,8 @@ cask "betterzip"
 cask "claude-code"
 cask "dropbox"
 # cask "finetune"
+cask "font-0xproto"
+cask "font-0xproto-nerd-font"
 cask "font-google-sans-code"
 cask "font-montserrat"
 cask "font-new-york"
@@ -132,5 +136,6 @@ mas "uBlock Origin Lite", id: 6745342698
 
 uv "prek"
 uv "ptpython"
+uv "yubikey-manager"
 
 # }}}
