@@ -5380,6 +5380,7 @@ never\:"Disables colored output"))' \
         case $line[1] in
             (metadata)
 _arguments "${_arguments_options[@]}" : \
+'--output-version=[Request a specific version of the metadata schema]:VERSION:_default' \
 '--script=[View metadata for the specified PEP 723 Python script, rather than the current workspace]:SCRIPT:_files' \
 '*--index=[The indexes to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
