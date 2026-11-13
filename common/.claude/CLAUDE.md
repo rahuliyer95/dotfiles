@@ -86,7 +86,9 @@ Applies to documents, PRs, and reports, not chat replies.
   - Prefer `fd` over `find`.
 - Line length is 100 characters unless specified otherwise. Use this to determine how to wrap long
   lines when you end up wrapping them.
-- Create a worktree before making any change unless you are already in a worktree.
+- Create a worktree before making any change unless you are already in a worktree. Store worktrees
+  in `.claude/worktrees` relative to root of the repo.
+- ALWAYS USE NATIVE TOOLS LIKE `Read`/`Grep`/`Glob` OVER `sed`/`grep`/`rg` WHEN READING FILES.
 
 ## Git Commits
 
