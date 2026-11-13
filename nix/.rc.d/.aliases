@@ -76,8 +76,8 @@ command -v batman > /dev/null && alias man="batman"
 # vim as nvim
 command -v nvim > /dev/null && alias vim="nvim"
 
-# btop over top
-command -v btop > /dev/null && alias top="btop"
+# bottom over top
+command -v btm > /dev/null && alias top="btm --basic"
 
 # vi
 alias vi="vi -u NONE"
