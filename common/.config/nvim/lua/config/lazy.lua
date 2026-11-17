@@ -19,7 +19,12 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
   -- Core plugins {{{
-  { "raimondi/delimitmate" },
+  {
+    "nvim-mini/mini.pairs",
+    config = function()
+      require("mini.pairs").setup()
+    end,
+  },
   -- { "tpope/vim-sensible" },
   {
     "nvim-treesitter/nvim-treesitter",
