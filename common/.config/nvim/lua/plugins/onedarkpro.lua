@@ -1,25 +1,5 @@
 require("onedarkpro").setup({
   highlights = {
-    -- barbar.nvim diagnostics
-    BufferCurrentERROR = {
-      fg = "${red}",
-    },
-    BufferCurrentINFO = {
-      fg = "${blue}",
-    },
-    BufferCurrentWARN = {
-      fg = "${yellow}",
-    },
-    -- git signs
-    BufferCurrentADDED = {
-      fg = "${green}",
-    },
-    BufferCurrentCHANGED = {
-      fg = "${yellow}",
-    },
-    BufferCurrentDELETED = {
-      fg = "${red}",
-    },
     -- lsp
     LspInlayHint = { fg = "${gray}", italic = true },
   },

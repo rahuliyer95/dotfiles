@@ -1,6 +1,10 @@
--- barbar.nvim navigation
-vim.keymap.set("n", "<Tab>", vim.cmd.BufferNext, { desc = "Next buffer" })
-vim.keymap.set("n", "<S-Tab>", vim.cmd.BufferPrevious, { desc = "Previous buffer" })
+-- buffer navigation
+vim.keymap.set("n", "<Tab>", vim.cmd.bnext, { desc = "Next buffer" })
+vim.keymap.set("n", "<S-Tab>", vim.cmd.bprevious, { desc = "Previous buffer" })
+-- Keeps the window layout, which plain :bdelete does not
+vim.keymap.set("n", "<leader>bd", function()
+  Snacks.bufdelete()
+end, { desc = "Close buffer" })
 
 -- snacks.nvim picker
 vim.keymap.set("n", "<C-p>", function()

@@ -19,6 +19,7 @@ vim.opt.guicursor =
 vim.opt.background = "dark"
 vim.opt.laststatus = 2
 vim.opt.showmode = false
+vim.opt.showtabline = 2
 
 -- vim-polyglot markdown settings
 vim.g.vim_markdown_folding_disabled = 1

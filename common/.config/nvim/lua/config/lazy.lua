@@ -168,13 +168,6 @@ require("lazy").setup({
     end,
   },
   {
-    "romgrk/barbar.nvim",
-    config = function()
-      require("plugins.barbar")
-    end,
-    dependencies = { "nvim-mini/mini.icons" },
-  },
-  {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       require("plugins.indent-blankline")
