@@ -138,27 +138,68 @@ null_ls.setup({
         return not params.bufname:find("%.venv")
       end,
     }),
+    null_ls.builtins.formatting.stylua,
+    -- Use ~/.markdownlint-cli2.yml as the base config so project-local configs can override it.
+    null_ls.builtins.diagnostics.markdownlint_cli2.with({
+      extra_args = { "--config", vim.env.HOME .. "/.markdownlint-cli2.yml" },
+    }),
     sort_json_keys,
   },
 })
 
-require("mason-null-ls").setup({
-  automatic_installation = true,
-  ensure_installed = {
-    "stylua",
-  },
-  handlers = {
-    -- We use bashls to format. Since bashls requires shfmt binary to be installed separately (which
-    -- we manage using Mason) we need to disable this so that null-ls doesn't register shfmt.
-    shfmt = function() end,
-    -- Use ~/.markdownlint-cli2.yml as the base config so project-local configs can override it.
-    markdownlint_cli2 = function()
-      null_ls.register(null_ls.builtins.diagnostics.markdownlint_cli2.with({
-        extra_args = { "--config", vim.env.HOME .. "/.markdownlint-cli2.yml" },
-      }))
-    end,
-  },
-})
+-- Register null-ls plugins installed using Mason
+local registry = require("mason-registry")
+local skipped_builtins = {
+  -- We use bashls to format. Since bashls requires shfmt binary to be installed separately (which
+  -- we manage using Mason) we need to disable this so that null-ls doesn't register shfmt.
+  shfmt = true,
+}
+---Whether a null-ls source with the same name and method as `builtin` is already registered.
+---Not `null_ls.is_registered`: it treats the name as a Lua pattern, which breaks on `-`, and
+---can't match builtins that declare several methods.
+---@param builtin table null-ls builtin
+---@return boolean
+local function is_registered(builtin)
+  local method = type(builtin.method) == "table" and builtin.method[1] or builtin.method
+  return vim.iter(null_ls.get_sources()):any(function(source)
+    return source.name == builtin.name and source.methods[method]
+  end)
+end
+
+---Register the null-ls builtins (diagnostics, formatting, code actions) matching a Mason package.
+---Skips builtins in `skipped_builtins` and ones already registered, so explicit sources win.
+---@param pkg Package Mason package
+local function register_builtins(pkg)
+  local name = pkg.name:gsub("-", "_")
+  if skipped_builtins[name] then
+    return
+  end
+  for _, method in ipairs({ "diagnostics", "formatting", "code_actions" }) do
+    -- Probe the runtime instead of indexing null_ls.builtins, which logs a warning on a miss.
+    local path = ("lua/null-ls/builtins/%s/%s.lua"):format(method, name)
+    if #vim.api.nvim_get_runtime_file(path, false) > 0 then
+      local builtin = null_ls.builtins[method][name]
+      -- An explicit source above (e.g. mypy with options) takes precedence
+      if not is_registered(builtin) then
+        null_ls.register(builtin)
+      end
+    end
+  end
+end
+
+registry:on("package:install:success", vim.schedule_wrap(register_builtins))
+
+registry.refresh(function()
+  for _, source in ipairs(null_ls.get_sources()) do
+    local pkg_name = source.name:gsub("_", "-")
+    if registry.has_package(pkg_name) and not registry.is_installed(pkg_name) then
+      registry.get_package(pkg_name):install()
+    end
+  end
+  for _, pkg in ipairs(registry.get_installed_packages()) do
+    register_builtins(pkg)
+  end
+end)
 
 -- Show diagnostic information on the current line as virtual text
 vim.diagnostic.config({

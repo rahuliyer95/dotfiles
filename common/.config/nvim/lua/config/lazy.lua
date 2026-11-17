@@ -52,7 +52,6 @@ require("lazy").setup({
     dependencies = { "rahuliyer95/mason.nvim" },
   },
   { "nvimtools/none-ls.nvim" },
-  { "jay-babu/mason-null-ls.nvim" },
   {
     "massolari/lsp-auto-setup.nvim",
     dependencies = { "rahuliyer95/mason.nvim" },
