@@ -74,8 +74,10 @@ vim.keymap.set("n", "]d", function()
   vim.diagnostic.jump({ count = -1 })
 end, { desc = "Previous diagnostic" })
 
--- nvim-tree
-vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>", { desc = "Toggle file tree" })
+-- snacks.nvim explorer
+vim.keymap.set("n", "<leader>n", function()
+  Snacks.explorer()
+end, { desc = "Toggle file tree" })
 
 -- trouble.nvim
 vim.keymap.set("n", "<F8>", "<ESC>:Trouble diagnostics toggle<CR>", { desc = "Toggle diagnostics" })

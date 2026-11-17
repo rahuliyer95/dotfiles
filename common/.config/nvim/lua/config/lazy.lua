@@ -149,13 +149,6 @@ require("lazy").setup({
   },
   { "onsails/lspkind.nvim" },
   {
-    "kyazdani42/nvim-tree.lua",
-    config = function()
-      require("plugins.nvim-tree")
-    end,
-    dependencies = { "nvim-mini/mini.icons" },
-  },
-  {
     "RRethy/vim-illuminate",
     config = function()
       require("plugins.illuminate")
