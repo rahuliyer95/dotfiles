@@ -1,6 +1,9 @@
 # vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 # https://github.com/mitchellh/ghostty/blob/main/src/config/Config.zig
 
+# Start herdr by default
+command = /opt/homebrew/bin/herdr
+
 # Font {{{
 
 adjust-cell-height = 25%
@@ -59,15 +62,72 @@ shell-integration-features = no-cursor,ssh-env,ssh-terminfo
 
 # }}}
 
+# Herdr {{{
+
+# \x1b[32;6u is herdr's prefix (ctrl+shift+space, kitty CSI); the trailing char is the herdr key
+# Herdr owns splits/tabs/workspaces, so cmd shortcuts are forwarded as prefix sequences.
+
+# Split pane right (prefix+v)
+keybind = cmd+d=text:\x1b[32;6uv
+# Split pane down (prefix+minus)
+keybind = cmd+shift+d=text:\x1b[32;6u-
+# New herdr tab (prefix+c)
+keybind = cmd+t=text:\x1b[32;6uc
+# New herdr workspace (prefix+shift+n)
+keybind = cmd+shift+t=text:\x1b[32;6uN
+# Focus herdr pane left/down/up/right (prefix+h/j/k/l)
+keybind = cmd+shift+left=text:\x1b[32;6uh
+keybind = cmd+shift+down=text:\x1b[32;6uj
+keybind = cmd+shift+up=text:\x1b[32;6uk
+keybind = cmd+shift+right=text:\x1b[32;6ul
+# Same pane focus, vim-style
+keybind = super+alt+h=text:\x1b[32;6uh
+keybind = super+alt+j=text:\x1b[32;6uj
+keybind = super+alt+k=text:\x1b[32;6uk
+keybind = super+alt+l=text:\x1b[32;6ul
+# Native ghostty escape hatches (bypass herdr): new tab, split right, split down
+keybind = cmd+ctrl+t=new_tab
+keybind = cmd+ctrl+d=new_split:right
+keybind = cmd+ctrl+shift+d=new_split:down
+# Digits 1-9, three layers:
+#   cmd+N        herdr tab N (alt+N chord, see switch_tab in herdr config)
+#   cmd+shift+N  herdr workspace N (prefix+N, see switch_workspace in herdr config)
+#   alt+shift+N  native ghostty tab N
+keybind = cmd+digit_1=text:\x1b1
+keybind = cmd+shift+digit_1=text:\x1b[32;6u1
+keybind = alt+shift+digit_1=goto_tab:1
+keybind = cmd+digit_2=text:\x1b2
+keybind = cmd+shift+digit_2=text:\x1b[32;6u2
+keybind = alt+shift+digit_2=goto_tab:2
+keybind = cmd+digit_3=text:\x1b3
+keybind = cmd+shift+digit_3=text:\x1b[32;6u3
+keybind = alt+shift+digit_3=goto_tab:3
+keybind = cmd+digit_4=text:\x1b4
+keybind = cmd+shift+digit_4=text:\x1b[32;6u4
+keybind = alt+shift+digit_4=goto_tab:4
+keybind = cmd+digit_5=text:\x1b5
+keybind = cmd+shift+digit_5=text:\x1b[32;6u5
+keybind = alt+shift+digit_5=goto_tab:5
+keybind = cmd+digit_6=text:\x1b6
+keybind = cmd+shift+digit_6=text:\x1b[32;6u6
+keybind = alt+shift+digit_6=goto_tab:6
+keybind = cmd+digit_7=text:\x1b7
+keybind = cmd+shift+digit_7=text:\x1b[32;6u7
+keybind = alt+shift+digit_7=goto_tab:7
+keybind = cmd+digit_8=text:\x1b8
+keybind = cmd+shift+digit_8=text:\x1b[32;6u8
+keybind = alt+shift+digit_8=goto_tab:8
+keybind = cmd+digit_9=text:\x1b9
+keybind = cmd+shift+digit_9=text:\x1b[32;6u9
+keybind = alt+shift+digit_9=goto_tab:9
+
+# }}}
+
 # Miscellaneous {{{
 
 auto-update             = download
 keybind                 = shift+enter=text:\n
 keybind                 = super+v=paste_from_clipboard
-keybind                 = super+alt+h=goto_split:left
-keybind                 = super+alt+j=goto_split:down
-keybind                 = super+alt+k=goto_split:up
-keybind                 = super+alt+l=goto_split:right
 # 4 GB
 scrollback-limit        = 4_294_967_295
 unfocused-split-opacity = 0.7

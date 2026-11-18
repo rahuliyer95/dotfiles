@@ -3,6 +3,8 @@ onboarding = false
 [keys]
 prefix = "ctrl+shift+space"
 detach = "prefix+d"
+switch_workspace = "prefix+1..9"
+switch_tab = "alt+1..9"
 
 [[keys.command]]
 # lazygit: open in a split
